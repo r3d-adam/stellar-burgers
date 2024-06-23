@@ -1,0 +1,21 @@
+.tabName {
+	display: block;
+}
+
+.list {
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 600px;
+	justify-content: space-between;
+	margin: 0;
+	padding: 0;
+	margin-left: 4px;
+	margin-right: 4px;
+}
+
+.listItem {
+	width: 50%;
+	list-style: none;
+	padding-left: 12px;
+	padding-right: 12px;
+}

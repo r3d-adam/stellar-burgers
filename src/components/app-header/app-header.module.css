@@ -1,0 +1,26 @@
+.header {
+	background: #1c1c21;
+}
+
+.container {
+	position: relative;
+	max-width: 1280px;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+}
+
+.navigation {
+	display: inline-flex;
+}
+
+.logoWrapper {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.profileLink {
+	align-self: flex-end;
+}

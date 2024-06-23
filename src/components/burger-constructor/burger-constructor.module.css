@@ -1,0 +1,63 @@
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	padding: 100px 0 20px 16px;
+	flex-grow: 1;
+	flex-basis: 600px;
+}
+
+.constructorIngredients {
+	flex: 0 1 auto;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+.list {
+	overflow-y: auto;
+	scrollbar-color: #8585ad #2f2f37;
+	scrollbar-width: thin;
+	padding: 0;
+	padding-right: 20px;
+	margin: 0;
+	list-style: none;
+	flex: 0 1 auto;
+	margin-bottom: 16px;
+}
+
+.listItem {
+	position: relative;
+	margin-top: 16px;
+	padding-left: 32px;
+}
+
+.listItem:first-child {
+	margin-top: 0;
+}
+.constructorElementWrapper {
+	padding-left: 32px;
+	padding-right: 20px;
+}
+.dragBtn {
+	position: absolute;
+	display: block;
+	height: 24px;
+	width: 24px;
+	background: url(../../images/dnd.png) no-repeat center center;
+	cursor: pointer;
+	left: 0;
+	top: 50%;
+	margin-top: -12px;
+}
+
+.orderSummary {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	margin-right: 20px;
+}
+
+.orderTotal {
+	margin-right: 40px;
+}
