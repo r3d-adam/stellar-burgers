@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getRandomInt } from '../../utils/utils';
 import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -43,8 +44,6 @@ const App = () => {
 	const generateRandomOrder = ({ maxIngredients = 10, chance = 0.2, maxSameIngredient = 2 }) => {
 		if (ingredients.length && !order.length) {
 			const ingredientsCopy = [...ingredients];
-
-			const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 			const bunList = ingredientsCopy.filter((ingredient) => ingredient.type === 'bun');
 
