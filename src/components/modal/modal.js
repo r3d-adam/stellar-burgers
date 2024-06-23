@@ -6,11 +6,11 @@ import ModalOverlay from './modal-overlay/modal-overlay';
 
 const modalRoot = document.getElementById('react-modals');
 
-const KEYCODE_ESC = 27;
+const KEYCODE_ESC = 'Escape';
 
 const Modal = ({ modalTitle, children, closeModal }) => {
 	const handleKeyPress = (e) => {
-		if (e.keyCode === KEYCODE_ESC) {
+		if (e.key === KEYCODE_ESC) {
 			closeModal();
 		}
 	};
