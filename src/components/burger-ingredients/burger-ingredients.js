@@ -5,6 +5,12 @@ import { orderListShape, ingredientListShape } from '../../utils/propTypesShapes
 import IngredientsGroup from './ingredients-group/ingredients-group';
 import styles from './burger-ingredients.module.css';
 
+const TABS = {
+	BUNS: 'buns',
+	SAUCES: 'sauces',
+	MAINS: 'mains',
+};
+
 const BurgerIngredients = (props) => {
 	const [activeTab, setActiveTab] = useState();
 
@@ -49,23 +55,23 @@ const BurgerIngredients = (props) => {
 
 			<div className={`mb-10`} style={{ display: 'flex' }}>
 				<Tab
-					value="Булки"
-					active={activeTab === 'Булки'}
-					onClick={() => handleTabClick('Булки')}
+					value={TABS.BUNS}
+					active={activeTab === TABS.BUNS}
+					onClick={() => handleTabClick(TABS.BUNS)}
 				>
 					Булки
 				</Tab>
 				<Tab
-					value="Соусы"
-					active={activeTab === 'Соусы'}
-					onClick={() => handleTabClick('Соусы')}
+					value={TABS.SAUCES}
+					active={activeTab === TABS.SAUCES}
+					onClick={() => handleTabClick(TABS.SAUCES)}
 				>
 					Соусы
 				</Tab>
 				<Tab
-					value="Начинки"
-					active={activeTab === 'Начинки'}
-					onClick={() => handleTabClick('Начинки')}
+					value={TABS.MAINS}
+					active={activeTab === TABS.MAINS}
+					onClick={() => handleTabClick(TABS.MAINS)}
 				>
 					Начинки
 				</Tab>
@@ -76,19 +82,19 @@ const BurgerIngredients = (props) => {
 					title="Булки"
 					order={props.order}
 					ingredients={buns}
-					ref={activeTab === 'Булки' ? scrollToRef : null}
+					ref={activeTab === TABS.BUNS ? scrollToRef : null}
 				/>
 				<IngredientsGroup
 					title="Соусы"
 					order={props.order}
 					ingredients={sauces}
-					ref={activeTab === 'Соусы' ? scrollToRef : null}
+					ref={activeTab === TABS.SAUCES ? scrollToRef : null}
 				/>
 				<IngredientsGroup
 					title="Начинки"
 					order={props.order}
 					ingredients={mainIngredients}
-					ref={activeTab === 'Начинки' ? scrollToRef : null}
+					ref={activeTab === TABS.MAINS ? scrollToRef : null}
 				/>
 			</div>
 		</div>
