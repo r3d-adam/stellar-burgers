@@ -1,0 +1,14 @@
+.menuItem {
+	cursor: pointer;
+	display: inline-flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	font-size: 16px;
+	color: #8585ad;
+	border-radius: 20px;
+}
+
+.menuItemActive {
+	color: #fff;
+}

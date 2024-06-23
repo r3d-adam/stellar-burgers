@@ -1,0 +1,17 @@
+.modalContent {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
+.orderId {
+	text-shadow: 0 0 22px rgba(51, 51, 255, 0.25), 0 0 12px rgba(51, 51, 255, 0.25),
+		0 4px 32px rgba(51, 51, 255, 0.5);
+}
+.modalImage {
+	display: block;
+	width: 120px;
+	height: auto;
+	margin-left: auto;
+	margin-right: auto;
+}
