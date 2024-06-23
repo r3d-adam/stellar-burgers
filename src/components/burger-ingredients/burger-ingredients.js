@@ -28,9 +28,18 @@ const BurgerIngredients = (props) => {
 		});
 	};
 
-	const buns = props.ingredients.filter((ingredient) => ingredient.type === 'bun'),
-		sauces = props.ingredients.filter((ingredient) => ingredient.type === 'sauce'),
-		mainIngredients = props.ingredients.filter((ingredient) => ingredient.type === 'main');
+	const buns = React.useMemo(
+		() => props.ingredients.filter((ingredient) => ingredient.type === 'bun'),
+		[props.ingredients],
+	);
+	const sauces = React.useMemo(
+		() => props.ingredients.filter((ingredient) => ingredient.type === 'sauce'),
+		[props.ingredients],
+	);
+	const mainIngredients = React.useMemo(
+		() => props.ingredients.filter((ingredient) => ingredient.type === 'main'),
+		[props.ingredients],
+	);
 
 	return (
 		<div className={styles.wrapper}>
