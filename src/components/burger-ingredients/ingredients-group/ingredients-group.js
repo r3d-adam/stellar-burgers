@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import IngredientItem from '../ingredient-item/ingredient-item';
 import styles from './ingredients-group.module.css';
 
-const IngredientsGroup = (props) => {
+const IngredientsGroup = React.forwardRef((props, ref) => {
 	const getIngredientCount = (ingredient) =>
 		props.order.find((item) => ingredient._id === item._id)?.count;
 
 	return (
 		<>
-			<span className={`${styles.tabName} text text_type_main-medium mb-6`}>
+			<span className={`${styles.tabName} text text_type_main-medium mb-6`} ref={ref}>
 				{props.title}
 			</span>
 
@@ -28,7 +28,7 @@ const IngredientsGroup = (props) => {
 			</ul>
 		</>
 	);
-};
+});
 
 IngredientsGroup.propTypes = {
 	order: PropTypes.arrayOf(

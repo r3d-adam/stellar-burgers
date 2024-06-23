@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { orderListShape, ingredientListShape } from '../../utils/propTypesShapes';
@@ -6,15 +6,19 @@ import IngredientsGroup from './ingredients-group/ingredients-group';
 import styles from './burger-ingredients.module.css';
 
 const BurgerIngredients = (props) => {
-	const [activeTab, setActiveTab] = useState('Булки');
+	const [activeTab, setActiveTab] = useState();
+
+	const scrollToRef = useRef();
+
+	useEffect(() => {
+		scrollToRef.current && scrollToRef.current.scrollIntoView({ behavior: 'smooth' });
+	}, [scrollToRef.current, activeTab]);
 
 	const handleTabClick = (activeItem) => {
 		setActiveTab(activeItem);
 	};
 
 	const plus = (ingredient) => {
-		// console.log('plus', ingredient);
-
 		const oldIngredient = props.order.find((item) => item._id === ingredient._id);
 		const newIngredient = oldIngredient ? { ...oldIngredient } : { ...ingredient };
 
@@ -59,19 +63,24 @@ const BurgerIngredients = (props) => {
 			</div>
 
 			<div className={styles.tabContent}>
-				{activeTab === 'Булки' && (
-					<IngredientsGroup title="Булки" order={props.order} ingredients={buns} />
-				)}
-				{activeTab === 'Соусы' && (
-					<IngredientsGroup title="Соусы" order={props.order} ingredients={sauces} />
-				)}
-				{activeTab === 'Начинки' && (
-					<IngredientsGroup
-						title="Начинки"
-						order={props.order}
-						ingredients={mainIngredients}
-					/>
-				)}
+				<IngredientsGroup
+					title="Булки"
+					order={props.order}
+					ingredients={buns}
+					ref={activeTab === 'Булки' ? scrollToRef : null}
+				/>
+				<IngredientsGroup
+					title="Соусы"
+					order={props.order}
+					ingredients={sauces}
+					ref={activeTab === 'Соусы' ? scrollToRef : null}
+				/>
+				<IngredientsGroup
+					title="Начинки"
+					order={props.order}
+					ingredients={mainIngredients}
+					ref={activeTab === 'Начинки' ? scrollToRef : null}
+				/>
 			</div>
 		</div>
 	);
