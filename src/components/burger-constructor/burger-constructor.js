@@ -25,12 +25,9 @@ const BurgerConstructor = (props) => {
 		const order = props.order;
 
 		const total = order.reduce((totalPrice, item) => {
-			// console.log(item);
 			if (item.type === 'bun') {
-				// console.log(totalPrice + item.price * 2);
 				return totalPrice + item.price * 2;
 			} else {
-				// console.log(totalPrice + item.price * item.count);
 				return totalPrice + item.price * item.count;
 			}
 		}, 0);
@@ -38,7 +35,6 @@ const BurgerConstructor = (props) => {
 	};
 
 	const minus = (ingredient) => {
-		// console.log('minus', ingredient.count);
 		props.updateOrder({
 			...ingredient,
 			count: ingredient.count - 1,

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
 import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -41,7 +40,6 @@ const App = () => {
 		generateRandomOrder({});
 	}, [ingredients]);
 
-	// функция для генерации заказа из случайных ингредиентов
 	const generateRandomOrder = ({ maxIngredients = 10, chance = 0.2, maxSameIngredient = 2 }) => {
 		if (ingredients.length && !order.length) {
 			const ingredientsCopy = [...ingredients];
@@ -73,12 +71,10 @@ const App = () => {
 
 	const updateOrder = (ingredient) => {
 		const index = order.findIndex((item) => item._id === ingredient._id);
-		// console.log(index);
+
 		let newOrder = [...order];
 
 		if (index !== -1) {
-			// обновляем существующий
-
 			if (ingredient.count <= 0) {
 				newOrder.splice(index, 1);
 			} else {
@@ -88,8 +84,6 @@ const App = () => {
 				};
 			}
 		} else {
-			// добавляем новый
-
 			if (ingredient.type === 'bun') {
 				newOrder = newOrder.filter((item) => item.type !== 'bun');
 			}

@@ -24,16 +24,6 @@ const BurgerIngredients = (props) => {
 		setActiveTab(activeItem);
 	};
 
-	const plus = (ingredient) => {
-		const oldIngredient = props.order.find((item) => item._id === ingredient._id);
-		const newIngredient = oldIngredient ? { ...oldIngredient } : { ...ingredient };
-
-		props.updateOrder({
-			...newIngredient,
-			count: newIngredient?.count ? newIngredient.count + 1 : 1,
-		});
-	};
-
 	const buns = React.useMemo(
 		() => props.ingredients.filter((ingredient) => ingredient.type === 'bun'),
 		[props.ingredients],

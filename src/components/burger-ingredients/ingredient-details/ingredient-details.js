@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { ingredientShape } from '../../../utils/propTypesShapes';
 
 const IngredientDetails = ({ ingredient }) => {
-	const { name, price, image, calories, proteins, fat, carbohydrates } = ingredient;
+	const { name, calories, proteins, fat, carbohydrates } = ingredient;
 
 	return (
 		<>
