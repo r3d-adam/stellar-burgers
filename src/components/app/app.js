@@ -20,7 +20,13 @@ const App = () => {
 		setState({ ...state, hasError: false, isLoading: true });
 
 		fetch(API_URL)
-			.then((res) => res.json())
+			.then((res) => {
+				if (res.ok) {
+					return res.json();
+				} else {
+					return Promise.reject(res);
+				}
+			})
 			.then((data) => {
 				setState({ ...state, isLoading: false });
 				setIngredients(data.data);
