@@ -1,0 +1,26 @@
+.list {
+	display: flex;
+	flex-wrap: wrap;
+	text-align: center;
+	margin: auto;
+	justify-content: space-between;
+	gap: 20px;
+	margin-left: 60px;
+	margin-right: 60px;
+}
+.list li {
+	list-style: none;
+	flex: 1 1 0;
+	font-size: 16px;
+}
+.list li span {
+	display: block;
+}
+.modalName {
+	display: block;
+	text-align: center;
+}
+.modalImage {
+	display: block;
+	margin: auto;
+}
