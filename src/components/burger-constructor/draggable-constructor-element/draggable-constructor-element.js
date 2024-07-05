@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteIngredient } from '../../../services/slices/constructorSlice';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
+import { ingredientShape } from '../../../utils/propTypesShapes';
 
 const DraggableConstructorElement = (ingredient) => {
 	const dispatch = useDispatch();
@@ -14,16 +15,11 @@ const DraggableConstructorElement = (ingredient) => {
 		type: 'ingredient',
 		item: {
 			...ingredient,
-			// id: ingredient._id,
 		},
 		collect: (monitor) => ({
 			onDrag: monitor.isDragging(),
 		}),
 	});
-
-	// const { orderId, isLoading, error } = useSelector((store) => {
-	// 	return store.order;
-	// });
 
 	return (
 		<div ref={dragRef} style={{ opacity: onDrag ? 0.4 : 1 }}>
@@ -39,7 +35,7 @@ const DraggableConstructorElement = (ingredient) => {
 };
 
 DraggableConstructorElement.propTypes = {
-	// orderId: PropTypes.string.isRequired,
+	ingredient: ingredientShape.isRequired,
 };
 
 export default DraggableConstructorElement;

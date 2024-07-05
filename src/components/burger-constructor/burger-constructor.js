@@ -17,7 +17,6 @@ import { getOrder } from './../../services/slices/orderSlice';
 import { openModal, closeModal } from './../../services/slices/modalSlice';
 
 const BurgerConstructor = (props) => {
-	// const [modalVisible, setModalVisible] = useState(false);
 	const dispatch = useDispatch();
 	const { constructorIngredients, bun } = useSelector((store) => {
 		return store.constructorStore;
@@ -26,14 +25,9 @@ const BurgerConstructor = (props) => {
 	const handleClick = () => {
 		if (bun && constructorIngredients.length > 0) {
 			dispatch(getOrder([bun, ...constructorIngredients, bun]));
-			// setModalVisible(true);
 			dispatch(openModal({ type: 'ORDER_DETAILS' }));
 		}
 	};
-
-	// const closeModal = () => {
-	// 	setModalVisible(false);
-	// };
 
 	const totalPrice = useMemo(() => {
 		let totalPrice = 0;
@@ -42,34 +36,8 @@ const BurgerConstructor = (props) => {
 		return totalPrice;
 	}, [bun, constructorIngredients]);
 
-	// const minus = (id) => {
-	// 	dispatch(deleteIngredient(id));
-	// };
-
-	// const bun = props.order.filter((item) => item.type === 'bun')[0];
-
-	// const mainList = [];
-	// constructorIngredients
-	// 	// .filter((item) => item.type !== 'bun')
-	// 	.forEach((ingredient, index) => {
-	// 		const { name, image, price, count, id } = ingredient;
-	// 		for (let i = 0; i < count; i++) {
-	// 			mainList.push(
-	// 				<li className={styles.listItem} key={id}>
-	// 					<span className={styles.dragBtn}></span>
-	// 					<ConstructorElement
-	// 						text={name}
-	// 						price={price}
-	// 						thumbnail={image}
-	// 						// handleClose={() => minus(ingredient)}
-	// 					/>
-	// 				</li>,
-	// 			);
-	// 		}
-	// 	});
-
 	const mainList = constructorIngredients.map((ingredient) => {
-		const { name, image, price, id } = ingredient;
+		const { id } = ingredient;
 		return (
 			<li className={styles.listItem} key={id}>
 				<DropTarget id={id}>
@@ -78,8 +46,6 @@ const BurgerConstructor = (props) => {
 			</li>
 		);
 	});
-
-	// console.log(mainList, constructorIngredients);
 
 	return (
 		<div className={styles.wrapper}>
@@ -145,17 +111,9 @@ const BurgerConstructor = (props) => {
 				<Button htmlType="button" type="primary" size="medium" onClick={handleClick}>
 					Оформить заказ
 				</Button>
-				{/* <Modal>
-					<OrderDetails />
-				</Modal> */}
 			</div>
 		</div>
 	);
 };
-
-// BurgerConstructor.propTypes = {
-// 	order: orderListShape.isRequired,
-// 	updateOrder: PropTypes.func.isRequired,
-// };
 
 export default BurgerConstructor;
