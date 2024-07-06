@@ -8,13 +8,13 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import { useDrag } from 'react-dnd';
 import { ingredientShape } from '../../../utils/propTypesShapes';
 
-const DraggableConstructorElement = (ingredient) => {
+const DraggableConstructorElement = (props) => {
 	const dispatch = useDispatch();
-	const { name, price, image, id } = ingredient;
+	const { name, price, image, id } = props;
 	const [{ onDrag }, dragRef] = useDrag({
 		type: 'ingredient',
 		item: {
-			...ingredient,
+			...props,
 		},
 		collect: (monitor) => ({
 			onDrag: monitor.isDragging(),
@@ -35,7 +35,10 @@ const DraggableConstructorElement = (ingredient) => {
 };
 
 DraggableConstructorElement.propTypes = {
-	ingredient: ingredientShape.isRequired,
+	name: PropTypes.string.isRequired,
+	price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+	image: PropTypes.string.isRequired,
+	id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
 export default DraggableConstructorElement;

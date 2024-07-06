@@ -7,10 +7,13 @@ const initialState = {
 	isLoading: false,
 };
 
-export const getIngredients = createAsyncThunk('ingredients/getIngredients', async () => {
-	const response = await fetchIngredients();
-	return response;
-});
+export const getIngredients = createAsyncThunk(
+	'ingredients/getIngredients',
+	async (data, { rejectWithValue }) => {
+		const response = await fetchIngredients();
+		return response.data;
+	},
+);
 
 export const ingredientsSlice = createSlice({
 	name: 'ingredients',
@@ -25,9 +28,11 @@ export const ingredientsSlice = createSlice({
 			state.ingredients = action.payload;
 		});
 		builder.addCase(getIngredients.rejected, (state, action) => {
-			state.isLoading = false;
-			state.errors = action.payload;
-			state.ingredients = initialState.ingredients;
+			return {
+				...initialState,
+				isLoading: false,
+				error: action.error,
+			};
 		});
 	},
 });

@@ -30,7 +30,9 @@ const OrderDetails = () => {
 					</span>
 				</>
 			) : error ? (
-				<span className={`text text_type_main-large mb-8`}>Произошла ошибка</span>
+				<span className={`text text_type_main-large mb-8`}>
+					Произошла ошибка: {error.message}
+				</span>
 			) : (
 				<span className={`text text_type_main-large mb-8`}>Загрузка...</span>
 			)}

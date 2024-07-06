@@ -7,15 +7,17 @@ const initialState = {
 	isLoading: false,
 };
 
-export const getOrder = createAsyncThunk('order/getOrder', async (constructorIngredients) => {
-	const fetchBody = {
-		ingredients: constructorIngredients.map((item) => item._id),
-	};
+export const getOrder = createAsyncThunk(
+	'order/getOrder',
+	async (constructorIngredients, { rejectWithValue }) => {
+		const fetchBody = {
+			ingredients: constructorIngredients.map((item) => item._id),
+		};
 
-	const response = await fetchOrder(fetchBody);
-
-	return response;
-});
+		const response = await fetchOrder(fetchBody);
+		return response;
+	},
+);
 
 export const orderSlice = createSlice({
 	name: 'order',
@@ -30,10 +32,10 @@ export const orderSlice = createSlice({
 			state.orderId = action.payload.order.number;
 		});
 		builder.addCase(getOrder.rejected, (state, action) => {
-			state = {
+			return {
 				...initialState,
 				isLoading: false,
-				error: action.payload.error,
+				error: action.error,
 			};
 		});
 	},

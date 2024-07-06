@@ -1,16 +1,10 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
-import { fetchIngredients } from '../../utils/api';
 
 const initialState = {
 	bun: null,
 	constructorIngredients: [],
 };
-
-export const getIngredients = createAsyncThunk('constructor/getIngredients', async () => {
-	const response = await fetchIngredients();
-	return response;
-});
 
 export const constructorSlice = createSlice({
 	name: 'constructor',

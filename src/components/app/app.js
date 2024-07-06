@@ -9,6 +9,7 @@ import { getIngredients } from '../../services/slices/ingredientsSlice';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Modal from '../modal/modal';
+import { closeModal } from '../../services/slices/modalSlice';
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -20,12 +21,16 @@ const App = () => {
 
 	const [page, setPage] = useState('Конструктор');
 
+	const handleModalClose = () => {
+		dispatch(closeModal());
+	};
+
 	return (
 		<>
-			<Modal />
+			<Modal onClose={handleModalClose} />
 			<AppHeader onMenuClick={setPage} activeMenuItem={page} />
 			{page === 'Конструктор' && isLoading && 'Загрузка...'}
-			{page === 'Конструктор' && error && 'Произошла ошибка'}
+			{page === 'Конструктор' && error && `Произошла ошибка: ${error.message}`}
 			{page === 'Конструктор' && !isLoading && !error && ingredients.length && (
 				<main className={styles.mainContainer}>
 					<DndProvider backend={HTML5Backend}>

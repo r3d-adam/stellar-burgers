@@ -12,15 +12,14 @@ const modalRoot = document.getElementById('react-modals');
 
 const KEYCODE_ESC = 'Escape';
 
-const Modal = () => {
-	const dispatch = useDispatch();
+const Modal = ({ onClose }) => {
 	const { isOpen, modalType, modalData, modalTitle } = useSelector((store) => {
 		return store.modal;
 	});
 
 	const handleKeyPress = (e) => {
 		if (e.key === KEYCODE_ESC) {
-			dispatch(closeModal());
+			onClose();
 		}
 	};
 
@@ -30,7 +29,7 @@ const Modal = () => {
 		return () => {
 			document.removeEventListener('keydown', handleKeyPress);
 		};
-	}, []);
+	}, [onClose]);
 
 	const modalContent = () => {
 		switch (modalType) {
@@ -45,10 +44,10 @@ const Modal = () => {
 
 	const modal = isOpen ? (
 		<div className={styles.modalContainer}>
-			<ModalOverlay />
+			<ModalOverlay onClose={onClose} />
 
 			<div className={`${styles.modal} p-10 pb-15`}>
-				<span className={styles.modalClose} onClick={() => dispatch(closeModal())}></span>
+				<span className={styles.modalClose} onClick={onClose}></span>
 				<span className={`${styles.modalTitle} text text_type_main-large`}>
 					{modalTitle}
 				</span>
@@ -58,6 +57,10 @@ const Modal = () => {
 	) : null;
 
 	return ReactDOM.createPortal(modal, modalRoot);
+};
+
+Modal.propTypes = {
+	onClose: PropTypes.func.isRequired,
 };
 
 export default Modal;
