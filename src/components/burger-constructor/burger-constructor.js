@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
 	ConstructorElement,
 	CurrencyIcon,
@@ -9,111 +9,111 @@ import { orderListShape } from '../../utils/propTypesShapes';
 import styles from './burger-constructor.module.css';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
+import DraggableConstructorElement from './draggable-constructor-element/draggable-constructor-element';
+import DropTarget from '../drop-target/drop-target';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteIngredient } from '../../services/slices/constructorSlice';
+import { getOrder } from './../../services/slices/orderSlice';
+import { openModal, closeModal } from './../../services/slices/modalSlice';
 
 const BurgerConstructor = (props) => {
-	const [modalVisible, setModalVisible] = useState(false);
+	const dispatch = useDispatch();
+	const { constructorIngredients, bun } = useSelector((store) => {
+		return store.constructorStore;
+	});
 
 	const handleClick = () => {
-		setModalVisible(true);
+		if (bun && constructorIngredients.length > 0) {
+			dispatch(getOrder([bun, ...constructorIngredients, bun]));
+			dispatch(openModal({ type: 'ORDER_DETAILS' }));
+		}
 	};
 
-	const closeModal = () => {
-		setModalVisible(false);
-	};
+	const totalPrice = useMemo(() => {
+		let totalPrice = 0;
+		totalPrice = bun ? totalPrice + bun.price * 2 : totalPrice;
+		totalPrice = constructorIngredients.reduce((acc, item) => acc + item.price, totalPrice);
+		return totalPrice;
+	}, [bun, constructorIngredients]);
 
-	const getTotalPrice = () => {
-		const order = props.order;
-
-		const total = order.reduce((totalPrice, item) => {
-			if (item.type === 'bun') {
-				return totalPrice + item.price * 2;
-			} else {
-				return totalPrice + item.price * item.count;
-			}
-		}, 0);
-		return total;
-	};
-
-	const minus = (ingredient) => {
-		props.updateOrder({
-			...ingredient,
-			count: ingredient.count - 1,
-		});
-	};
-
-	const bun = props.order.filter((item) => item.type === 'bun')[0];
-
-	const mainList = [];
-	props.order
-		.filter((item) => item.type !== 'bun')
-		.forEach((ingredient, index) => {
-			const { name, image, price, count, _id } = ingredient;
-			for (let i = 0; i < count; i++) {
-				mainList.push(
-					<li className={styles.listItem} key={_id + `_${i}`}>
-						<span className={styles.dragBtn}></span>
-						<ConstructorElement
-							text={name}
-							price={price}
-							thumbnail={image}
-							handleClose={() => minus(ingredient)}
-						/>
-					</li>,
-				);
-			}
-		});
+	const mainList = constructorIngredients.map((ingredient) => {
+		const { id } = ingredient;
+		return (
+			<li className={styles.listItem} key={id}>
+				<DropTarget id={id}>
+					<DraggableConstructorElement {...ingredient}></DraggableConstructorElement>
+				</DropTarget>
+			</li>
+		);
+	});
 
 	return (
 		<div className={styles.wrapper}>
 			<div className={styles.constructorIngredients}>
-				{bun && (
-					<div className={`${styles.constructorElementWrapper} mb-4`}>
-						<ConstructorElement
-							type="top"
-							isLocked={true}
-							text={`${bun.name} (верх)`}
-							price={bun.price}
-							thumbnail={bun.image}
-							key={bun._id + '_0'}
-						/>
+				{bun ? (
+					<div className={`${styles.constructorElementWrapper}`}>
+						<DropTarget type="bun">
+							<ConstructorElement
+								type="top"
+								isLocked={true}
+								text={`${bun.name} (верх)`}
+								price={bun.price}
+								thumbnail={bun.image}
+								key={bun.id + '_0'}
+							/>
+						</DropTarget>
 					</div>
+				) : (
+					<DropTarget type="bun">
+						<div className={styles.bunPlaceholder + ' ' + styles.bunPlaceholderTop}>
+							Выберите булки
+						</div>
+					</DropTarget>
 				)}
 
-				<ul className={styles.list}>{mainList}</ul>
+				<ul className={styles.list}>
+					{mainList.length ? (
+						mainList
+					) : (
+						<li className={styles.listItem}>
+							<DropTarget id={0}>
+								<div className={styles.mainPlaceholder}>Выберите начинку</div>
+							</DropTarget>
+						</li>
+					)}
+				</ul>
 
-				{bun && (
+				{bun ? (
 					<div className={styles.constructorElementWrapper}>
-						<ConstructorElement
-							type="bottom"
-							isLocked={true}
-							text={`${bun.name} (низ)`}
-							price={bun.price}
-							thumbnail={bun.image}
-							key={bun._id + '_1'}
-						/>
+						<DropTarget type="bun">
+							<ConstructorElement
+								type="bottom"
+								isLocked={true}
+								text={`${bun.name} (низ)`}
+								price={bun.price}
+								thumbnail={bun.image}
+								key={bun.id + '_1'}
+							/>
+						</DropTarget>
 					</div>
+				) : (
+					<DropTarget type="bun">
+						<div className={styles.bunPlaceholder + ' ' + styles.bunPlaceholderBottom}>
+							Выберите булки
+						</div>
+					</DropTarget>
 				)}
 			</div>
 			<div className={`${styles.orderSummary} mt-10`}>
 				<span className={`${styles.orderTotal} digittext text_type_digits-medium`}>
-					{getTotalPrice()} <CurrencyIcon />
+					{totalPrice} <CurrencyIcon />
 				</span>
 				<Button htmlType="button" type="primary" size="medium" onClick={handleClick}>
 					Оформить заказ
 				</Button>
-				{modalVisible && (
-					<Modal closeModal={closeModal}>
-						<OrderDetails orderId="034536" />
-					</Modal>
-				)}
 			</div>
 		</div>
 	);
-};
-
-BurgerConstructor.propTypes = {
-	order: orderListShape.isRequired,
-	updateOrder: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;

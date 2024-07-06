@@ -1,0 +1,38 @@
+.wrapper {
+	position: relative;
+}
+.innerWrapper {
+	padding-top: 8px;
+	padding-bottom: 8px;
+	/* margin-top: 16px; */
+	padding-left: 32px;
+}
+.innerWrapperBun {
+	padding-left: 0;
+	padding-bottom: 0;
+	padding-top: 0;
+}
+.bar {
+	display: block;
+	position: absolute;
+	left: 32px;
+	right: 10px;
+	height: 10px;
+	background-color: #8585ad;
+	background: rgb(128, 26, 179);
+	background: linear-gradient(
+		90deg,
+		rgba(128, 26, 179, 1) 0%,
+		rgba(76, 76, 255, 1) 50%,
+		rgba(128, 26, 179, 1) 100%
+	);
+	border-radius: 50%;
+	-webkit-filter: blur(2px);
+	z-index: -999;
+}
+.bar.top {
+	top: -5px;
+}
+.bar.bottom {
+	bottom: -5px;
+}

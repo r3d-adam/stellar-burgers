@@ -1,0 +1,11 @@
+.dragBtn {
+	position: absolute;
+	display: block;
+	height: 24px;
+	width: 24px;
+	background: url(../../../images/dnd.png) no-repeat center center;
+	cursor: move;
+	left: 0;
+	top: 50%;
+	margin-top: -12px;
+}
