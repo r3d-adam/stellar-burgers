@@ -62,12 +62,11 @@
 }
 .mainPlaceholder,
 .bunPlaceholder {
+	display: flex;
 	padding: 16px 24px;
-	display: inline-flex;
 	border-radius: var(--common-border-radius-s);
 	background: var(--background-element);
 	max-width: 536px;
-	width: 100%;
 	min-height: 80px;
 	font-family: Jet Brains Mono;
 	font-size: 16px;

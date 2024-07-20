@@ -1,0 +1,12 @@
+.wrapper {
+	max-width: 480px;
+	margin: 200px auto 0;
+	text-align: center;
+}
+.link {
+	text-decoration: none;
+	color: #4c4cff;
+}
+.link:hover {
+	text-decoration: underline;
+}

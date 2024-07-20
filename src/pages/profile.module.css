@@ -1,0 +1,29 @@
+.menu {
+	list-style: none;
+}
+
+.menuItem {
+	display: block;
+	text-decoration: none;
+	color: #8585ad;
+	transition: color 0.2s ease;
+}
+.menuItem:hover {
+	color: #fff;
+}
+.menuItem.menuItemActive {
+	color: #fff;
+}
+.container {
+	max-width: 1280px;
+	width: 100%;
+	margin: 0 auto;
+	display: flex;
+	padding-top: 140px;
+}
+.navWrapper {
+	margin-right: 60px;
+	max-width: 320px;
+}
+.tabContentWrapper {
+}

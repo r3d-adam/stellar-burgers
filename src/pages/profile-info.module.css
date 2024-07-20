@@ -1,0 +1,9 @@
+.wrapper {
+	max-width: 480px;
+	/* margin: 200px auto 0; */
+	text-align: center;
+}
+.buttonGroup {
+	display: flex;
+	justify-content: space-evenly;
+}

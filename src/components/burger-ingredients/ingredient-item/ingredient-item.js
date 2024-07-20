@@ -6,8 +6,11 @@ import ingredientItem from './ingredient-item.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { openModal } from '../../../services/slices/modalSlice';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 const IngredientItem = ({ ingredient }) => {
+	const location = useLocation(window.location);
+
 	const dispatch = useDispatch();
 	const { name, price, image } = ingredient;
 
@@ -44,7 +47,13 @@ const IngredientItem = ({ ingredient }) => {
 
 	return (
 		<>
-			<div className={`${ingredientItem.card} mb-8 pb-6`} onClick={handleClick} ref={dragRef}>
+			<Link
+				to={`ingredients/${ingredient._id}`}
+				className={`${ingredientItem.card} mb-8 pb-6`}
+				onClick={handleClick}
+				ref={dragRef}
+				state={{ backgroundLocation: location }}
+			>
 				{count ? <Counter count={count} size="default" extraClass="m-1" /> : null}
 				<div className={ingredientItem.image}>
 					<img src={image} alt={name} />
@@ -53,13 +62,9 @@ const IngredientItem = ({ ingredient }) => {
 					{price} <CurrencyIcon type="primary" />
 				</div>
 				<div className={`${ingredientItem.name} text text_type_main-default`}>{name}</div>
-			</div>
+			</Link>
 		</>
 	);
-};
-
-IngredientItem.propTypes = {
-	ingredient: ingredientShape.isRequired,
 };
 
 export default IngredientItem;

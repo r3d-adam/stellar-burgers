@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import doneImagePath from '../../images/done.png';
 import styles from './order-details.module.css';
 import { useSelector } from 'react-redux';
+import Loader from '../loader';
 
 const OrderDetails = () => {
 	const { orderId, isLoading, error } = useSelector((store) => {
@@ -34,7 +35,7 @@ const OrderDetails = () => {
 					Произошла ошибка: {error.message}
 				</span>
 			) : (
-				<span className={`text text_type_main-large mb-8`}>Загрузка...</span>
+				<Loader />
 			)}
 		</div>
 	);

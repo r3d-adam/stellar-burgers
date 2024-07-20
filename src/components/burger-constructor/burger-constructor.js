@@ -15,18 +15,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteIngredient } from '../../services/slices/constructorSlice';
 import { getOrder } from './../../services/slices/orderSlice';
 import { openModal, closeModal } from './../../services/slices/modalSlice';
+import { useNavigate } from 'react-router-dom';
 
 const BurgerConstructor = (props) => {
 	const dispatch = useDispatch();
 	const { constructorIngredients, bun } = useSelector((store) => {
 		return store.constructorStore;
 	});
+	const { user } = useSelector((store) => store.user);
+	const navigate = useNavigate();
 
 	const handleClick = () => {
 		if (bun && constructorIngredients.length > 0) {
-			dispatch(getOrder([bun, ...constructorIngredients, bun]));
-			dispatch(openModal({ type: 'ORDER_DETAILS' }));
+			if (user) {
+				dispatch(getOrder([bun, ...constructorIngredients, bun]));
+				dispatch(openModal({ type: 'ORDER_DETAILS' }));
+			} else {
+				navigate('/login');
+			}
 		}
+	};
+
+	const handleModalClose = () => {
+		dispatch(closeModal());
 	};
 
 	const totalPrice = useMemo(() => {
@@ -111,6 +122,7 @@ const BurgerConstructor = (props) => {
 				<Button htmlType="button" type="primary" size="medium" onClick={handleClick}>
 					Оформить заказ
 				</Button>
+				<Modal onClose={handleModalClose} />
 			</div>
 		</div>
 	);
