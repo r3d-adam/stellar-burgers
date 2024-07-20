@@ -1,0 +1,10 @@
+.container {
+	display: flex;
+	padding-top: 120px;
+	justify-content: center;
+	margin: 0 auto;
+}
+.box {
+	display: block;
+	margin: 0 auto;
+}

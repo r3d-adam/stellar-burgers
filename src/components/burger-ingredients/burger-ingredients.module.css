@@ -33,3 +33,10 @@
 	max-width: 50%;
 	list-style: none;
 }
+.tabs {
+	display: flex;
+}
+.tabs > div {
+	flex: 1 1 auto;
+	min-width: auto;
+}

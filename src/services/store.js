@@ -3,6 +3,7 @@ import ingredientsSlice from './slices/ingredientsSlice';
 import constructorSlice from './slices/constructorSlice';
 import orderSlice from './slices/orderSlice';
 import modalSlice from './slices/modalSlice';
+import userSlice from './slices/userSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
 		ingredients: ingredientsSlice,
 		order: orderSlice,
 		modal: modalSlice,
+		user: userSlice,
 	},
 });

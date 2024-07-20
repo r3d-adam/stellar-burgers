@@ -97,7 +97,7 @@ const BurgerIngredients = (props) => {
 				Соберите бургер
 			</span>
 
-			<div className={`mb-10`} style={{ display: 'flex' }}>
+			<div className={`mb-10 ${styles.tabs}`}>
 				<Tab
 					value={TABS.BUNS}
 					active={activeTab === TABS.BUNS}
