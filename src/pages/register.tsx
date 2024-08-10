@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import {
 	EmailInput,
 	Button,
@@ -10,27 +10,34 @@ import styles from './register.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../services/slices/userSlice';
 
-const RegisterPage = () => {
-	const [state, setState] = useState({
+interface IRegisterPageFrom {
+	name: string;
+	email: string;
+	password: string;
+}
+
+const RegisterPage: FC = () => {
+	const [state, setState] = useState<IRegisterPageFrom>({
 		name: '',
 		email: '',
 		password: '',
 	});
-	const { isLoading, error } = useSelector((store) => store.user);
-	const [formSubmitted, setFormSubmitted] = useState(false);
+	const { isLoading, error } = useSelector((store: any) => store.user);
+	const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
 
 	const dispatch = useDispatch();
 
-	const onChange = (e) => {
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setState({
 			...state,
 			[e.target.name]: e.target.value,
 		});
 	};
 
-	const handleSubmit = (e) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setFormSubmitted(true);
+		// @ts-ignore
 		dispatch(registerUser(state));
 	};
 
@@ -38,6 +45,7 @@ const RegisterPage = () => {
 		<div className={styles.wrapper}>
 			<form onSubmit={handleSubmit}>
 				<p className="text text_type_main-medium mb-6">Регистрация</p>
+				{/* @ts-ignore */}
 				<Input
 					onChange={onChange}
 					value={state.name}

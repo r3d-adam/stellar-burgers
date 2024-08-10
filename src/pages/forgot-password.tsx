@@ -1,28 +1,28 @@
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import styles from './forgot-password.module.css';
-import { forgotPasswordRequest } from '../utils/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { forgotPassword } from '../services/slices/userSlice';
 
-const ForgotPasswordPage = () => {
+const ForgotPasswordPage: FC = () => {
 	const [email, setEmail] = useState('');
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const { isLoading, error, forgotPasswordSuccess } = useSelector((store) => store.user);
-	const [formSubmitted, setFormSubmitted] = useState(false);
+	const { isLoading, error, forgotPasswordSuccess } = useSelector((store: any) => store.user);
+	const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
 
-	const onChange = (e) => {
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		e.preventDefault();
 		setEmail(e.target.value);
 	};
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		setFormSubmitted(true);
 
+		// @ts-ignore
 		const resultAction = await dispatch(forgotPassword(email));
 		if (forgotPassword.fulfilled.match(resultAction)) {
 			navigate('/reset-password', { replace: true });

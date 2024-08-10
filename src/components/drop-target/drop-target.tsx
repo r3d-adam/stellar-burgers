@@ -1,21 +1,27 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { FC, ReactNode, useEffect, useRef, useState } from 'react';
 import styles from './drop-target.module.css';
-import { useDrop } from 'react-dnd';
+import { DropTargetMonitor, useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { addIngredient, moveIngredient } from '../../services/slices/constructorSlice';
-import PropTypes from 'prop-types';
+import { TIngredientWithID } from '../../services/types/data';
 
-const DropTarget = ({ children, id = 0, type = 'default' }) => {
+interface IDropTargetProps {
+	type?: 'bun' | 'ingredient';
+	id?: string | number;
+	children?: ReactNode;
+}
+
+const DropTarget: FC<IDropTargetProps> = ({ id = 0, type = 'ingredient', children }) => {
 	const dispatch = useDispatch();
-	const wrapperRef = useRef();
-	const [dropLocation, setDropLocation] = useState(null);
+	const wrapperRef = useRef<HTMLDivElement>(null);
+	const [dropLocation, setDropLocation] = useState<'after' | 'before' | null>(null);
 	const constructorIngredients = useSelector(
-		(store) => store.constructorStore.constructorIngredients,
+		(store: any) => store.constructorStore.constructorIngredients,
 	);
 
-	const [{ onHover, canDrop }, dropTarget] = useDrop({
+	const [{ onHover }, dropTarget] = useDrop({
 		accept: type === 'bun' ? 'bun' : 'ingredient',
-		drop(ingredient, monitor) {
+		drop(ingredient: TIngredientWithID, monitor: DropTargetMonitor<TIngredientWithID, void>) {
 			if (ingredient?.id === id) {
 				return;
 			}
@@ -25,14 +31,19 @@ const DropTarget = ({ children, id = 0, type = 'default' }) => {
 				return;
 			}
 
-			let newIndex = constructorIngredients.findIndex((item) => item.id === id);
+			let newIndex = constructorIngredients.findIndex(
+				(item: TIngredientWithID) => item.id === id,
+			);
 
-			const clientY = monitor.getClientOffset().y;
-			const wrapperRect = wrapperRef.current.getBoundingClientRect();
+			const clientY = monitor.getClientOffset()?.y;
+			const wrapperRect = wrapperRef.current?.getBoundingClientRect();
+
+			if (!wrapperRect) return;
+
 			const wrapperYCenter = wrapperRect.top + (wrapperRect.bottom - wrapperRect.top) / 2;
 
 			const currentIndex = constructorIngredients.findIndex(
-				(item) => item.id === ingredient?.id,
+				(item: TIngredientWithID) => item.id === ingredient?.id,
 			);
 
 			if (currentIndex > -1) {
@@ -40,24 +51,35 @@ const DropTarget = ({ children, id = 0, type = 'default' }) => {
 					newIndex--;
 				}
 
-				if (clientY > wrapperYCenter && constructorIngredients.length - 1 >= newIndex + 1) {
+				if (
+					clientY &&
+					clientY > wrapperYCenter &&
+					constructorIngredients.length - 1 >= newIndex + 1
+				) {
 					newIndex++;
 				}
 
 				dispatch(moveIngredient({ ingredient, index: newIndex }));
 			} else {
-				if (clientY > wrapperYCenter && constructorIngredients.length >= newIndex + 1) {
+				if (
+					clientY &&
+					clientY > wrapperYCenter &&
+					constructorIngredients.length >= newIndex + 1
+				) {
 					newIndex++;
 				}
 				dispatch(addIngredient({ ingredient, index: newIndex }));
 			}
 		},
-		hover: (ingredient, monitor) => {
-			const clientY = monitor.getClientOffset().y;
-			const wrapperRect = wrapperRef.current.getBoundingClientRect();
+		hover: (ingredient: TIngredientWithID, monitor) => {
+			const clientY = monitor.getClientOffset()?.y;
+
+			const wrapperRect = wrapperRef.current?.getBoundingClientRect();
+
+			if (!wrapperRect) return;
 			const wrapperYCenter = wrapperRect.top + (wrapperRect.bottom - wrapperRect.top) / 2;
 
-			if (clientY > wrapperYCenter) {
+			if (clientY && clientY > wrapperYCenter) {
 				setDropLocation('after');
 			} else {
 				setDropLocation('before');
@@ -88,11 +110,6 @@ const DropTarget = ({ children, id = 0, type = 'default' }) => {
 			)}
 		</div>
 	);
-};
-
-DropTarget.propTypes = {
-	type: PropTypes.string,
-	id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default DropTarget;

@@ -1,14 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import doneImagePath from '../../../images/done.png';
+import React, { FC } from 'react';
 import styles from './draggable-constructor-element.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { deleteIngredient } from '../../../services/slices/constructorSlice';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
-import { ingredientShape } from '../../../utils/propTypesShapes';
 
-const DraggableConstructorElement = (props) => {
+interface IDraggableConstructorElementProps {
+	name: string,
+	price: number,
+	image: string,
+	id: string | number,
+}
+
+const DraggableConstructorElement: FC<IDraggableConstructorElementProps> = (props) => {
 	const dispatch = useDispatch();
 	const { name, price, image, id } = props;
 	const [{ onDrag }, dragRef] = useDrag({
@@ -21,6 +25,7 @@ const DraggableConstructorElement = (props) => {
 		}),
 	});
 
+
 	return (
 		<div ref={dragRef} style={{ opacity: onDrag ? 0.4 : 1 }}>
 			<span className={styles.dragBtn}></span>
@@ -32,13 +37,6 @@ const DraggableConstructorElement = (props) => {
 			/>
 		</div>
 	);
-};
-
-DraggableConstructorElement.propTypes = {
-	name: PropTypes.string.isRequired,
-	price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-	image: PropTypes.string.isRequired,
-	id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
 export default DraggableConstructorElement;

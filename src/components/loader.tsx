@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Oval } from 'react-loader-spinner';
 
-const Loader = () => {
+const Loader: FC = () => {
 	return (
 		<div
 			style={{
