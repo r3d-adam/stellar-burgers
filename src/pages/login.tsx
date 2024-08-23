@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import {
 	EmailInput,
 	Button,
@@ -9,28 +9,33 @@ import styles from './login.module.css';
 import { login } from '../services/slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-const LoginPage = () => {
-	const [state, setState] = useState({
+interface ILoginFormState {
+	email: string;
+	password: string;
+}
+
+const LoginPage: FC = () => {
+	const [state, setState] = useState<ILoginFormState>({
 		email: '',
 		password: '',
 	});
 
-	const { isLoading, error } = useSelector((store) => store.user);
+	const { isLoading, error } = useSelector((store: any) => store.user);
 	const [formSubmitted, setFormSubmitted] = useState(false);
 
 	const dispatch = useDispatch();
 
-	const onChange = (e) => {
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setState({
 			...state,
 			[e.target.name]: e.target.value,
 		});
 	};
 
-	const handleSubmit = (e) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setFormSubmitted(true);
-
+		//@ts-ignore
 		dispatch(login(state));
 	};
 

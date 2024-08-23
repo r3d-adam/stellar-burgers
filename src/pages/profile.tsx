@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import styles from './profile.module.css';
 import { useDispatch } from 'react-redux';
 import { logout } from '../services/slices/userSlice';
 
-const ProfilePage = () => {
+const ProfilePage: FC = () => {
 	const dispatch = useDispatch();
-	const makeMenuItemClass = ({ isActive }) => {
+	const makeMenuItemClass = ({ isActive }: { isActive: boolean }): string => {
 		const linkClass = 'p-4 ' + styles.menuItem;
 		return isActive ? linkClass + ' ' + styles.menuItemActive : linkClass;
 	};
 
-	const handleLogoutClick = (e) => {
+	const handleLogoutClick = (e: React.SyntheticEvent) => {
 		e.preventDefault();
+		// @ts-ignore
 		dispatch(logout());
 	};
 

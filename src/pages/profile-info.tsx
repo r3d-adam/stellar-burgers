@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import {
 	EmailInput,
 	Button,
@@ -10,20 +10,26 @@ import styles from './profile-info.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUser } from '../services/slices/userSlice';
 
-const ProfileInfo = () => {
-	const { user, isLoading, error } = useSelector((store) => store.user);
-	const [state, setState] = useState({
+interface IProfileInfoForm {
+	name: string;
+	email: string;
+	password: string;
+}
+
+const ProfileInfo: FC = () => {
+	const { user, isLoading, error } = useSelector((store: any) => store.user);
+	const [state, setState] = useState<IProfileInfoForm>({
 		name: user?.name ? user.name : '',
 		email: user?.email ? user.email : '',
 		password: '',
 	});
 
-	const [isDataChanged, setDataChanged] = useState(false);
+	const [isDataChanged, setDataChanged] = useState<boolean>(false);
 
-	const [formSubmitted, setFormSubmitted] = useState(false);
+	const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
 	const dispatch = useDispatch();
 
-	const onChange = (e) => {
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setDataChanged(true);
 		setState({
 			...state,
@@ -31,17 +37,17 @@ const ProfileInfo = () => {
 		});
 	};
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: React.SyntheticEvent) => {
 		e.preventDefault();
 		setFormSubmitted(true);
-
+		// @ts-ignore
 		const resultAction = await dispatch(updateUser(state));
 		if (updateUser.fulfilled.match(resultAction)) {
 			setDataChanged(false);
 		}
 	};
 
-	const handleCancel = (e) => {
+	const handleCancel = (e: React.SyntheticEvent) => {
 		e.preventDefault();
 		setState({
 			name: user?.name ? user.name : '',
@@ -54,6 +60,7 @@ const ProfileInfo = () => {
 	return (
 		<div className={styles.wrapper}>
 			<form>
+				{/* @ts-ignore */}
 				<Input
 					onChange={onChange}
 					value={state.name}
@@ -68,6 +75,7 @@ const ProfileInfo = () => {
 					isIcon={false}
 					placeholder={'Логин'}
 					extraClass="mt-6 mb-6"
+					// @ts-ignore
 					icon="EditIcon"
 				/>
 				<PasswordInput

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import styles from './reset-password.module.css';
@@ -6,29 +6,30 @@ import { resetPasswordRequest } from '../utils/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPassword } from '../services/slices/userSlice';
 
-const ResetPasswordPage = () => {
+const ResetPasswordPage: FC = () => {
 	const [formState, setFormState] = useState({
 		newPassword: '',
 		emailCode: '',
 	});
-	const [formSubmitted, setFormSubmitted] = useState(false);
-	const { isLoading, error, forgotPasswordSuccess } = useSelector((store) => store.user);
+	const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
+	const { isLoading, error, forgotPasswordSuccess } = useSelector((store: any) => store.user);
 	const dispatch = useDispatch();
 
 	const navigate = useNavigate();
 
-	const onChange = (e) => {
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormState({
 			...formState,
 			[e.target.name]: e.target.value,
 		});
 	};
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		setFormSubmitted(true);
 
+		// @ts-ignore
 		const resultAction = await dispatch(resetPassword(formState));
 		if (resetPassword.fulfilled.match(resultAction)) {
 			navigate('/login', { replace: true });
@@ -50,6 +51,7 @@ const ResetPasswordPage = () => {
 					placeholder={'Введите новый пароль'}
 					required
 				/>
+				{/* @ts-ignore */}
 				<Input
 					onChange={onChange}
 					value={formState.emailCode}
