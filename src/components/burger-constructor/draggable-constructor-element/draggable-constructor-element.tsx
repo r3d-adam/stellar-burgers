@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import styles from './draggable-constructor-element.module.css';
-import { useDispatch } from 'react-redux';
 import { deleteIngredient } from '../../../services/slices/constructorSlice';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
+import { useDispatch } from '../../../services/store';
 
 interface IDraggableConstructorElementProps {
 	name: string;

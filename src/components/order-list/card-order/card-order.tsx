@@ -23,17 +23,40 @@ const CardOrder: FC<ICardOrderProps> = ({ data, showStatus = false }) => {
 		return store.ingredients;
 	});
 
+	if (
+		!ingredients ||
+		ingredients.length === 0 ||
+		!data.ingredients ||
+		data.ingredients.length === 0
+	) {
+		return null;
+	}
+
 	const ingredientsIdList: string[] = [];
 	let totalPrice = 0;
 	const imageList: ReactNode[] = [];
 	data.ingredients.forEach((ingredientId: string, i) => {
-		if (ingredientsIdList.filter((id) => id === ingredientId).length === 0) {
+		if (!ingredientsIdList.includes(ingredientId)) {
 			const ingredientData = ingredients.filter(
 				(ingredient: TIngredient) => ingredient._id === ingredientId,
 			)[0];
 
+			if (!ingredientData) {
+				return null;
+			}
+
 			let count = data.ingredients.filter((id: string) => ingredientId === id).length;
 			ingredientsIdList.push(ingredientId);
+
+			if (
+				!ingredientData ||
+				!ingredientData.price ||
+				!ingredientData.name ||
+				!ingredientData.type ||
+				!ingredientData.image_mobile
+			) {
+				return null;
+			}
 
 			const { price, name, type } = ingredientData;
 			const image = ingredientData.image_mobile;

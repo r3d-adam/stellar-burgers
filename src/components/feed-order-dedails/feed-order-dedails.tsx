@@ -41,10 +41,14 @@ const FeedOrderDetails: FC<TFeedOrderDetailsProps> = ({ order }) => {
 		let totalPrice = 0;
 
 		order?.ingredients.forEach((ingredientId: string) => {
-			if (ingredientsIdList.filter((id) => id === ingredientId).length === 0) {
+			if (!ingredientsIdList.includes(ingredientId)) {
 				const ingredientData = ingredients.filter(
 					(ingredient: TIngredient) => ingredient._id === ingredientId,
 				)[0];
+
+				if (!ingredientData) {
+					return null;
+				}
 
 				if (ingredientData) {
 					let count = order.ingredients.filter(
@@ -52,7 +56,16 @@ const FeedOrderDetails: FC<TFeedOrderDetailsProps> = ({ order }) => {
 					).length;
 					ingredientsIdList.push(ingredientId);
 
-					const { price, name, type } = ingredientData;
+					if (
+						!ingredientData ||
+						!ingredientData.price ||
+						!ingredientData.name ||
+						!ingredientData.image_mobile
+					) {
+						return null;
+					}
+
+					const { price, name } = ingredientData;
 					const image = ingredientData.image_mobile;
 
 					totalPrice += count * price;
