@@ -3,7 +3,7 @@ import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burg
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import styles from './reset-password.module.css';
 import { resetPasswordRequest } from '../utils/api';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from './../services/store';
 import { resetPassword } from '../services/slices/userSlice';
 
 const ResetPasswordPage: FC = () => {
@@ -12,7 +12,7 @@ const ResetPasswordPage: FC = () => {
 		emailCode: '',
 	});
 	const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
-	const { isLoading, error, forgotPasswordSuccess } = useSelector((store: any) => store.user);
+	const { isLoading, error, forgotPasswordSuccess } = useSelector((store) => store.user);
 	const dispatch = useDispatch();
 
 	const navigate = useNavigate();
@@ -29,7 +29,6 @@ const ResetPasswordPage: FC = () => {
 
 		setFormSubmitted(true);
 
-		// @ts-ignore
 		const resultAction = await dispatch(resetPassword(formState));
 		if (resetPassword.fulfilled.match(resultAction)) {
 			navigate('/login', { replace: true });

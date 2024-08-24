@@ -7,7 +7,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import styles from './profile-info.module.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from './../services/store';
 import { updateUser } from '../services/slices/userSlice';
 
 interface IProfileInfoForm {
@@ -17,7 +17,7 @@ interface IProfileInfoForm {
 }
 
 const ProfileInfo: FC = () => {
-	const { user, isLoading, error } = useSelector((store: any) => store.user);
+	const { user, isLoading, error } = useSelector((store) => store.user);
 	const [state, setState] = useState<IProfileInfoForm>({
 		name: user?.name ? user.name : '',
 		email: user?.email ? user.email : '',
@@ -40,7 +40,6 @@ const ProfileInfo: FC = () => {
 	const handleSubmit = async (e: React.SyntheticEvent) => {
 		e.preventDefault();
 		setFormSubmitted(true);
-		// @ts-ignore
 		const resultAction = await dispatch(updateUser(state));
 		if (updateUser.fulfilled.match(resultAction)) {
 			setDataChanged(false);

@@ -1,21 +1,19 @@
-import React, { FC, ReactPortal, useEffect } from 'react';
+import React, { FC, ReactNode, ReactPortal, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './modal.module.css';
 import ModalOverlay from './modal-overlay/modal-overlay';
-import { useSelector } from 'react-redux';
-import IngredientDetails from '../burger-ingredients/ingredient-details/ingredient-details';
-import OrderDetails from '../order-details/order-details';
-
+import { useSelector } from './../../services/store';
 const modalRoot = document.getElementById('react-modals') as HTMLElement;
 
 interface ModalProps {
 	onClose: () => void;
+	children: ReactNode;
 }
 
 const KEYCODE_ESC = 'Escape';
 
-const Modal: FC<ModalProps> = ({ onClose }): ReactPortal => {
-	const { isOpen, modalType, modalData, modalTitle } = useSelector((store: any) => {
+const Modal: FC<ModalProps> = ({ onClose, children }): ReactPortal => {
+	const { isOpen, title } = useSelector((store) => {
 		return store.modal;
 	});
 
@@ -33,27 +31,14 @@ const Modal: FC<ModalProps> = ({ onClose }): ReactPortal => {
 		};
 	}, [onClose]);
 
-	const modalContent = () => {
-		switch (modalType) {
-			case 'INGREDIENT_DETAILS':
-				return <IngredientDetails ingredient={modalData} />;
-			case 'ORDER_DETAILS':
-				return <OrderDetails />;
-			default:
-				return null;
-		}
-	};
-
 	const modal = isOpen ? (
 		<div className={styles.modalContainer}>
 			<ModalOverlay onClose={onClose} />
 
 			<div className={`${styles.modal} p-10 pb-15`}>
 				<span className={styles.modalClose} onClick={onClose}></span>
-				<span className={`${styles.modalTitle} text text_type_main-large`}>
-					{modalTitle}
-				</span>
-				<div className={styles.modalContent}>{modalContent()}</div>
+				<span className={`${styles.modalTitle} text text_type_main-large`}>{title}</span>
+				<div className={styles.modalContent}>{children}</div>
 			</div>
 		</div>
 	) : null;

@@ -1,0 +1,90 @@
+.content {
+	max-width: 640px;
+	margin: 0 auto;
+}
+.orderId {
+	text-align: center;
+}
+.status {
+}
+.status.statusSuccess {
+	color: #0cc;
+}
+.ingredientList {
+	padding: 0;
+	padding-right: 24px;
+	margin-top: 0;
+	max-height: 312px;
+	overflow-y: auto;
+	scrollbar-color: #8585ad #2f2f37;
+	scrollbar-width: thin;
+}
+.ingredientList li {
+	display: flex;
+	list-style: none;
+	justify-content: space-between;
+	gap: 16px;
+	margin-bottom: 16px;
+}
+.ingredientList li:last-child {
+	margin-bottom: 0;
+}
+.ingredientName {
+	display: block;
+	margin-left: 16px;
+}
+.ingredientImageWrap {
+	position: relative;
+	display: block;
+	list-style: none;
+	border-radius: 50%;
+	width: 64px;
+	height: 64px;
+	padding: 2px;
+	overflow: hidden;
+}
+.price {
+	display: block;
+}
+.ingredientLeft {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.ingredientImageWrap div {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	background-color: #000;
+	text-align: center;
+}
+.ingredientImageWrap::before {
+	position: absolute;
+	content: '';
+	display: block;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	background: linear-gradient(45deg, #801ab3ff, #4c4cffff);
+	border-radius: 50%;
+	z-index: 0;
+}
+.ingredientImageWrap img {
+	max-height: 100%;
+	width: auto;
+}
+.bottom {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.totalPrice,
+.price {
+	display: flex;
+	align-items: center;
+}

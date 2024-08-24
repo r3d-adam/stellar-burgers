@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import styles from './profile.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from './../services/store';
 import { logout } from '../services/slices/userSlice';
 
 const ProfilePage: FC = () => {
@@ -13,7 +13,6 @@ const ProfilePage: FC = () => {
 
 	const handleLogoutClick = (e: React.SyntheticEvent) => {
 		e.preventDefault();
-		// @ts-ignore
 		dispatch(logout());
 	};
 

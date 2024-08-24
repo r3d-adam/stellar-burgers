@@ -1,23 +1,29 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
+import { TIngredientWithID } from '../types/data';
 
-const initialState = {
+const initialState: TConstructorState = {
 	bun: null,
 	constructorIngredients: [],
+};
+
+type TConstructorState = {
+	bun: null | TIngredientWithID,
+	constructorIngredients: TIngredientWithID[],
 };
 
 export const constructorSlice = createSlice({
 	name: 'constructor',
 	initialState,
 	reducers: {
-		deleteIngredient: (state, action) => {
+		deleteIngredient: (state, action: PayloadAction<string>) => {
 			console.log(action);
 			state.constructorIngredients = state.constructorIngredients.filter(
 				(ingredient) => ingredient.id !== action.payload,
 			);
 		},
 		addIngredient: {
-			reducer: (state, action) => {
+			reducer: (state, action: PayloadAction<{ ingredient: TIngredientWithID; index: number }>) => {
 				if (action.payload.ingredient.type === 'bun') {
 					state.bun = action.payload.ingredient;
 				} else {
@@ -37,7 +43,7 @@ export const constructorSlice = createSlice({
 				},
 			}),
 		},
-		moveIngredient: (state, action) => {
+		moveIngredient: (state, action: PayloadAction<{ ingredient: TIngredientWithID; index: number }>) => {
 			const newIndex = action.payload.index;
 
 			const filteredItems = [...state.constructorIngredients].filter(
@@ -52,6 +58,11 @@ export const constructorSlice = createSlice({
 		},
 	},
 });
+
+
+type TConstructorActionCreators = typeof constructorSlice.actions;
+
+export type TConstructorActions = ReturnType<TConstructorActionCreators[keyof TConstructorActionCreators]>;
 
 export const { deleteIngredient, addIngredient, moveIngredient } = constructorSlice.actions;
 export default constructorSlice.reducer;

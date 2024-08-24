@@ -13,3 +13,22 @@ export type TIngredient = {
 };
 
 export type TIngredientWithID = TIngredient & { id: string };
+
+
+export enum OrderStatus {
+	DONE = 'done',
+	PENDING = 'pending',
+	CREATED = 'created',
+	CANCELED = 'canceled',
+}
+
+export type TOrder = {
+	ingredients: string[];
+	_id: string;
+	status: OrderStatus;
+	name: string;
+	createdAt: string;
+	updatedAt: string;
+	number: number;
+	id?: string;
+}

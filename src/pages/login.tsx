@@ -7,7 +7,7 @@ import {
 import { Link } from 'react-router-dom';
 import styles from './login.module.css';
 import { login } from '../services/slices/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from './../services/store';
 
 interface ILoginFormState {
 	email: string;
@@ -20,7 +20,7 @@ const LoginPage: FC = () => {
 		password: '',
 	});
 
-	const { isLoading, error } = useSelector((store: any) => store.user);
+	const { isLoading, error } = useSelector((store) => store.user);
 	const [formSubmitted, setFormSubmitted] = useState(false);
 
 	const dispatch = useDispatch();
@@ -35,7 +35,6 @@ const LoginPage: FC = () => {
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setFormSubmitted(true);
-		//@ts-ignore
 		dispatch(login(state));
 	};
 

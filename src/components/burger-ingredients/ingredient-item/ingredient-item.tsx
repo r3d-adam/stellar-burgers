@@ -1,7 +1,7 @@
 import React, { useMemo, FC } from 'react';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientItem from './ingredient-item.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from './../../../services/store';
 import { useDrag } from 'react-dnd';
 import { openModal } from '../../../services/slices/modalSlice';
 import { Link, useLocation } from 'react-router-dom';
@@ -28,13 +28,12 @@ const IngredientItem: FC<IIngredientItemProps> = ({ ingredient }) => {
 		dispatch(
 			openModal({
 				type: 'INGREDIENT_DETAILS',
-				data: ingredient,
 				title: 'Детали ингридиента',
 			}),
 		);
 	};
 
-	const { constructorIngredients, bun } = useSelector((store: any) => {
+	const { constructorIngredients, bun } = useSelector((store) => {
 		return store.constructorStore;
 	});
 	const count = useMemo(() => {

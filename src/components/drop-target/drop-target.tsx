@@ -1,7 +1,7 @@
 import React, { FC, ReactNode, useEffect, useRef, useState } from 'react';
 import styles from './drop-target.module.css';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from './../../services/store';
 import { addIngredient, moveIngredient } from '../../services/slices/constructorSlice';
 import { TIngredientWithID } from '../../services/types/data';
 
@@ -16,7 +16,7 @@ const DropTarget: FC<IDropTargetProps> = ({ id = 0, type = 'ingredient', childre
 	const wrapperRef = useRef<HTMLDivElement>(null);
 	const [dropLocation, setDropLocation] = useState<'after' | 'before' | null>(null);
 	const constructorIngredients = useSelector(
-		(store: any) => store.constructorStore.constructorIngredients,
+		(store) => store.constructorStore.constructorIngredients,
 	);
 
 	const [{ onHover }, dropTarget] = useDrop({
