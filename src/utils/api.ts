@@ -1,4 +1,4 @@
-import { TIngredient } from '../services/types/data';
+import { OrderStatus, TIngredient, TOrder } from '../services/types/data';
 import { request, checkResponse, setTokens, TServerResponse, TRefreshResponse } from './utils';
 
 const BASE_URL = 'https://norma.nomoreparties.space/api';
@@ -26,7 +26,7 @@ type TFetchOrderResponse = TServerResponse<{
 	};
 }>;
 
-export const fetchOrder = (ingredients: TIngredient[]): Promise<TFetchOrderResponse> => {
+export const fetchOrder = (ingredients: { ingredients: string[]}): Promise<TFetchOrderResponse> => {
 	return fetchWithRefresh<TFetchOrderResponse>(`${BASE_URL}/orders`, {
 		method: 'POST',
 		headers: {
@@ -78,16 +78,16 @@ export const fetchUserData = () => {
 	});
 };
 
-type TRegisterUserResponse = TServerResponse<{
-	user: string;
+export type TRegisterUserResponse = TServerResponse<{
+	user: TUser;
 } & TRefreshResponse>;
 
-type TUser = {
+export type TUser = {
 	email: string;
 	name: string;
 };
 
-type TUserWithPassword = TUser & { password: string };
+export type TUserWithPassword = TUser & { password: string };
 
 export const registerUserRequest = (user: TUserWithPassword): Promise<TRegisterUserResponse> => {
 	return request<TRegisterUserResponse>(`${BASE_URL}/auth/register`, {
@@ -105,7 +105,7 @@ type TLoginResponse = TServerResponse<
 	} & TRefreshResponse
 >;
 
-export const loginRequest = (user: TUser): Promise<TLoginResponse> => {
+export const loginRequest = (user: {email: string; password: string}): Promise<TLoginResponse> => {
 	return request<TLoginResponse>(`${BASE_URL}/auth/login`, {
 		method: 'POST',
 		headers: {
@@ -115,7 +115,7 @@ export const loginRequest = (user: TUser): Promise<TLoginResponse> => {
 	}).then(setTokens<TLoginResponse>);
 };
 
-type TLogoutResponse = TServerResponse<{ message: string }>;
+export type TLogoutResponse = TServerResponse<{ message: string }>;
 
 export const logoutRequest = (): Promise<TLogoutResponse> => {
 	return request<TLogoutResponse>(`${BASE_URL}/auth/logout`, {
@@ -174,4 +174,12 @@ export const resetPasswordRequest = ({
 		},
 		body: JSON.stringify({ password: newPassword, token: emailCode }),
 	});
+};
+
+
+
+export type TGetOrderResponse = TServerResponse<{ orders: TOrder[]; total: number; totalToday: number }>;
+
+export const getOrderRequest = (number: number): Promise<TGetOrderResponse> => {
+	return request<TGetOrderResponse>(`${BASE_URL}/orders/${number}`);
 };

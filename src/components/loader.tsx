@@ -8,6 +8,7 @@ const Loader: FC = () => {
 				display: 'flex',
 				height: 'auto',
 				margin: '0 auto',
+				justifyContent: 'center',
 			}}
 		>
 			<div

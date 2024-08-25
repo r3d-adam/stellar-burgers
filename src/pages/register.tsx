@@ -7,7 +7,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import styles from './register.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from './../services/store';
 import { registerUser } from '../services/slices/userSlice';
 
 interface IRegisterPageFrom {
@@ -22,7 +22,7 @@ const RegisterPage: FC = () => {
 		email: '',
 		password: '',
 	});
-	const { isLoading, error } = useSelector((store: any) => store.user);
+	const { isLoading, error } = useSelector((store) => store.user);
 	const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
 
 	const dispatch = useDispatch();
@@ -37,7 +37,6 @@ const RegisterPage: FC = () => {
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setFormSubmitted(true);
-		// @ts-ignore
 		dispatch(registerUser(state));
 	};
 

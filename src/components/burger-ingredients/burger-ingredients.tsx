@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { orderListShape, ingredientListShape } from '../../utils/propTypesShapes';
 import IngredientsGroup from './ingredients-group/ingredients-group';
 import styles from './burger-ingredients.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from './../../services/store';
 import { addIngredient } from '../../services/slices/constructorSlice';
 import { TIngredient, TIngredientWithID } from '../../services/types/data';
 
@@ -18,7 +18,7 @@ const OFFSET = 50;
 
 const BurgerIngredients: FC = () => {
 	const dispatch = useDispatch();
-	const ingredients = useSelector((store: any) => store.ingredients.ingredients);
+	const ingredients = useSelector((store) => store.ingredients.ingredients);
 	const [activeTab, setActiveTab] = useState<TABS | null>(null);
 	const [isTabClicked, setTabClicked] = useState<boolean>(false);
 

@@ -1,5 +1,6 @@
 .menu {
 	list-style: none;
+	padding-top: 140px;
 }
 
 .menuItem {
@@ -19,11 +20,13 @@
 	width: 100%;
 	margin: 0 auto;
 	display: flex;
-	padding-top: 140px;
 }
 .navWrapper {
 	margin-right: 60px;
 	max-width: 320px;
+	flex-basis: 320px;
 }
 .tabContentWrapper {
+	padding-top: 40px;
+	flex-grow: 1;
 }

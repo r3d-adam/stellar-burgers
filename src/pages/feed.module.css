@@ -1,0 +1,53 @@
+.container {
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+	max-width: 1280px;
+	width: 100%;
+	padding-left: 20px;
+	padding-right: 20px;
+	margin: 0 auto;
+	gap: 40px;
+	justify-content: space-between;
+}
+.listCol {
+	display: flex;
+	height: 100%;
+	flex-direction: column;
+}
+.listWrapper {
+	display: block;
+	overflow-y: auto;
+	scrollbar-color: #8585ad #2f2f37;
+	scrollbar-width: thin;
+	padding-right: 8px;
+}
+.infoCol {
+	padding-top: 100px;
+}
+.statusListsWrapper {
+	display: flex;
+	gap: 36px;
+}
+.statusListsWrapper > div {
+	flex-basis: 272px;
+}
+.statusList {
+	margin: 0;
+	padding: 0;
+}
+.statusList li {
+	list-style: none;
+	margin-bottom: 8px;
+}
+.statusListSuccess {
+	color: #00cccc;
+}
+.statusListName {
+	display: block;
+}
+.lists {
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+}

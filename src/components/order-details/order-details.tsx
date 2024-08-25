@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import doneImagePath from '../../images/done.png';
 import styles from './order-details.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector } from './../../services/store';
 import Loader from '../loader';
 
 const OrderDetails: FC = () => {
-	const { orderId, isLoading, error } = useSelector((store: any) => {
+	const { orderId, isLoading, error } = useSelector((store) => {
 		return store.order;
 	});
 
@@ -30,9 +30,7 @@ const OrderDetails: FC = () => {
 					</span>
 				</>
 			) : error ? (
-				<span className={`text text_type_main-large mb-8`}>
-					Произошла ошибка: {error.message}
-				</span>
+				<span className={`text text_type_main-large mb-8`}>Произошла ошибка: {error}</span>
 			) : (
 				<Loader />
 			)}

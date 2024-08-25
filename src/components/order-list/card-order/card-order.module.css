@@ -1,0 +1,85 @@
+.card {
+	text-decoration: none;
+	color: #fff;
+	border-radius: 40px;
+	background-color: #1c1c21;
+	display: block;
+	position: relative;
+}
+.top {
+	display: flex;
+	justify-content: space-between;
+}
+.name {
+}
+.code {
+}
+.time {
+}
+.bottom {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.price {
+	display: inline-flex;
+	align-items: center;
+}
+.imageList {
+	display: inline-flex;
+	flex-direction: row-reverse;
+	padding: 0;
+	margin: 0;
+	padding-left: 15px;
+	max-width: 300px;
+	margin-right: 15px;
+	flex-wrap: wrap;
+}
+.imageList li {
+	position: relative;
+	list-style: none;
+	border-radius: 50%;
+	width: 64px;
+	height: 64px;
+	margin-left: -15px;
+	padding: 2px;
+}
+.imgWrapper {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	background-color: #000;
+	text-align: center;
+	overflow: hidden;
+}
+.imgWrapper .count {
+	position: absolute;
+	display: flex;
+	width: 100%;
+	height: 100%;
+	font-size: 16px;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(28, 28, 33, 0.6);
+}
+.imageList img {
+	max-height: 100%;
+	width: auto;
+}
+.imageList li::before {
+	position: absolute;
+	content: '';
+	display: block;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	background: linear-gradient(45deg, #801ab3ff, #4c4cffff);
+	border-radius: 50%;
+	z-index: 0;
+}

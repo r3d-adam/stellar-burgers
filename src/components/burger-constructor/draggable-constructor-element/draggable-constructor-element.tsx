@@ -1,15 +1,15 @@
 import React, { FC } from 'react';
 import styles from './draggable-constructor-element.module.css';
-import { useDispatch } from 'react-redux';
 import { deleteIngredient } from '../../../services/slices/constructorSlice';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
+import { useDispatch } from '../../../services/store';
 
 interface IDraggableConstructorElementProps {
-	name: string,
-	price: number,
-	image: string,
-	id: string | number,
+	name: string;
+	price: number;
+	image: string;
+	id: string | number;
 }
 
 const DraggableConstructorElement: FC<IDraggableConstructorElementProps> = (props) => {
@@ -25,7 +25,6 @@ const DraggableConstructorElement: FC<IDraggableConstructorElementProps> = (prop
 		}),
 	});
 
-
 	return (
 		<div ref={dragRef} style={{ opacity: onDrag ? 0.4 : 1 }}>
 			<span className={styles.dragBtn}></span>
@@ -33,7 +32,7 @@ const DraggableConstructorElement: FC<IDraggableConstructorElementProps> = (prop
 				text={name}
 				price={price}
 				thumbnail={image}
-				handleClose={() => dispatch(deleteIngredient(id))}
+				handleClose={() => dispatch(deleteIngredient(`${id}`))}
 			/>
 		</div>
 	);
