@@ -1,5 +1,17 @@
 import { BASE_URL } from './../../src/utils/api';
 
+const selectors = {
+	orderButton: '[data-testid="order-button"]',
+	modal: '[data-testid="modal"]',
+	modalClose: '[data-testid="modal-close"]',
+	burgerIngredientsTab: '[class^="burger-ingredients_tabContent"]',
+	ingredientsDetailsModalName: '[class^="ingredients-details_modalName"]',
+	ingredientsDetailsList: '[class^=ingredients-details_list]',
+	counterNum: '[class^="counter__num"]',
+	burgerConstructorList: '[class^="burger-constructor_list"]',
+	burgerConstructorOrderTotal: '[class^="burger-constructor_orderTotal"]',
+};
+
 describe('home page test', () => {
 	beforeEach(() => {
 		cy.intercept('GET', `${BASE_URL}/auth/user`, { fixture: 'user.json' });
@@ -19,47 +31,47 @@ describe('home page test', () => {
 	});
 
 	it('should not open order details modal', () => {
-		cy.get('[data-testid="order-button"]').click();
-		cy.get('[data-testid="modal"]').should('not.exist');
+		cy.get(selectors.orderButton).click();
+		cy.get(selectors.modal).should('not.exist');
 	});
 
 	it('should open ingredient details modal with first bun data', () => {
-		cy.get('[class^="burger-ingredients_tabContent"]')
+		cy.get(selectors.burgerIngredientsTab)
 			.contains('Булки')
 			.parent()
 			.find('li:first-child a')
 			.click();
-		cy.get('[data-testid="modal"]').should('exist').find('img').should('exist');
-		cy.get('[class^="ingredients-details_modalName"]')
+		cy.get(selectors.modal).should('exist').find('img').should('exist');
+		cy.get(selectors.ingredientsDetailsModalName)
 			.should('exist')
 			.and('have.text', 'Краторная булка N-200i 123');
 
-		cy.get('[class^=ingredients-details_list] > :nth-child(1) > .text').should(
+		cy.get(`${selectors.ingredientsDetailsList} > :nth-child(1) > .text`).should(
 			'have.text',
 			'420',
 		);
-		cy.get('[class^=ingredients-details_list] > :nth-child(2) > .text').should(
+		cy.get(`${selectors.ingredientsDetailsList} > :nth-child(2) > .text`).should(
 			'have.text',
 			'80',
 		);
-		cy.get('[class^=ingredients-details_list] > :nth-child(3) > .text').should(
+		cy.get(`${selectors.ingredientsDetailsList} > :nth-child(3) > .text`).should(
 			'have.text',
 			'24',
 		);
-		cy.get('[class^=ingredients-details_list] > :nth-child(4) > .text').should(
+		cy.get(`${selectors.ingredientsDetailsList} > :nth-child(4) > .text`).should(
 			'have.text',
 			'53',
 		);
 
 		cy.log('Нажимаем на кнопку закрытия модального окна и проверяем');
-		cy.get('[data-testid="modal-close"]').click();
-		cy.get('[data-testid="modal"]').should('not.exist');
+		cy.get(selectors.modalClose).click();
+		cy.get(selectors.modal).should('not.exist');
 	});
 
 	it('should make order', () => {
 		cy.contains('Соберите бургер');
 
-		cy.get('[class^="burger-ingredients_tabContent"]')
+		cy.get(selectors.burgerIngredientsTab)
 			.contains('Булки')
 			.parent()
 			.find('li:first-child a')
@@ -70,7 +82,7 @@ describe('home page test', () => {
 		cy.contains('Выберите начинку').trigger('drop');
 
 		cy.log('Проверка: булка не должна появиться');
-		cy.get('@bun').find('[class^="counter__num"]').should('not.exist');
+		cy.get('@bun').find(selectors.counterNum).should('not.exist');
 		cy.contains('Выберите булки').should('exist');
 
 		cy.log('Перетаскиваем булку в корректный элемент');
@@ -80,11 +92,11 @@ describe('home page test', () => {
 		cy.log(
 			'Проверка: булка должна появиться и измениться счётчик в списке, цена должна измениться',
 		);
-		cy.get('@bun').find('[class^="counter__num"]').should('have.text', '2');
-		cy.get('[class^="burger-constructor_orderTotal"]').should('not.be.a', '0');
+		cy.get('@bun').find(selectors.counterNum).should('have.text', '2');
+		cy.get(selectors.burgerConstructorOrderTotal).should('not.be.a', '0');
 
 		cy.log('Перетаскиваем начинку в корректный элемент');
-		cy.get('[class^="burger-ingredients_tabContent"]')
+		cy.get(selectors.burgerIngredientsTab)
 			.contains('Соусы')
 			.parent()
 			.find('li:first-child a')
@@ -93,30 +105,30 @@ describe('home page test', () => {
 		cy.contains('Выберите начинку').trigger('drop');
 
 		cy.log('Проверка: начинка должна появиться и измениться счётчик в списке');
-		cy.get('@ingredient-1').find('[class^="counter__num"]').should('have.text', '1');
+		cy.get('@ingredient-1').find(selectors.counterNum).should('have.text', '1');
 
 		cy.log('Перетаскиваем такую же начинку в корректный элемент');
 		cy.get('@ingredient-1').trigger('dragstart');
-		cy.get('[class^="burger-constructor_list"]')
+		cy.get(selectors.burgerConstructorList)
 			.find('.constructor-element')
 			.should('have.length', 1);
-		cy.get('[class^="burger-constructor_list"]').find('.constructor-element').trigger('drop');
+		cy.get(selectors.burgerConstructorList).find('.constructor-element').trigger('drop');
 
 		cy.log('Проверка: начинка должна появиться и счетчик должен показать 2');
-		cy.get('@ingredient-1').find('[class^="counter__num"]').should('have.text', '2');
+		cy.get('@ingredient-1').find(selectors.counterNum).should('have.text', '2');
 
 		cy.log('Нажимаем на кнопку удаления ингредиента из конструктора');
-		cy.get('[class^="burger-constructor_list"]')
+		cy.get(selectors.burgerConstructorList)
 			.find('.constructor-element')
 			.find('.constructor-element__action')
 			.last()
 			.trigger('click');
 
 		cy.log('Проверка: начинка должна удалиться и счетчик должен показать 1');
-		cy.get('@ingredient-1').find('[class^="counter__num"]').should('have.text', '1');
+		cy.get('@ingredient-1').find(selectors.counterNum).should('have.text', '1');
 
 		cy.log('Перетаскиваем новую начинку и дропаем её в начало');
-		cy.get('[class^="burger-ingredients_tabContent"]')
+		cy.get(selectors.burgerIngredientsTab)
 			.contains('Начинки')
 			.parent()
 			.find('li:last-child a')
@@ -128,7 +140,7 @@ describe('home page test', () => {
 			ingredientName = Cypress.$(ingredient).find('[class^="ingredient-item_name"]').text();
 			cy.log('ingredientName: ', ingredientName);
 
-			cy.get('[class^="burger-constructor_list"]')
+			cy.get(selectors.burgerConstructorList)
 				.find('.constructor-element')
 				.then((element) => {
 					const rect = Cypress.$(element)[0].getBoundingClientRect();
@@ -136,7 +148,7 @@ describe('home page test', () => {
 					cy.wrap(element).trigger('drop', { clientX: rect.x + 1, clientY: rect.y + 1 });
 
 					cy.log('Проверяем добавился ли ингредиент в начало списка с начинками');
-					cy.get('[class^="burger-constructor_list"]')
+					cy.get(selectors.burgerConstructorList)
 						.find('.constructor-element')
 						.first()
 						.should('contain', ingredientName);
@@ -144,7 +156,7 @@ describe('home page test', () => {
 		});
 
 		cy.log('Перетаскиваем новую начинку и дропаем её в конец');
-		cy.get('[class^="burger-ingredients_tabContent"]')
+		cy.get(selectors.burgerIngredientsTab)
 			.contains('Соусы')
 			.parent()
 			.find('li:last-child a')
@@ -156,7 +168,7 @@ describe('home page test', () => {
 			ingredientName = Cypress.$(ingredient).find('[class^="ingredient-item_name"]').text();
 			cy.log('ingredientName: ', ingredientName);
 
-			cy.get('[class^="burger-constructor_list"]')
+			cy.get(selectors.burgerConstructorList)
 				.find('.constructor-element')
 				.eq(-1)
 				.then((element) => {
@@ -169,7 +181,7 @@ describe('home page test', () => {
 					});
 
 					cy.log('Проверяем добавился ли ингредиент в конец списка с начинками');
-					cy.get('[class^="burger-constructor_list"]')
+					cy.get(selectors.burgerConstructorList)
 						.find('.constructor-element')
 						.last()
 						.should('contain', ingredientName);
@@ -177,7 +189,7 @@ describe('home page test', () => {
 		});
 
 		cy.log('Перетаскиваем последний ингредиент (начинку) конструктора на первое место');
-		cy.get('[class^="burger-constructor_list"]')
+		cy.get(selectors.burgerConstructorList)
 			.find('.constructor-element')
 			.eq(-1)
 			.as('ingredient-4')
@@ -188,7 +200,7 @@ describe('home page test', () => {
 			ingredientName = Cypress.$(ingredient).find('[class^="ingredient-item_name"]').text();
 			cy.log('ingredientName: ', ingredientName);
 
-			cy.get('[class^="burger-constructor_list"]')
+			cy.get(selectors.burgerConstructorList)
 				.find('.constructor-element')
 				.first()
 				.then((element) => {
@@ -201,7 +213,7 @@ describe('home page test', () => {
 					});
 
 					cy.log('Проверяем передвинулся ли ингредиент в начало списка с начинками');
-					cy.get('[class^="burger-constructor_list"]')
+					cy.get(selectors.burgerConstructorList)
 						.find('.constructor-element')
 						.first()
 						.should('contain', ingredientName);
@@ -209,16 +221,16 @@ describe('home page test', () => {
 		});
 
 		cy.log('Нажимаем на кнопку "Оформить заказ"');
-		cy.get('[data-testid="order-button"]').click();
+		cy.get(selectors.orderButton).click();
 		cy.log('Проверяем открылось ли модальное окно и соответствует ли номер заказа');
-		cy.get('[data-testid="modal"]').should('exist');
+		cy.get(selectors.modal).should('exist');
 		cy.get('@order').then((res: Record<string, any>) => {
 			cy.log('order', res);
 			cy.get('[data-testid="order-number"]').should('have.text', res.order.number);
 		});
 
 		cy.log('Нажимаем на кнопку закрытия модального окна и проверяем');
-		cy.get('[data-testid="modal-close"]').click();
-		cy.get('[data-testid="modal"]').should('not.exist');
+		cy.get(selectors.modalClose).click();
+		cy.get(selectors.modal).should('not.exist');
 	});
 });
