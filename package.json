@@ -31,7 +31,8 @@
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"cy": "cypress open cache clear"
+		"cy": "cypress open cache clear",
+		"deploy": "npm run build && scp -r ./build/* praktikum@51.250.39.61:/home/praktikum/stellar-frontend"
 	},
 	"eslintConfig": {
 		"extends": [
