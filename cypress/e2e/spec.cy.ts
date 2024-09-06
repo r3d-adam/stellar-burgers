@@ -5,11 +5,13 @@ const selectors = {
 	modal: '[data-testid="modal"]',
 	modalClose: '[data-testid="modal-close"]',
 	burgerIngredientsTab: '[class^="burger-ingredients_tabContent"]',
+	ingredientName: '[class^="ingredient-item_name"]',
 	ingredientsDetailsModalName: '[class^="ingredients-details_modalName"]',
 	ingredientsDetailsList: '[class^=ingredients-details_list]',
 	counterNum: '[class^="counter__num"]',
 	burgerConstructorList: '[class^="burger-constructor_list"]',
 	burgerConstructorOrderTotal: '[class^="burger-constructor_orderTotal"]',
+	constructorElement: '.constructor-element',
 };
 
 describe('home page test', () => {
@@ -110,16 +112,16 @@ describe('home page test', () => {
 		cy.log('Перетаскиваем такую же начинку в корректный элемент');
 		cy.get('@ingredient-1').trigger('dragstart');
 		cy.get(selectors.burgerConstructorList)
-			.find('.constructor-element')
+			.find(selectors.constructorElement)
 			.should('have.length', 1);
-		cy.get(selectors.burgerConstructorList).find('.constructor-element').trigger('drop');
+		cy.get(selectors.burgerConstructorList).find(selectors.constructorElement).trigger('drop');
 
 		cy.log('Проверка: начинка должна появиться и счетчик должен показать 2');
 		cy.get('@ingredient-1').find(selectors.counterNum).should('have.text', '2');
 
 		cy.log('Нажимаем на кнопку удаления ингредиента из конструктора');
 		cy.get(selectors.burgerConstructorList)
-			.find('.constructor-element')
+			.find(selectors.constructorElement)
 			.find('.constructor-element__action')
 			.last()
 			.trigger('click');
@@ -137,11 +139,11 @@ describe('home page test', () => {
 
 		cy.get('@ingredient-2').then((ingredient) => {
 			let ingredientName;
-			ingredientName = Cypress.$(ingredient).find('[class^="ingredient-item_name"]').text();
+			ingredientName = Cypress.$(ingredient).find(selectors.ingredientName).text();
 			cy.log('ingredientName: ', ingredientName);
 
 			cy.get(selectors.burgerConstructorList)
-				.find('.constructor-element')
+				.find(selectors.constructorElement)
 				.then((element) => {
 					const rect = Cypress.$(element)[0].getBoundingClientRect();
 
@@ -149,7 +151,7 @@ describe('home page test', () => {
 
 					cy.log('Проверяем добавился ли ингредиент в начало списка с начинками');
 					cy.get(selectors.burgerConstructorList)
-						.find('.constructor-element')
+						.find(selectors.constructorElement)
 						.first()
 						.should('contain', ingredientName);
 				});
@@ -165,11 +167,11 @@ describe('home page test', () => {
 
 		cy.get('@ingredient-3').then((ingredient) => {
 			let ingredientName;
-			ingredientName = Cypress.$(ingredient).find('[class^="ingredient-item_name"]').text();
+			ingredientName = Cypress.$(ingredient).find(selectors.ingredientName).text();
 			cy.log('ingredientName: ', ingredientName);
 
 			cy.get(selectors.burgerConstructorList)
-				.find('.constructor-element')
+				.find(selectors.constructorElement)
 				.eq(-1)
 				.then((element) => {
 					const rect = Cypress.$(element)[0].getBoundingClientRect();
@@ -182,7 +184,7 @@ describe('home page test', () => {
 
 					cy.log('Проверяем добавился ли ингредиент в конец списка с начинками');
 					cy.get(selectors.burgerConstructorList)
-						.find('.constructor-element')
+						.find(selectors.constructorElement)
 						.last()
 						.should('contain', ingredientName);
 				});
@@ -190,18 +192,18 @@ describe('home page test', () => {
 
 		cy.log('Перетаскиваем последний ингредиент (начинку) конструктора на первое место');
 		cy.get(selectors.burgerConstructorList)
-			.find('.constructor-element')
+			.find(selectors.constructorElement)
 			.eq(-1)
 			.as('ingredient-4')
 			.trigger('dragstart');
 
 		cy.get('@ingredient-4').then((ingredient) => {
 			let ingredientName;
-			ingredientName = Cypress.$(ingredient).find('[class^="ingredient-item_name"]').text();
+			ingredientName = Cypress.$(ingredient).find(selectors.ingredientName).text();
 			cy.log('ingredientName: ', ingredientName);
 
 			cy.get(selectors.burgerConstructorList)
-				.find('.constructor-element')
+				.find(selectors.constructorElement)
 				.first()
 				.then((element) => {
 					const rect = Cypress.$(element)[0].getBoundingClientRect();
@@ -214,7 +216,7 @@ describe('home page test', () => {
 
 					cy.log('Проверяем передвинулся ли ингредиент в начало списка с начинками');
 					cy.get(selectors.burgerConstructorList)
-						.find('.constructor-element')
+						.find(selectors.constructorElement)
 						.first()
 						.should('contain', ingredientName);
 				});
