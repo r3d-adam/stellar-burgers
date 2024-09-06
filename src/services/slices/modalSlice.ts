@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: TModalData = {
+export const initialState: TModalData = {
 	isOpen: false,
 	type: null,
 	title: null,
 };
 
 type TModalData = {
-	isOpen: boolean,
-	type?: null | string,
-	title?: null | string,
+	isOpen: boolean;
+	type?: null | string;
+	title?: null | string;
 };
 
 export const modalSlice = createSlice({

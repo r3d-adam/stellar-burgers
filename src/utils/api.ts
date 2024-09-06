@@ -1,7 +1,7 @@
 import { OrderStatus, TIngredient, TOrder } from '../services/types/data';
 import { request, checkResponse, setTokens, TServerResponse, TRefreshResponse } from './utils';
 
-const BASE_URL = 'https://norma.nomoreparties.space/api';
+export const BASE_URL = 'https://norma.nomoreparties.space/api';
 
 
 

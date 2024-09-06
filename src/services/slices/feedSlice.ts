@@ -4,20 +4,17 @@ import { getOrderRequest } from '../../utils/api';
 import { RootState } from '../store';
 import { TOrder } from '../types/data';
 
-
 export type TFeedState = {
 	orders: TOrder[];
 	total: number;
 	totalToday: number;
 	error: null | undefined | string;
 	isConnected: boolean;
-	selectedOrder: TOrder |  null;
+	selectedOrder: TOrder | null;
 	isSelectedOrderLoading: boolean;
 };
 
-
-
-const initialState: TFeedState = {
+export const initialState: TFeedState = {
 	orders: [],
 	total: 0,
 	totalToday: 0,
@@ -27,19 +24,20 @@ const initialState: TFeedState = {
 	isSelectedOrderLoading: false,
 };
 
-
-
 export const getOrder = createAsyncThunk<TOrder, number, { rejectValue: string }>(
 	'feed/getOrder',
 	async (orderNumber, { rejectWithValue, getState }) => {
 		const { userOrders } = getState() as RootState;
-		let order = userOrders.orders.find(order => order.number === orderNumber);
-		
+		let order = userOrders.orders.find((order) => order.number === orderNumber);
+
 		if (order) {
 			return order;
 		} else {
 			try {
 				const response = await getOrderRequest(orderNumber);
+				if (response.orders.length === 0 || response.orders[0].number !== orderNumber) {
+					return rejectWithValue('Order not found');
+				}
 				return response.orders[0];
 			} catch (error: unknown) {
 				if (error instanceof Error) {
@@ -49,7 +47,7 @@ export const getOrder = createAsyncThunk<TOrder, number, { rejectValue: string }
 				}
 			}
 		}
-	}
+	},
 );
 
 export const feedSlice = createSlice({
@@ -61,7 +59,7 @@ export const feedSlice = createSlice({
 		},
 		wsDisconnect: (state, action) => {
 			console.log('wsDisconnect', action);
-					},
+		},
 		wsMessage: {
 			reducer: (state, action: PayloadAction<any>) => {
 				console.log(action);
@@ -69,7 +67,7 @@ export const feedSlice = createSlice({
 				state.total = action.payload.total;
 				state.totalToday = action.payload.totalToday;
 			},
-			prepare: ({ orders, total, totalToday })  => {
+			prepare: ({ orders, total, totalToday }) => {
 				const ordersWithId = orders.map((item: TOrder) => ({ ...item, id: uuid() }));
 				return {
 					payload: {
@@ -93,7 +91,7 @@ export const feedSlice = createSlice({
 			state.error = action.payload;
 		},
 	},
-		extraReducers: (builder) => {
+	extraReducers: (builder) => {
 		builder
 
 			.addCase(getOrder.fulfilled, (state, action: PayloadAction<TOrder>) => {
@@ -104,7 +102,7 @@ export const feedSlice = createSlice({
 			.addCase(getOrder.rejected, (state, action) => {
 				state.isSelectedOrderLoading = false;
 				state.error = action.payload || action.error.message;
-			})
+			});
 	},
 });
 

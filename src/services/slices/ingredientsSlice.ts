@@ -3,7 +3,7 @@ import { fetchIngredients } from '../../utils/api';
 import { TIngredient } from '../types/data';
 import { PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: TIngredientsState = {
+export const initialState: TIngredientsState = {
 	ingredients: [],
 	error: null,
 	isLoading: false,
@@ -13,12 +13,11 @@ type TIngredientsState = {
 	ingredients: TIngredient[];
 	error: null | undefined | string;
 	isLoading: boolean;
-}
+};
 
-export const getIngredients = createAsyncThunk<TIngredient[], void, { rejectValue: string } >(
+export const getIngredients = createAsyncThunk<TIngredient[], void, { rejectValue: string }>(
 	'ingredients/getIngredients',
 	async (_, { rejectWithValue }) => {
-
 		try {
 			const response = await fetchIngredients();
 			return response.data;
@@ -30,7 +29,7 @@ export const getIngredients = createAsyncThunk<TIngredient[], void, { rejectValu
 			}
 		}
 	},
-); 
+);
 
 export const ingredientsSlice = createSlice({
 	name: 'ingredients',
@@ -48,7 +47,7 @@ export const ingredientsSlice = createSlice({
 			return {
 				...initialState,
 				isLoading: false,
-				error:  action.payload || action.error.message
+				error: action.payload || action.error.message,
 			};
 		});
 	},
@@ -56,6 +55,8 @@ export const ingredientsSlice = createSlice({
 
 type TIngredientsActionCreators = typeof ingredientsSlice.actions;
 
-export type TIngredientsActions = ReturnType<TIngredientsActionCreators[keyof TIngredientsActionCreators]>;
+export type TIngredientsActions = ReturnType<
+	TIngredientsActionCreators[keyof TIngredientsActionCreators]
+>;
 
 export default ingredientsSlice.reducer;

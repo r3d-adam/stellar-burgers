@@ -2,16 +2,16 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchOrder } from '../../utils/api';
 import { TIngredient } from '../types/data';
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
 	orderId: null,
 	error: null,
 	isLoading: false,
 };
 
 type TOrderState = {
-	orderId: string | null,
-	error?: string | null | undefined,
-	isLoading: boolean,
+	orderId: string | null;
+	error?: string | null | undefined;
+	isLoading: boolean;
 };
 
 export const getOrder = createAsyncThunk(
@@ -24,7 +24,6 @@ export const getOrder = createAsyncThunk(
 
 			const response = await fetchOrder(fetchBody);
 			return response;
-
 		} catch (error) {
 			if (error instanceof Error) {
 				return rejectWithValue(error.message);

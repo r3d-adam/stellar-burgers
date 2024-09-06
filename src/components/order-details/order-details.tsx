@@ -13,7 +13,10 @@ const OrderDetails: FC = () => {
 		<div className={`${styles.modalContent} pt-15 pb-15`}>
 			{!isLoading && !error ? (
 				<>
-					<span className={`${styles.orderId} text text_type_digits-large mb-8`}>
+					<span
+						className={`${styles.orderId} text text_type_digits-large mb-8`}
+						data-testid="order-number"
+					>
 						{orderId}
 					</span>
 					<span className="text text_type_main-medium">идентификатор заказа</span>

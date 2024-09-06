@@ -32,11 +32,15 @@ const Modal: FC<ModalProps> = ({ onClose, children }): ReactPortal => {
 	}, [onClose]);
 
 	const modal = isOpen ? (
-		<div className={styles.modalContainer}>
+		<div className={styles.modalContainer} data-testid="modal">
 			<ModalOverlay onClose={onClose} />
 
 			<div className={`${styles.modal} p-10 pb-15`}>
-				<span className={styles.modalClose} onClick={onClose}></span>
+				<span
+					className={styles.modalClose}
+					onClick={onClose}
+					data-testid="modal-close"
+				></span>
 				<span className={`${styles.modalTitle} text text_type_main-large`}>{title}</span>
 				<div className={styles.modalContent}>{children}</div>
 			</div>

@@ -15,7 +15,7 @@ import {
 import { deleteTokens } from '../../utils/utils';
 import { AppDispatch, RootState } from '../store';
 
-const initialState: UserState = {
+export const initialState: UserState = {
 	user: null,
 	isAuthChecked: false,
 	isLoading: false,
@@ -24,12 +24,12 @@ const initialState: UserState = {
 };
 
 type UserState = {
-	user: null | TUser,
-	isAuthChecked: boolean,
-	isLoading: boolean,
-	error: null | undefined | string,
-	forgotPasswordSuccess: boolean,
-}
+	user: null | TUser;
+	isAuthChecked: boolean;
+	isLoading: boolean;
+	error: null | undefined | string;
+	forgotPasswordSuccess: boolean;
+};
 
 const setLoading = (state: UserState) => {
 	state.isLoading = true;
@@ -51,12 +51,12 @@ export const getUser = createAsyncThunk('user/getUser', async (_, { rejectWithVa
 		const response = await fetchUserData();
 		return response;
 	} catch (error: unknown) {
-			if (error instanceof Error) {
-				return rejectWithValue(error.message);
-			} else {
-				return rejectWithValue('An unknown error occurred');
-			}
+		if (error instanceof Error) {
+			return rejectWithValue(error.message);
+		} else {
+			return rejectWithValue('An unknown error occurred');
 		}
+	}
 });
 
 export const registerUser = createAsyncThunk<TRegisterUserResponse, TUserWithPassword>(
@@ -75,57 +75,63 @@ export const registerUser = createAsyncThunk<TRegisterUserResponse, TUserWithPas
 	},
 );
 
-export const login = createAsyncThunk('user/login', async (user: {email: string; password: string}, { rejectWithValue }) => {
-	try {
-		const response = await loginRequest(user);
-		return response;
-	} catch (error: unknown) {
+export const login = createAsyncThunk(
+	'user/login',
+	async (user: { email: string; password: string }, { rejectWithValue }) => {
+		try {
+			const response = await loginRequest(user);
+			return response;
+		} catch (error: unknown) {
 			if (error instanceof Error) {
 				return rejectWithValue(error.message);
 			} else {
 				return rejectWithValue('An unknown error occurred');
 			}
 		}
-});
+	},
+);
 
 export const logout = createAsyncThunk<
-  TLogoutResponse,
-  undefined, 
-  {
-    rejectValue: string;
-    state: RootState;
-    dispatch: AppDispatch;
-  }
+	TLogoutResponse,
+	undefined,
+	{
+		rejectValue: string;
+		state: RootState;
+		dispatch: AppDispatch;
+	}
 >('user/logout', async (_, { rejectWithValue }) => {
 	try {
 		const response = await logoutRequest();
 		deleteTokens();
 		return response;
 	} catch (error: unknown) {
-			if (error instanceof Error) {
-				return rejectWithValue(error.message);
-			} else {
-				return rejectWithValue('An unknown error occurred');
-			}
+		if (error instanceof Error) {
+			return rejectWithValue(error.message);
+		} else {
+			return rejectWithValue('An unknown error occurred');
 		}
+	}
 });
 
-export const updateUser = createAsyncThunk('user/updateUser', async (user: TUser | TUserWithPassword, { rejectWithValue }) => {
-	try {
-		const u: TUser & {password?: string} = { ...user };
-		if ('password' in u && u.password && u.password.length === 0) {
-			delete u.password;
-		}
-		const response = await updateUserRequest(u);
-		return response;
-	} catch (error: unknown) {
+export const updateUser = createAsyncThunk(
+	'user/updateUser',
+	async (user: TUser | TUserWithPassword, { rejectWithValue }) => {
+		try {
+			const u: TUser & { password?: string } = { ...user };
+			if ('password' in u && u.password && u.password.length === 0) {
+				delete u.password;
+			}
+			const response = await updateUserRequest(u);
+			return response;
+		} catch (error: unknown) {
 			if (error instanceof Error) {
 				return rejectWithValue(error.message);
 			} else {
 				return rejectWithValue('An unknown error occurred');
 			}
 		}
-});
+	},
+);
 
 export const forgotPassword = createAsyncThunk(
 	'user/forgotPassword',
@@ -145,8 +151,10 @@ export const forgotPassword = createAsyncThunk(
 
 export const resetPassword = createAsyncThunk(
 	'user/resetPassword',
-	async ({ newPassword, emailCode }: { newPassword: string;
-    emailCode: string;}, { rejectWithValue }) => {
+	async (
+		{ newPassword, emailCode }: { newPassword: string; emailCode: string },
+		{ rejectWithValue },
+	) => {
 		try {
 			const response = await resetPasswordRequest({ newPassword, emailCode });
 			return response;
@@ -193,11 +201,14 @@ export const userSlice = createSlice({
 			})
 			.addCase(getUser.rejected, setError)
 			.addCase(registerUser.pending, setLoading)
-			.addCase(registerUser.fulfilled, (state, action: PayloadAction<TRegisterUserResponse>) => {
-				setFulfilled(state);
-				state.isAuthChecked = true;
-				state.user = action.payload.user;
-			})
+			.addCase(
+				registerUser.fulfilled,
+				(state, action: PayloadAction<TRegisterUserResponse>) => {
+					setFulfilled(state);
+					state.isAuthChecked = true;
+					state.user = action.payload.user;
+				},
+			)
 			.addCase(registerUser.rejected, setError)
 			.addCase(updateUser.pending, setLoading)
 			.addCase(updateUser.fulfilled, (state, action) => {

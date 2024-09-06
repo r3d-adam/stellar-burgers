@@ -121,7 +121,13 @@ const BurgerConstructor: FC = () => {
 				<span className={`${styles.orderTotal} digittext text_type_digits-medium`}>
 					{totalPrice} <CurrencyIcon type={'primary'} />
 				</span>
-				<Button htmlType="button" type="primary" size="medium" onClick={handleClick}>
+				<Button
+					htmlType="button"
+					type="primary"
+					size="medium"
+					onClick={handleClick}
+					data-testid="order-button"
+				>
 					Оформить заказ
 				</Button>
 
