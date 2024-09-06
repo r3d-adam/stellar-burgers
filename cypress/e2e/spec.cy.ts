@@ -50,6 +50,10 @@ describe('home page test', () => {
 			'have.text',
 			'53',
 		);
+
+		cy.log('Нажимаем на кнопку закрытия модального окна и проверяем');
+		cy.get('[data-testid="modal-close"]').click();
+		cy.get('[data-testid="modal"]').should('not.exist');
 	});
 
 	it('should make order', () => {
