@@ -70,6 +70,7 @@ const DropTarget: FC<IDropTargetProps> = ({ id = 0, type = 'ingredient', childre
 				}
 				dispatch(addIngredient({ ingredient, index: newIndex }));
 			}
+			setDropLocation(null);
 		},
 		hover: (ingredient: TIngredientWithID, monitor) => {
 			const clientY = monitor.getClientOffset()?.y;

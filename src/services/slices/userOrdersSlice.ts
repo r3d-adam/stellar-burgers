@@ -3,7 +3,6 @@ import { v4 as uuid } from 'uuid';
 import { getOrderRequest } from '../../utils/api';
 import { RootState } from '../store';
 import { TOrder } from '../types/data';
- 
 
 export type IUserOrdersState = {
 	orders: TOrder[];
@@ -15,7 +14,7 @@ export type IUserOrdersState = {
 	isSelectedOrderLoading: boolean;
 };
 
-const initialState: IUserOrdersState = {
+export const initialState: IUserOrdersState = {
 	orders: [],
 	total: 0,
 	totalToday: 0,
@@ -26,31 +25,30 @@ const initialState: IUserOrdersState = {
 };
 
 export const getOrder = createAsyncThunk<TOrder, number, { rejectValue: string }>(
-  'userOrders/getOrder',
-  async (orderNumber, { rejectWithValue, getState }) => {
-    const { userOrders } = getState() as RootState;
-    const order = userOrders.orders.find((order: TOrder) => order.number === orderNumber);
-    
-    if (order) {
-      return order;
-    } else {
-      try {
-        const response = await getOrderRequest(orderNumber);
-        if (response.orders.length === 0) {
-          return rejectWithValue('Order not found');
-        }
-        return response.orders[0];
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          return rejectWithValue(error.message);
-        } else {
-          return rejectWithValue('An unknown error occurred');
-        }
-      }
-    }
-  }
-);
+	'userOrders/getOrder',
+	async (orderNumber, { rejectWithValue, getState }) => {
+		const { userOrders } = getState() as RootState;
+		const order = userOrders.orders.find((order: TOrder) => order.number === orderNumber);
 
+		if (order) {
+			return order;
+		} else {
+			try {
+				const response = await getOrderRequest(orderNumber);
+				if (response.orders.length === 0 || response.orders[0].number !== orderNumber) {
+					return rejectWithValue('Order not found');
+				}
+				return response.orders[0];
+			} catch (error: unknown) {
+				if (error instanceof Error) {
+					return rejectWithValue(error.message);
+				} else {
+					return rejectWithValue('An unknown error occurred');
+				}
+			}
+		}
+	},
+);
 
 export const userOrdersSlice = createSlice({
 	name: 'userOrders',
@@ -69,7 +67,7 @@ export const userOrdersSlice = createSlice({
 				state.total = action.payload.total;
 				state.totalToday = action.payload.totalToday;
 			},
-			prepare: ({ orders, total, totalToday })  => {
+			prepare: ({ orders, total, totalToday }) => {
 				const ordersWithId = orders.map((item: TOrder) => ({ ...item, id: uuid() }));
 				return {
 					payload: {
@@ -93,11 +91,9 @@ export const userOrdersSlice = createSlice({
 			state.error = action.payload;
 		},
 	},
-		extraReducers: (builder) => {
+	extraReducers: (builder) => {
 		builder
-			.addCase(getOrder.pending, (state, action) => {
-
-			})
+			.addCase(getOrder.pending, (state, action) => {})
 			.addCase(getOrder.fulfilled, (state, action: PayloadAction<TOrder>) => {
 				state.isSelectedOrderLoading = false;
 				state.error = null;
@@ -105,14 +101,17 @@ export const userOrdersSlice = createSlice({
 			})
 			.addCase(getOrder.rejected, (state, action) => {
 				state.isSelectedOrderLoading = false;
-				state.error =  action.payload || action.error.message;
-			})
+				state.error = action.payload || action.error.message;
+			});
 	},
 });
 
 type TUserOrdersActionCreators = typeof userOrdersSlice.actions;
 
-export type TUserOrdersActions = ReturnType<TUserOrdersActionCreators[keyof TUserOrdersActionCreators]>;
+export type TUserOrdersActions = ReturnType<
+	TUserOrdersActionCreators[keyof TUserOrdersActionCreators]
+>;
 
-export const { wsConnect, wsDisconnect, wsMessage, wsOpen, wsClose, wsError } = userOrdersSlice.actions;
+export const { wsConnect, wsDisconnect, wsMessage, wsOpen, wsClose, wsError } =
+	userOrdersSlice.actions;
 export default userOrdersSlice.reducer;
