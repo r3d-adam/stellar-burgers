@@ -1,3 +1,4 @@
+/* eslint-disable  */
 import reducer, {
 	initialState,
 	setUser,
@@ -10,6 +11,7 @@ import reducer, {
 	resetPassword,
 	updateUser,
 } from './userSlice';
+/* eslint-enable  */
 
 const mockUser = { name: 'Test User', email: 'test@testmail.com' };
 

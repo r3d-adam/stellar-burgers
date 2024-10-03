@@ -22,7 +22,6 @@ export const request = <T>(url: RequestInfo, options?: any): Promise<T> => {
 	return fetch(url, options).then(checkResponse<T>);
 };
 
-
 export const setTokens = <T extends TRefreshResponse>(tokenData: T): Promise<T> => {
 	if (!tokenData.success) {
 		return Promise.reject(tokenData);
@@ -36,3 +35,14 @@ export const deleteTokens = () => {
 	localStorage.removeItem('accessToken');
 	localStorage.removeItem('refreshToken');
 };
+
+export function handleError(error: unknown): string {
+	if (error instanceof Error && error.message) {
+		return error.message;
+	} else {
+		if (error && typeof error === 'object' && 'message' in error) {
+			return (error as { message: string }).message;
+		}
+		return 'An unknown error occurred';
+	}
+}

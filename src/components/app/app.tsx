@@ -61,6 +61,7 @@ const App: FC = () => {
 			<main className={styles.mainContainer}>
 				<Routes location={state?.backgroundLocation || location}>
 					<Route path="/" element={<Home />} />
+					<Route path="/stellar-burgers" element={<Home />} />
 					<Route path="/login" element={<OnlyUnAuth element={<LoginPage />} />} />
 					<Route path="/register" element={<OnlyUnAuth element={<RegisterPage />} />} />
 					<Route

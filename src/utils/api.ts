@@ -3,8 +3,6 @@ import { request, checkResponse, setTokens, TServerResponse, TRefreshResponse } 
 
 export const BASE_URL = 'https://norma.nomoreparties.space/api';
 
-
-
 type TIngredientsResponse = TServerResponse<{
 	data: TIngredient[];
 }>;
@@ -26,7 +24,9 @@ type TFetchOrderResponse = TServerResponse<{
 	};
 }>;
 
-export const fetchOrder = (ingredients: { ingredients: string[]}): Promise<TFetchOrderResponse> => {
+export const fetchOrder = (ingredients: {
+	ingredients: string[];
+}): Promise<TFetchOrderResponse> => {
 	return fetchWithRefresh<TFetchOrderResponse>(`${BASE_URL}/orders`, {
 		method: 'POST',
 		headers: {
@@ -66,7 +66,7 @@ export const fetchWithRefresh = async <T>(url: RequestInfo, options: any): Promi
 	}
 };
 
-type TUserResponse = TServerResponse<
+export type TUserResponse = TServerResponse<
 	{
 		user: { email: string; name: string };
 	} & TRefreshResponse
@@ -78,9 +78,11 @@ export const fetchUserData = () => {
 	});
 };
 
-export type TRegisterUserResponse = TServerResponse<{
-	user: TUser;
-} & TRefreshResponse>;
+export type TRegisterUserResponse = TServerResponse<
+	{
+		user: TUser;
+	} & TRefreshResponse
+>;
 
 export type TUser = {
 	email: string;
@@ -105,7 +107,10 @@ type TLoginResponse = TServerResponse<
 	} & TRefreshResponse
 >;
 
-export const loginRequest = (user: {email: string; password: string}): Promise<TLoginResponse> => {
+export const loginRequest = (user: {
+	email: string;
+	password: string;
+}): Promise<TLoginResponse> => {
 	return request<TLoginResponse>(`${BASE_URL}/auth/login`, {
 		method: 'POST',
 		headers: {
@@ -176,9 +181,11 @@ export const resetPasswordRequest = ({
 	});
 };
 
-
-
-export type TGetOrderResponse = TServerResponse<{ orders: TOrder[]; total: number; totalToday: number }>;
+export type TGetOrderResponse = TServerResponse<{
+	orders: TOrder[];
+	total: number;
+	totalToday: number;
+}>;
 
 export const getOrderRequest = (number: number): Promise<TGetOrderResponse> => {
 	return request<TGetOrderResponse>(`${BASE_URL}/orders/${number}`);

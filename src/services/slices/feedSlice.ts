@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { getOrderRequest } from '../../utils/api';
 import { RootState } from '../store';
 import { TOrder } from '../types/data';
+import { handleError } from '../../utils/utils';
 
 export type TFeedState = {
 	orders: TOrder[];
@@ -40,11 +41,7 @@ export const getOrder = createAsyncThunk<TOrder, number, { rejectValue: string }
 				}
 				return response.orders[0];
 			} catch (error: unknown) {
-				if (error instanceof Error) {
-					return rejectWithValue(error.message);
-				} else {
-					return rejectWithValue('An unknown error occurred');
-				}
+				return rejectWithValue(handleError(error));
 			}
 		}
 	},
@@ -101,7 +98,7 @@ export const feedSlice = createSlice({
 			})
 			.addCase(getOrder.rejected, (state, action) => {
 				state.isSelectedOrderLoading = false;
-				state.error = action.payload || action.error.message;
+				state.error = action.payload || 'An unknown error occurred';
 			});
 	},
 });

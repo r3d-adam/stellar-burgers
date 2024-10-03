@@ -11,8 +11,9 @@ import {
 	TUser,
 	TRegisterUserResponse,
 	TLogoutResponse,
+	TUserResponse,
 } from '../../utils/api';
-import { deleteTokens } from '../../utils/utils';
+import { deleteTokens, handleError } from '../../utils/utils';
 import { AppDispatch, RootState } from '../store';
 
 export const initialState: UserState = {
@@ -46,18 +47,17 @@ const setError = (state: UserState, action: any) => {
 	state.error = action.payload || action.error.message;
 };
 
-export const getUser = createAsyncThunk('user/getUser', async (_, { rejectWithValue }) => {
-	try {
-		const response = await fetchUserData();
-		return response;
-	} catch (error: unknown) {
-		if (error instanceof Error) {
-			return rejectWithValue(error.message);
-		} else {
-			return rejectWithValue('An unknown error occurred');
+export const getUser = createAsyncThunk<TUserResponse>(
+	'user/getUser',
+	async (_, { rejectWithValue }) => {
+		try {
+			const response = await fetchUserData();
+			return response;
+		} catch (error: unknown) {
+			return rejectWithValue(handleError(error));
 		}
-	}
-});
+	},
+);
 
 export const registerUser = createAsyncThunk<TRegisterUserResponse, TUserWithPassword>(
 	'user/registerUser',
@@ -66,27 +66,25 @@ export const registerUser = createAsyncThunk<TRegisterUserResponse, TUserWithPas
 			const response = await registerUserRequest(user);
 			return response;
 		} catch (error: unknown) {
-			if (error instanceof Error) {
-				return rejectWithValue(error.message);
-			} else {
-				return rejectWithValue('An unknown error occurred');
-			}
+			return rejectWithValue(handleError(error));
 		}
 	},
 );
 
 export const login = createAsyncThunk(
 	'user/login',
-	async (user: { email: string; password: string }, { rejectWithValue }) => {
+	async (
+		user: {
+			email: string;
+			password: string;
+		},
+		{ rejectWithValue },
+	) => {
 		try {
 			const response = await loginRequest(user);
 			return response;
 		} catch (error: unknown) {
-			if (error instanceof Error) {
-				return rejectWithValue(error.message);
-			} else {
-				return rejectWithValue('An unknown error occurred');
-			}
+			return rejectWithValue(handleError(error));
 		}
 	},
 );
@@ -95,7 +93,7 @@ export const logout = createAsyncThunk<
 	TLogoutResponse,
 	undefined,
 	{
-		rejectValue: string;
+		rejectValue: unknown;
 		state: RootState;
 		dispatch: AppDispatch;
 	}
@@ -105,11 +103,7 @@ export const logout = createAsyncThunk<
 		deleteTokens();
 		return response;
 	} catch (error: unknown) {
-		if (error instanceof Error) {
-			return rejectWithValue(error.message);
-		} else {
-			return rejectWithValue('An unknown error occurred');
-		}
+		return rejectWithValue(handleError(error));
 	}
 });
 
@@ -124,11 +118,7 @@ export const updateUser = createAsyncThunk(
 			const response = await updateUserRequest(u);
 			return response;
 		} catch (error: unknown) {
-			if (error instanceof Error) {
-				return rejectWithValue(error.message);
-			} else {
-				return rejectWithValue('An unknown error occurred');
-			}
+			return rejectWithValue(handleError(error));
 		}
 	},
 );
@@ -140,11 +130,7 @@ export const forgotPassword = createAsyncThunk(
 			const response = await forgotPasswordRequest(email);
 			return response;
 		} catch (error: unknown) {
-			if (error instanceof Error) {
-				return rejectWithValue(error.message);
-			} else {
-				return rejectWithValue('An unknown error occurred');
-			}
+			return rejectWithValue(handleError(error));
 		}
 	},
 );
@@ -159,11 +145,7 @@ export const resetPassword = createAsyncThunk(
 			const response = await resetPasswordRequest({ newPassword, emailCode });
 			return response;
 		} catch (error: unknown) {
-			if (error instanceof Error) {
-				return rejectWithValue(error.message);
-			} else {
-				return rejectWithValue('An unknown error occurred');
-			}
+			return rejectWithValue(handleError(error));
 		}
 	},
 );

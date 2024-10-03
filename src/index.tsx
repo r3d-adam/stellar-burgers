@@ -9,7 +9,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 const root = ReactDOM.createRoot(document.querySelector('#root') as HTMLElement);
 root.render(
 	<Provider store={store}>
-		<Router>
+		<Router basename="/stellar-burgers">
 			<App />
 		</Router>
 	</Provider>,

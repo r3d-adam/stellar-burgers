@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchIngredients } from '../../utils/api';
 import { TIngredient } from '../types/data';
 import { PayloadAction } from '@reduxjs/toolkit';
+import { handleError } from '../../utils/utils';
 
 export const initialState: TIngredientsState = {
 	ingredients: [],
@@ -15,18 +16,14 @@ type TIngredientsState = {
 	isLoading: boolean;
 };
 
-export const getIngredients = createAsyncThunk<TIngredient[], void, { rejectValue: string }>(
+export const getIngredients = createAsyncThunk<TIngredient[], void, { rejectValue: unknown }>(
 	'ingredients/getIngredients',
 	async (_, { rejectWithValue }) => {
 		try {
 			const response = await fetchIngredients();
 			return response.data;
 		} catch (error: unknown) {
-			if (error instanceof Error) {
-				return rejectWithValue(error.message);
-			} else {
-				return rejectWithValue('An unknown error occurred');
-			}
+			return rejectWithValue(handleError(error));
 		}
 	},
 );
@@ -47,7 +44,7 @@ export const ingredientsSlice = createSlice({
 			return {
 				...initialState,
 				isLoading: false,
-				error: action.payload || action.error.message,
+				error: action.error.message,
 			};
 		});
 	},

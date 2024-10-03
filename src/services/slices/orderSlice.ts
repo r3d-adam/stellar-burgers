@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchOrder } from '../../utils/api';
 import { TIngredient } from '../types/data';
+import { handleError } from '../../utils/utils';
 
 export const initialState: TOrderState = {
 	orderId: null,
@@ -25,11 +26,7 @@ export const getOrder = createAsyncThunk(
 			const response = await fetchOrder(fetchBody);
 			return response;
 		} catch (error) {
-			if (error instanceof Error) {
-				return rejectWithValue(error.message);
-			} else {
-				return rejectWithValue(error);
-			}
+			return rejectWithValue(handleError(error));
 		}
 	},
 );
