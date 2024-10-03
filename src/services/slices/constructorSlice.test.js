@@ -1,10 +1,10 @@
+import { v4 as uuid } from 'uuid';
 import reducer, {
 	deleteIngredient,
 	addIngredient,
 	moveIngredient,
-	initialState,
+	initialState
 } from './constructorSlice';
-import { v4 as uuid } from 'uuid';
 
 jest.mock('uuid');
 
@@ -32,7 +32,7 @@ describe('constructor reducer', () => {
 			image: 'https://code.s3.yandex.net/react/code/bun-02.png',
 			image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
 			image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
-			__v: 0,
+			__v: 0
 		};
 
 		expect(
@@ -40,9 +40,9 @@ describe('constructor reducer', () => {
 				undefined,
 				addIngredient({
 					index: 0,
-					ingredient: { ...newIngredient, id: 'test-id' },
-				}),
-			),
+					ingredient: { ...newIngredient, id: 'test-id' }
+				})
+			)
 		).toEqual({
 			...initialState,
 			bun: {
@@ -58,8 +58,8 @@ describe('constructor reducer', () => {
 				image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
 				image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
 				__v: 0,
-				id: 'test-id',
-			},
+				id: 'test-id'
+			}
 		});
 	});
 
@@ -80,7 +80,7 @@ describe('constructor reducer', () => {
 				image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
 				image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
 				__v: 0,
-				id: '05cb3e0d-557c-4c68-8ff4-5ee5b210e814',
+				id: '05cb3e0d-557c-4c68-8ff4-5ee5b210e814'
 			},
 			constructorIngredients: [
 				{
@@ -96,7 +96,7 @@ describe('constructor reducer', () => {
 					image_mobile: 'https://code.s3.yandex.net/react/code/sauce-04-mobile.png',
 					image_large: 'https://code.s3.yandex.net/react/code/sauce-04-large.png',
 					__v: 0,
-					id: '6fb52524-c162-4772-b2e0-be88e0128965',
+					id: '6fb52524-c162-4772-b2e0-be88e0128965'
 				},
 				{
 					_id: '643d69a5c3f7b9001cfa0945',
@@ -111,7 +111,7 @@ describe('constructor reducer', () => {
 					image_mobile: 'https://code.s3.yandex.net/react/code/sauce-01-mobile.png',
 					image_large: 'https://code.s3.yandex.net/react/code/sauce-01-large.png',
 					__v: 0,
-					id: '54fd8cd1-18a6-43e7-970d-03f01097e57b',
+					id: '54fd8cd1-18a6-43e7-970d-03f01097e57b'
 				},
 				{
 					_id: '643d69a5c3f7b9001cfa0949',
@@ -126,7 +126,7 @@ describe('constructor reducer', () => {
 					image_mobile: 'https://code.s3.yandex.net/react/code/salad-mobile.png',
 					image_large: 'https://code.s3.yandex.net/react/code/salad-large.png',
 					__v: 0,
-					id: 'ec499616-0751-46db-bf29-3ae1b761b41b',
+					id: 'ec499616-0751-46db-bf29-3ae1b761b41b'
 				},
 				{
 					_id: '643d69a5c3f7b9001cfa0940',
@@ -141,7 +141,7 @@ describe('constructor reducer', () => {
 					image_mobile: 'https://code.s3.yandex.net/react/code/meat-04-mobile.png',
 					image_large: 'https://code.s3.yandex.net/react/code/meat-04-large.png',
 					__v: 0,
-					id: '2decd930-2f5c-4279-8da9-d7afa9807e02',
+					id: '2decd930-2f5c-4279-8da9-d7afa9807e02'
 				},
 				{
 					_id: '643d69a5c3f7b9001cfa0947',
@@ -156,7 +156,7 @@ describe('constructor reducer', () => {
 					image_mobile: 'https://code.s3.yandex.net/react/code/sp_1-mobile.png',
 					image_large: 'https://code.s3.yandex.net/react/code/sp_1-large.png',
 					__v: 0,
-					id: 'ff70057b-0284-4885-96fc-155ce3758987',
+					id: 'ff70057b-0284-4885-96fc-155ce3758987'
 				},
 				{
 					_id: '643d69a5c3f7b9001cfa094a',
@@ -171,9 +171,9 @@ describe('constructor reducer', () => {
 					image_mobile: 'https://code.s3.yandex.net/react/code/cheese-mobile.png',
 					image_large: 'https://code.s3.yandex.net/react/code/cheese-large.png',
 					__v: 0,
-					id: '8fa8c5dc-e281-456d-9e06-26af7c4ac123',
-				},
-			],
+					id: '8fa8c5dc-e281-456d-9e06-26af7c4ac123'
+				}
+			]
 		};
 
 		expect(
@@ -193,11 +193,11 @@ describe('constructor reducer', () => {
 						image_mobile: 'https://code.s3.yandex.net/react/code/cheese-mobile.png',
 						image_large: 'https://code.s3.yandex.net/react/code/cheese-large.png',
 						__v: 0,
-						id: '8fa8c5dc-e281-456d-9e06-26af7c4ac123',
+						id: '8fa8c5dc-e281-456d-9e06-26af7c4ac123'
 					},
-					index: 2,
-				}),
-			),
+					index: 2
+				})
+			)
 		).toEqual({
 			bun: {
 				_id: '643d69a5c3f7b9001cfa093c',
@@ -212,7 +212,7 @@ describe('constructor reducer', () => {
 				image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
 				image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
 				__v: 0,
-				id: '05cb3e0d-557c-4c68-8ff4-5ee5b210e814',
+				id: '05cb3e0d-557c-4c68-8ff4-5ee5b210e814'
 			},
 			constructorIngredients: [
 				{
@@ -228,7 +228,7 @@ describe('constructor reducer', () => {
 					image_mobile: 'https://code.s3.yandex.net/react/code/sauce-04-mobile.png',
 					image_large: 'https://code.s3.yandex.net/react/code/sauce-04-large.png',
 					__v: 0,
-					id: '6fb52524-c162-4772-b2e0-be88e0128965',
+					id: '6fb52524-c162-4772-b2e0-be88e0128965'
 				},
 				{
 					_id: '643d69a5c3f7b9001cfa0945',
@@ -243,7 +243,7 @@ describe('constructor reducer', () => {
 					image_mobile: 'https://code.s3.yandex.net/react/code/sauce-01-mobile.png',
 					image_large: 'https://code.s3.yandex.net/react/code/sauce-01-large.png',
 					__v: 0,
-					id: '54fd8cd1-18a6-43e7-970d-03f01097e57b',
+					id: '54fd8cd1-18a6-43e7-970d-03f01097e57b'
 				},
 				{
 					_id: '643d69a5c3f7b9001cfa094a',
@@ -258,7 +258,7 @@ describe('constructor reducer', () => {
 					image_mobile: 'https://code.s3.yandex.net/react/code/cheese-mobile.png',
 					image_large: 'https://code.s3.yandex.net/react/code/cheese-large.png',
 					__v: 0,
-					id: '8fa8c5dc-e281-456d-9e06-26af7c4ac123',
+					id: '8fa8c5dc-e281-456d-9e06-26af7c4ac123'
 				},
 				{
 					_id: '643d69a5c3f7b9001cfa0949',
@@ -273,7 +273,7 @@ describe('constructor reducer', () => {
 					image_mobile: 'https://code.s3.yandex.net/react/code/salad-mobile.png',
 					image_large: 'https://code.s3.yandex.net/react/code/salad-large.png',
 					__v: 0,
-					id: 'ec499616-0751-46db-bf29-3ae1b761b41b',
+					id: 'ec499616-0751-46db-bf29-3ae1b761b41b'
 				},
 				{
 					_id: '643d69a5c3f7b9001cfa0940',
@@ -288,7 +288,7 @@ describe('constructor reducer', () => {
 					image_mobile: 'https://code.s3.yandex.net/react/code/meat-04-mobile.png',
 					image_large: 'https://code.s3.yandex.net/react/code/meat-04-large.png',
 					__v: 0,
-					id: '2decd930-2f5c-4279-8da9-d7afa9807e02',
+					id: '2decd930-2f5c-4279-8da9-d7afa9807e02'
 				},
 				{
 					_id: '643d69a5c3f7b9001cfa0947',
@@ -303,9 +303,9 @@ describe('constructor reducer', () => {
 					image_mobile: 'https://code.s3.yandex.net/react/code/sp_1-mobile.png',
 					image_large: 'https://code.s3.yandex.net/react/code/sp_1-large.png',
 					__v: 0,
-					id: 'ff70057b-0284-4885-96fc-155ce3758987',
-				},
-			],
+					id: 'ff70057b-0284-4885-96fc-155ce3758987'
+				}
+			]
 		});
 	});
 
@@ -324,7 +324,7 @@ describe('constructor reducer', () => {
 				image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
 				image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
 				__v: 0,
-				id: '05cb3e0d-557c-4c68-8ff4-5ee5b210e814',
+				id: '05cb3e0d-557c-4c68-8ff4-5ee5b210e814'
 			},
 			constructorIngredients: [
 				{
@@ -340,7 +340,7 @@ describe('constructor reducer', () => {
 					image_mobile: 'https://code.s3.yandex.net/react/code/sauce-04-mobile.png',
 					image_large: 'https://code.s3.yandex.net/react/code/sauce-04-large.png',
 					__v: 0,
-					id: '6fb52524-c162-4772-b2e0-be88e0128965',
+					id: '6fb52524-c162-4772-b2e0-be88e0128965'
 				},
 				{
 					_id: '643d69a5c3f7b9001cfa0949',
@@ -355,9 +355,9 @@ describe('constructor reducer', () => {
 					image_mobile: 'https://code.s3.yandex.net/react/code/salad-mobile.png',
 					image_large: 'https://code.s3.yandex.net/react/code/salad-large.png',
 					__v: 0,
-					id: 'ec499616-0751-46db-bf29-3ae1b761b41b',
-				},
-			],
+					id: 'ec499616-0751-46db-bf29-3ae1b761b41b'
+				}
+			]
 		};
 
 		expect(reducer(state, deleteIngredient('6fb52524-c162-4772-b2e0-be88e0128965'))).toEqual({
@@ -374,7 +374,7 @@ describe('constructor reducer', () => {
 				image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
 				image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
 				__v: 0,
-				id: '05cb3e0d-557c-4c68-8ff4-5ee5b210e814',
+				id: '05cb3e0d-557c-4c68-8ff4-5ee5b210e814'
 			},
 			constructorIngredients: [
 				{
@@ -390,9 +390,9 @@ describe('constructor reducer', () => {
 					image_mobile: 'https://code.s3.yandex.net/react/code/salad-mobile.png',
 					image_large: 'https://code.s3.yandex.net/react/code/salad-large.png',
 					__v: 0,
-					id: 'ec499616-0751-46db-bf29-3ae1b761b41b',
-				},
-			],
+					id: 'ec499616-0751-46db-bf29-3ae1b761b41b'
+				}
+			]
 		});
 	});
 });

@@ -18,7 +18,7 @@ export type TRefreshResponse = TServerResponse<{
 	accessToken: string;
 }>;
 
-export const request = <T>(url: RequestInfo, options?: any): Promise<T> => {
+export const request = <T>(url: string, options?: any): Promise<T> => {
 	return fetch(url, options).then(checkResponse<T>);
 };
 

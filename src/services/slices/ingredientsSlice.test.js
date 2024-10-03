@@ -13,7 +13,7 @@ const mockIngredients = [
 		image: 'https://code.s3.yandex.net/react/code/bun-02.png',
 		image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
 		image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
-		__v: 0,
+		__v: 0
 	},
 	{
 		_id: '643d69a5c3f7b9001cfa0941',
@@ -27,7 +27,7 @@ const mockIngredients = [
 		image: 'https://code.s3.yandex.net/react/code/meat-01.png',
 		image_mobile: 'https://code.s3.yandex.net/react/code/meat-01-mobile.png',
 		image_large: 'https://code.s3.yandex.net/react/code/meat-01-large.png',
-		__v: 0,
+		__v: 0
 	},
 	{
 		_id: '643d69a5c3f7b9001cfa093e',
@@ -41,8 +41,8 @@ const mockIngredients = [
 		image: 'https://code.s3.yandex.net/react/code/meat-03.png',
 		image_mobile: 'https://code.s3.yandex.net/react/code/meat-03-mobile.png',
 		image_large: 'https://code.s3.yandex.net/react/code/meat-03-large.png',
-		__v: 0,
-	},
+		__v: 0
+	}
 ];
 
 describe('ingredients reducer', () => {
@@ -60,7 +60,7 @@ describe('ingredients reducer', () => {
 	test('should set ingredients when getIngredients.fulfilled and isLoading to false', () => {
 		const state = reducer(undefined, {
 			type: getIngredients.fulfilled,
-			payload: mockIngredients,
+			payload: mockIngredients
 		});
 		const { isLoading, error, ingredients } = state;
 
@@ -73,7 +73,7 @@ describe('ingredients reducer', () => {
 		const errorMessage = 'unexpected error';
 		const state = reducer(undefined, {
 			type: getIngredients.rejected,
-			error: { message: errorMessage },
+			error: { message: errorMessage }
 		});
 		const { isLoading, error } = state;
 

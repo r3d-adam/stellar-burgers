@@ -1,0 +1,78 @@
+{
+	"root": true,
+	// "parser": "babel-eslint",
+	"parser": "@typescript-eslint/parser",
+	"extends": [
+		"airbnb",
+		"react"
+	],
+	"env": {
+		"browser": true,
+		"node": true
+	},
+	"plugins": [
+		"@typescript-eslint",
+		"jest",
+		"react",
+		"jsx-a11y",
+		"import"
+	],
+	"settings": {
+		"import/resolver": {
+			"typescript": {
+				"extensions": [
+					".js",
+					".jsx",
+					".ts",
+					".tsx"
+				]
+			}
+		}
+	},
+	"overrides": [
+		{
+			"files": [
+				"src/**/*.test.js"
+			],
+			"plugins": [
+				"jest"
+			],
+			"extends": [
+				"plugin:jest/recommended"
+			],
+			"rules": {
+				"jest/prefer-expect-assertions": "off"
+			}
+		}
+	],
+	"rules": {
+		"no-unused-vars": 0,
+		"indent": [
+			"off",
+			4,
+			{
+				"SwitchCase": 1,
+			}
+		],
+		"no-tabs": [
+			"off",
+			{
+				"allowIndentationTabs": true,
+			}
+		],
+		"import/extensions": [
+			"error",
+			"ignorePackages",
+			{
+				"js": "never",
+				"jsx": "never",
+				"ts": "never",
+				"tsx": "never"
+			}
+		],
+		"object-curly-newline": 0,
+		"implicit-arrow-linebreak": 0,
+		"arrow-body-style": 0,
+		"comma-dangle": 0
+	}
+}

@@ -1,7 +1,9 @@
-import reducer, { wsOpen, wsClose, wsError, initialState, getOrder, wsMessage } from './feedSlice';
+import { v4 as uuid } from 'uuid';
+import reducer, {
+ wsOpen, wsClose, wsError, initialState, getOrder, wsMessage
+} from './feedSlice';
 import { getOrderRequest } from '../../utils/api';
 import { store } from '../store';
-import { v4 as uuid } from 'uuid';
 
 jest.mock('../../utils/api');
 // let store;
@@ -13,14 +15,14 @@ const mockOrders = [
 		ingredients: [
 			'643d69a5c3f7b9001cfa093d',
 			'643d69a5c3f7b9001cfa093d',
-			'643d69a5c3f7b9001cfa093e',
+			'643d69a5c3f7b9001cfa093e'
 		],
 		status: 'done',
 		name: 'Флюоресцентный люминесцентный бургер',
 		createdAt: '2024-09-06T00:57:52.389Z',
 		updatedAt: '2024-09-06T00:57:52.886Z',
 		number: 52042,
-		id: 'test-id1',
+		id: 'test-id1'
 	},
 	{
 		_id: '66da52d8119d45001b504856',
@@ -28,15 +30,15 @@ const mockOrders = [
 			'643d69a5c3f7b9001cfa093c',
 			'643d69a5c3f7b9001cfa093c',
 			'643d69a5c3f7b9001cfa093f',
-			'643d69a5c3f7b9001cfa093e',
+			'643d69a5c3f7b9001cfa093e'
 		],
 		status: 'done',
 		name: 'Краторный бессмертный люминесцентный бургер',
 		createdAt: '2024-09-06T00:54:48.683Z',
 		updatedAt: '2024-09-06T00:54:49.221Z',
 		number: 52041,
-		id: 'test-id2',
-	},
+		id: 'test-id2'
+	}
 ];
 
 describe('feed reducer', () => {
@@ -59,7 +61,7 @@ describe('feed reducer', () => {
 	test('should handle wsError', () => {
 		expect(reducer(undefined, wsError('error message'))).toEqual({
 			...initialState,
-			error: 'error message',
+			error: 'error message'
 		});
 	});
 
@@ -72,8 +74,8 @@ describe('feed reducer', () => {
 			wsMessage({
 				total: 3,
 				totalToday: 1,
-				orders: mockOrders,
-			}),
+				orders: mockOrders
+			})
 		);
 
 		expect(state.orders).toEqual(mockOrders);

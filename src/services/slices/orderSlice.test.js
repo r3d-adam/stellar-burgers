@@ -15,7 +15,7 @@ describe('order reducer', () => {
 	test('should set orderId when getOrder.fulfilled and isLoading to false', () => {
 		const state = reducer(undefined, {
 			type: getOrder.fulfilled,
-			payload: { order: { number: 1234 } },
+			payload: { order: { number: 1234 } }
 		});
 		const { isLoading, error, orderId } = state;
 
@@ -28,7 +28,7 @@ describe('order reducer', () => {
 		const errorMessage = 'unexpected error';
 		const state = reducer(undefined, {
 			type: getOrder.rejected,
-			error: { message: errorMessage },
+			error: { message: errorMessage }
 		});
 		const { isLoading, error } = state;
 

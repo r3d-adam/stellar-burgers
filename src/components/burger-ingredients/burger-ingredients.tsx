@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, FC } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { orderListShape, ingredientListShape } from '../../utils/propTypesShapes';
+import { orderListShape, ingredientListShape } from '../../utils/propTypesShapes.mjs';
 import IngredientsGroup from './ingredients-group/ingredients-group';
 import styles from './burger-ingredients.module.css';
 import { useDispatch, useSelector } from './../../services/store';

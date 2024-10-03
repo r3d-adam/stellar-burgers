@@ -7,9 +7,8 @@ type TIngredientsResponse = TServerResponse<{
 	data: TIngredient[];
 }>;
 
-export const fetchIngredients = (): Promise<TIngredientsResponse> => {
-	return request<TIngredientsResponse>(`${BASE_URL}/ingredients`);
-};
+export const fetchIngredients = (): Promise<TIngredientsResponse> =>
+	request<TIngredientsResponse>(`${BASE_URL}/ingredients`);
 
 type TFetchOrderResponse = TServerResponse<{
 	name: string;
@@ -24,21 +23,8 @@ type TFetchOrderResponse = TServerResponse<{
 	};
 }>;
 
-export const fetchOrder = (ingredients: {
-	ingredients: string[];
-}): Promise<TFetchOrderResponse> => {
-	return fetchWithRefresh<TFetchOrderResponse>(`${BASE_URL}/orders`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json;charset=utf-8',
-			'authorization': localStorage.getItem('accessToken'),
-		},
-		body: JSON.stringify(ingredients),
-	});
-};
-
-export const refreshToken = (): Promise<TRefreshResponse> => {
-	return request<TRefreshResponse>(`${BASE_URL}/auth/token`, {
+export const refreshToken = (): Promise<TRefreshResponse> =>
+	request<TRefreshResponse>(`${BASE_URL}/auth/token`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json;charset=utf-8',
@@ -47,9 +33,8 @@ export const refreshToken = (): Promise<TRefreshResponse> => {
 			token: localStorage.getItem('refreshToken'),
 		}),
 	}).then(setTokens<TRefreshResponse>);
-};
 
-export const fetchWithRefresh = async <T>(url: RequestInfo, options: any): Promise<T> => {
+export const fetchWithRefresh = async <T>(url: string, options: any): Promise<T> => {
 	try {
 		const res = await fetch(url, options);
 		return await checkResponse<T>(res);
@@ -59,12 +44,25 @@ export const fetchWithRefresh = async <T>(url: RequestInfo, options: any): Promi
 			const refreshData = await refreshToken();
 			options.headers.authorization = refreshData.accessToken;
 			const res = await fetch(url, options);
-			return await checkResponse<T>(res);
-		} else {
-			return Promise.reject(err);
+			try {
+				return await checkResponse<T>(res);
+			} catch (err) {
+				return Promise.reject(err);
+			}
 		}
+		return Promise.reject(err);
 	}
 };
+
+export const fetchOrder = (ingredients: { ingredients: string[] }): Promise<TFetchOrderResponse> =>
+	fetchWithRefresh<TFetchOrderResponse>(`${BASE_URL}/orders`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json;charset=utf-8',
+			'authorization': localStorage.getItem('accessToken'),
+		},
+		body: JSON.stringify(ingredients),
+	});
 
 export type TUserResponse = TServerResponse<
 	{
@@ -78,28 +76,28 @@ export const fetchUserData = () => {
 	});
 };
 
+export type TUser = {
+	email: string;
+	name: string;
+};
+
 export type TRegisterUserResponse = TServerResponse<
 	{
 		user: TUser;
 	} & TRefreshResponse
 >;
 
-export type TUser = {
-	email: string;
-	name: string;
-};
-
 export type TUserWithPassword = TUser & { password: string };
 
-export const registerUserRequest = (user: TUserWithPassword): Promise<TRegisterUserResponse> => {
-	return request<TRegisterUserResponse>(`${BASE_URL}/auth/register`, {
+// eslint-disable-next-line max-len
+export const registerUserRequest = (user: TUserWithPassword): Promise<TRegisterUserResponse> =>
+	request<TRegisterUserResponse>(`${BASE_URL}/auth/register`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json;charset=utf-8',
 		},
 		body: JSON.stringify(user),
 	}).then(setTokens<TRegisterUserResponse>);
-};
 
 type TLoginResponse = TServerResponse<
 	{
