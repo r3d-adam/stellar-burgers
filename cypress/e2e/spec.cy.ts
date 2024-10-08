@@ -1,4 +1,4 @@
-import { BASE_URL } from './../../src/utils/api';
+import { BASE_URL } from '../../src/utils/api';
 
 const selectors = {
 	orderButton: '[data-testid="order-button"]',
@@ -144,6 +144,7 @@ describe('home page test', () => {
 
 			cy.get(selectors.burgerConstructorList)
 				.find(selectors.constructorElement)
+				// eslint-disable-next-line max-nested-callbacks
 				.then((element) => {
 					const rect = Cypress.$(element)[0].getBoundingClientRect();
 

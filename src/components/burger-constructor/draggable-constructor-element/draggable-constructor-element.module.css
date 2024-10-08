@@ -1,3 +1,7 @@
+.draggableConstructorElement {
+	position: relative;
+	padding-left: 32px;
+}
 .dragBtn {
 	position: absolute;
 	display: block;
@@ -8,4 +12,62 @@
 	left: 0;
 	top: 50%;
 	margin-top: -12px;
+}
+.outer {
+	padding-left: 32px;
+	background: #131316;
+}
+.constructorElementWrap {
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+.removeBackground {
+	position: absolute;
+	left: 2px;
+	right: 2px;
+	bottom: 9px;
+	top: 9px;
+	background: #e52b1a;
+	border-radius: var(--common-border-radius-s);
+	z-index: -1;
+	margin-left: 32px;
+}
+.removeBackground:after {
+	content: '';
+	display: block;
+	position: absolute;
+	right: 54px;
+	width: 36px;
+	height: 36px;
+	top: 50%;
+	margin-top: -18px;
+	background-image: url("data:image/svg+xml,%3Csvg width='36' height='36' viewBox='0 0 36 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M28.4086 13.0457C28.7077 13.0457 28.979 13.1762 29.1934 13.3967C29.3933 13.6322 29.494 13.9247 29.4648 14.2337C29.4648 14.3357 28.6653 24.4456 28.2087 28.701C27.9228 31.3125 26.2393 32.898 23.7141 32.9415C21.7724 32.985 19.8744 33 18.0057 33C16.0217 33 14.0814 32.985 12.1981 32.9415C9.75747 32.883 8.07253 31.269 7.80118 28.701C7.33144 24.4306 6.54659 14.3357 6.532 14.2337C6.51741 13.9247 6.61661 13.6322 6.81793 13.3967C7.01633 13.1762 7.30226 13.0457 7.60278 13.0457H28.4086ZM21.0971 3C22.4232 3 23.6077 3.92549 23.9506 5.24548L24.1956 6.34047C24.394 7.23296 25.1672 7.86445 26.0571 7.86445H30.4307C31.0142 7.86445 31.5 8.34895 31.5 8.96544V9.53543C31.5 10.1369 31.0142 10.6364 30.4307 10.6364H5.57078C4.98579 10.6364 4.5 10.1369 4.5 9.53543V8.96544C4.5 8.34895 4.98579 7.86445 5.57078 7.86445H9.94435C10.8328 7.86445 11.606 7.23296 11.8058 6.34197L12.0349 5.31898C12.3908 3.92549 13.5622 3 14.9029 3H21.0971Z' fill='%23F2F2F3'/%3E%3C/svg%3E%0A");
+}
+@media screen and (max-width: 991.9px) {
+	.removeBackground {
+		border-radius: 0;
+	}
+	.constructorElementWrap {
+		border-bottom: 1px solid #2f2f37;
+		border-top: 1px solid transparent;
+		padding-top: 0;
+		padding-bottom: 0;
+		padding-right: 8px;
+		background: #131316;
+	}
+	:global(.constructor-element_pos_top) {
+		border-bottom: 1px solid #2f2f37;
+	}
+	:global(.constructor-element_pos_bottom) {
+		margin-top: -3px;
+		border-top: 1px solid #2f2f37;
+	}
+
+	.removeBackground {
+		bottom: 1px;
+		top: 1px;
+	}
+	.draggableConstructorElement {
+		padding-left: 16px;
+	}
 }

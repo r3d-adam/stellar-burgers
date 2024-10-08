@@ -1,12 +1,12 @@
 import React, { FC, ReactNode, useMemo } from 'react';
+import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
+import { spawn } from 'child_process';
 import doneImagePath from '../../images/done.png';
 import styles from './feed-order-dedails.module.css';
-import { useSelector } from './../../services/store';
+import { useSelector } from '../../services/store';
 import Loader from '../loader';
-import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { OrderStatus, TIngredient, TIngredientWithID, TOrder } from '../../services/types/data';
-import { spawn } from 'child_process';
 
 type TFeedOrderDetailsProps = {
 	order: TOrder;
@@ -18,18 +18,28 @@ const FeedOrderDetails: FC<TFeedOrderDetailsProps> = ({ order }) => {
 	});
 	let status;
 	if (order.status && order.status === OrderStatus.PENDING) {
-		status = <div className="text text_type_main-small mt-3 mb-15">Готовится</div>;
+		status = (
+			<div className={`${styles.status} text text_type_main-small mt-3 mb-15`}>Готовится</div>
+		);
 	} else if (order.status === OrderStatus.CREATED) {
-		status = <div className="text text_type_main-small mt-3 mb-15">Создан</div>;
+		status = (
+			<div className={`${styles.status} text text_type_main-small mt-3 mb-15`}>Создан</div>
+		);
 	} else if (order.status === OrderStatus.DONE) {
 		status = (
-			<div className="text text_type_main-small mt-3 mb-15" style={{ color: '#00CCCC' }}>
+			<div
+				className={`${styles.status} text text_type_main-small mt-3 mb-15`}
+				style={{ color: '#00CCCC' }}
+			>
 				Выполнен
 			</div>
 		);
 	} else {
 		status = (
-			<div className="text text_type_main-small mt-3 mb-15" style={{ color: '#ce3c2a' }}>
+			<div
+				className={`${styles.status} text text_type_main-small mt-3 mb-15`}
+				style={{ color: '#ce3c2a' }}
+			>
 				Отменен
 			</div>
 		);
@@ -103,29 +113,27 @@ const FeedOrderDetails: FC<TFeedOrderDetailsProps> = ({ order }) => {
 
 	return (
 		<div className={`${styles.content}`}>
-			<>
-				<div className={`${styles.orderId} text text_type_digits-default mb-10`}>
-					#{order.number}
-				</div>
-				<div className="text text_type_main-medium mb-3">{order.name}</div>
-				{status}
-				<div className="text text_type_main-medium mb-6">Состав:</div>
-				<ul className={`${styles.ingredientList} mb-10 pr-6`}>
-					{orderData.ingredientList.map((item: ReactNode, i: number) => (
-						<li key={i}>{item}</li>
-					))}
-				</ul>
+			<div className={`${styles.orderId} text text_type_digits-default mb-10`}>
+				#{order.number}
+			</div>
+			<div className={`${styles.name} text text_type_main-medium mb-3`}>{order.name}</div>
+			{status}
+			<div className={`${styles.label} text text_type_main-medium mb-6`}>Состав:</div>
+			<ul className={`${styles.ingredientList} mb-10 pr-6`}>
+				{orderData.ingredientList.map((item: ReactNode, i: number) => (
+					<li key={i}>{item}</li>
+				))}
+			</ul>
 
-				<div className={`${styles.bottom}`}>
-					<span className="text text_type_main-default text_color_inactive">
-						<FormattedDate date={new Date(order.createdAt)} />
-					</span>
-					<div className={`${styles.totalPrice}  text text_type_digits-default`}>
-						{orderData.totalPrice}&nbsp;
-						<CurrencyIcon type="primary" />
-					</div>
+			<div className={`${styles.bottom}`}>
+				<span className="text text_type_main-default text_color_inactive">
+					<FormattedDate date={new Date(order.createdAt)} />
+				</span>
+				<div className={`${styles.totalPrice}  text text_type_digits-default`}>
+					{orderData.totalPrice}&nbsp;
+					<CurrencyIcon type="primary" />
 				</div>
-			</>
+			</div>
 		</div>
 	);
 };

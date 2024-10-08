@@ -15,20 +15,19 @@ interface IOrderListProps {
 }
 
 const OrderList: FC<IOrderListProps> = ({ data, showStatus }) => {
+	if (data.length === 0) {
+		return null; // Возвращаем null вместо false
+	}
 	return (
-		<>
-			{data.length > 0 && (
-				<ul className={styles.list}>
-					{data.map((item) => {
-						return (
-							<li className={`${styles.item}`} key={item.id}>
-								<CardOrder data={item} showStatus={showStatus} />
-							</li>
-						);
-					})}
-				</ul>
-			)}
-		</>
+		<ul className={styles.list}>
+			{data.map((item) => {
+				return (
+					<li className={`${styles.item}`} key={item.id}>
+						<CardOrder data={item} showStatus={showStatus} />
+					</li>
+				);
+			})}
+		</ul>
 	);
 };
 

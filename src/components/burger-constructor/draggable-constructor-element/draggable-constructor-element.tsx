@@ -1,9 +1,10 @@
-import React, { FC } from 'react';
+import React, { FC, MouseEvent, SyntheticEvent, useEffect, useRef, useState } from 'react';
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import { DragSourceMonitor, useDrag, useDragLayer } from 'react-dnd';
+import { shallowEqual } from 'react-redux';
 import styles from './draggable-constructor-element.module.css';
 import { deleteIngredient } from '../../../services/slices/constructorSlice';
-import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDrag } from 'react-dnd';
-import { useDispatch } from '../../../services/store';
+import { useDispatch, useSelector } from '../../../services/store';
 
 interface IDraggableConstructorElementProps {
 	name: string;
@@ -12,30 +13,55 @@ interface IDraggableConstructorElementProps {
 	id: string | number;
 }
 
-const DraggableConstructorElement: FC<IDraggableConstructorElementProps> = (props) => {
-	const dispatch = useDispatch();
-	const { name, price, image, id } = props;
-	const [{ onDrag }, dragRef] = useDrag({
-		type: 'ingredient',
-		item: {
-			...props,
-		},
-		collect: (monitor) => ({
-			onDrag: monitor.isDragging(),
-		}),
-	});
+const DraggableConstructorElement: FC<IDraggableConstructorElementProps> = React.memo(
+	function DraggableConstructorElement(props: IDraggableConstructorElementProps) {
+		const { name, price, image, id } = props;
+		const constructorIngredients = useSelector(
+			(store) => store.constructorStore.constructorIngredients,
+			shallowEqual,
+		);
+		const dispatch = useDispatch();
+		// const constructorElementRef = useRef(null);
+		const [{ onDrag }, dragMoveRef, dragMovePreviewRef] = useDrag({
+			type: 'ingredient',
+			item: {
+				...props,
+			},
+			collect: (monitor) => ({
+				onDrag: monitor.isDragging(),
+			}),
+		});
 
-	return (
-		<div ref={dragRef} style={{ opacity: onDrag ? 0.4 : 1 }}>
-			<span className={styles.dragBtn}></span>
-			<ConstructorElement
-				text={name}
-				price={price}
-				thumbnail={image}
-				handleClose={() => dispatch(deleteIngredient(`${id}`))}
-			/>
-		</div>
-	);
-};
+		// const handleDragOver = (e: SyntheticEvent) => {
+		// 	if (dragMovePreviewRef && dragMovePreviewRef.) {
+		// 		dragMovePreviewRef?.current?.style.display = 'none';
+		// 	}
+		// };
+
+		return (
+			<div className={`${styles.draggableConstructorElement}`}>
+				{constructorIngredients.length > 1 && (
+					<div ref={dragMoveRef} style={onDrag ? { display: 'none' } : {}}>
+						<span className={styles.dragBtn} />
+					</div>
+				)}
+
+				<div
+					ref={dragMovePreviewRef}
+					className={`${styles.constructorElementWrap}`}
+					// style={onDrag ? { display: 'none' } : {}}
+					style={onDrag ? { opacity: 0.4 } : {}}
+				>
+					<ConstructorElement
+						text={name}
+						price={price}
+						thumbnail={image}
+						handleClose={() => dispatch(deleteIngredient(`${id}`))}
+					/>
+				</div>
+			</div>
+		);
+	},
+);
 
 export default DraggableConstructorElement;

@@ -24,6 +24,16 @@
 }
 .infoCol {
 	padding-top: 100px;
+	min-width: max-content;
+	display: flex;
+	overflow: hidden;
+}
+.infoColInner {
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+	scrollbar-color: #8585ad #2f2f37;
+	scrollbar-width: thin;
 }
 .statusListsWrapper {
 	display: flex;
@@ -35,6 +45,7 @@
 .statusList {
 	margin: 0;
 	padding: 0;
+	overflow: hidden;
 }
 .statusList li {
 	list-style: none;
@@ -50,4 +61,68 @@
 	display: flex;
 	flex-direction: row;
 	gap: 10px;
+}
+.tabs {
+	width: 100%;
+	display: flex;
+	/* overflow: hidden; */
+	margin-bottom: 20px;
+}
+.tabs :global(.tab) {
+	flex: 1 0 0;
+	padding-inline: 0;
+	min-width: auto;
+}
+.statList {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	flex-grow: 1;
+}
+.label:last-of-type {
+	margin-top: auto;
+}
+.totalToday {
+}
+.title {
+	width: 100%;
+	text-align: center;
+}
+.label + * {
+	max-height: 100px;
+	overflow: hidden;
+}
+
+@media (max-width: 991.9px) {
+	.container {
+		padding-left: 0;
+		padding-right: 0;
+		flex-wrap: nowrap;
+		gap: 0;
+		flex-direction: column;
+		justify-content: start;
+	}
+
+	.infoCol {
+		padding-top: 0;
+		padding-left: 8px;
+		padding-right: 8px;
+	}
+	.listCol {
+		height: auto;
+		overflow: hidden;
+	}
+	.statusList {
+		columns: 2;
+	}
+	.statusList li {
+		font-size: 22px;
+	}
+	.statusListName,
+	.label {
+		font-size: 20px;
+	}
+	.label + * {
+		font-size: 72px;
+	}
 }

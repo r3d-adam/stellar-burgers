@@ -19,12 +19,14 @@
 	scrollbar-color: #8585ad #2f2f37;
 	scrollbar-width: thin;
 	padding: 0;
-	padding-right: 20px;
+	padding-right: 10px;
 	padding-top: 10px;
 	padding-bottom: 10px;
+	padding-left: 0;
 	margin: 0;
 	list-style: none;
 	flex: 0 1 auto;
+	scrollbar-gutter: stable;
 }
 
 .listItem {
@@ -59,6 +61,7 @@
 
 .orderTotal {
 	margin-right: 40px;
+	text-wrap: nowrap;
 }
 .mainPlaceholder,
 .bunPlaceholder {
@@ -82,10 +85,87 @@
 	margin-left: 32px;
 	margin-right: 20px;
 }
+.mainPlaceholder {
+	margin-left: 32px;
+}
 
 .bunPlaceholderTop {
 	border-radius: var(--top-constructor-item-border-radius);
 }
 .bunPlaceholderBottom {
 	border-radius: var(--bottom-constructor-item-border-radius);
+}
+:global(.constructor-element_pos_bottom) img {
+	transform: scaleY(-1);
+}
+@media screen and (max-width: 991.9px) {
+	.wrapper {
+		padding: 0;
+	}
+	.bunPlaceholder,
+	.mainPlaceholder,
+	:global(.constructor-element) {
+		background: #131316;
+		border-radius: 0;
+		padding-top: 14px;
+		padding-bottom: 14px;
+		min-height: 70px;
+		margin-inline: auto;
+	}
+	:global(.constructor-element__action) {
+		display: none;
+	}
+	.mainPlaceholder {
+		padding-right: 12px;
+		padding-left: 4px;
+	}
+	.orderSummary {
+		display: none;
+	}
+	.list {
+		/* width: fit-content; */
+		padding: 2px 8px;
+		padding-right: 0;
+		scrollbar-gutter: unset;
+	}
+	.constructorIngredients {
+		width: fit-content;
+		margin-inline: auto;
+		width: 100%;
+		max-width: 440px;
+	}
+
+	.constructorElementWrapper {
+		padding-left: 24px;
+		padding-right: 0;
+	}
+	:global(.constructor-element) {
+		padding-left: 0;
+		padding-right: 0;
+		display: flex;
+		align-items: center;
+	}
+	:global(.constructor-element__image) {
+		margin-right: 8px;
+		width: 52px;
+		height: auto;
+	}
+	:global(.constructor-element__price) {
+		align-self: flex-start;
+		margin-left: auto;
+		font-size: 22px;
+	}
+	:global(.constructor-element__row) {
+		width: 100%;
+		flex-basis: 300px;
+		flex-grow: 1;
+	}
+	:global(.constructor-element_pos_top),
+	:global(.constructor-element_pos_bottom) {
+		padding-right: 8px;
+	}
+	:global(.constructor-element__text) {
+		font-size: 14px;
+		margin-right: 8px;
+	}
 }

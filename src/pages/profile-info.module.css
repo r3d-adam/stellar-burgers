@@ -2,8 +2,15 @@
 	max-width: 480px;
 	text-align: center;
 	margin-top: 106px;
+	width: 100%;
 }
 .buttonGroup {
 	display: flex;
 	justify-content: space-evenly;
+	gap: 10px;
+}
+@media screen and (max-width: 991.9px) {
+	.wrapper {
+		margin-inline: auto;
+	}
 }

@@ -1,0 +1,112 @@
+.menuMobile {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	display: flex;
+	z-index: 999;
+	flex-direction: column;
+}
+.overlay {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	top: 0;
+	right: 0;
+	display: block;
+	background: #000;
+	opacity: 0.5;
+	z-index: -1;
+}
+.inner {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	width: 400px;
+	background: #1c1c21;
+	max-width: 100%;
+}
+.menuMobile ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	max-width: 320px;
+}
+.menuMobile ul li > *:not(ul, ol) {
+	position: relative;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 20px;
+	/* color: #f2f2f3; */
+	text-decoration: none;
+	display: flex;
+	text-align: left;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 32px;
+	text-align: left;
+	justify-content: flex-start;
+}
+.menuMobile :where(a, span) svg {
+	position: absolute;
+	left: 8px;
+	translate: 0 -50%;
+	top: 50%;
+}
+.menuMobile ul ul :where(a, span, div) {
+	margin-left: 8px;
+}
+.menuItem {
+	color: #8585ad;
+	padding-left: 40px;
+	cursor: pointer;
+}
+.menuItem span {
+	display: block;
+	cursor: pointer;
+	/* padding-left: 8px; */
+}
+.menuItemActive {
+	color: #fff;
+}
+.title {
+	font-style: normal;
+	font-weight: 700;
+	font-size: 28px;
+	line-height: 32px;
+	height: 64px;
+	padding: 8px;
+	display: flex;
+	align-items: center;
+	padding-right: 50px;
+}
+.submenuBtn {
+	position: relative;
+	padding-right: 28px;
+}
+.submenuBtn:after {
+	content: '';
+	display: block;
+	position: absolute;
+	background: url('data:image/svg+xml,%3Csvg width="12" height="6" viewBox="0 0 12 6" fill="white" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M4.95408 0.352467C5.51643 -0.117489 6.48357 -0.117489 7.04592 0.352466L11.6243 4.1786C12.4585 4.87576 11.8129 6 10.5783 6H1.42166C0.187102 6 -0.458482 4.87576 0.375741 4.1786L4.95408 0.352467Z" fill="%23F2F2F3"/%3E%3C/svg%3E');
+	background-repeat: no-repeat no-repeat;
+	background-position: center center;
+	background-size: 12px 6px;
+	width: 24px;
+	height: 24px;
+	right: 8px;
+	top: 50%;
+	margin-top: -12px;
+	transform: scaleY(-1);
+}
+.submenuBtnActive:after {
+	transform: unset;
+}
+.submenuBtn + ul {
+	display: none;
+}
+.submenuBtnActive + ul {
+	display: block;
+}

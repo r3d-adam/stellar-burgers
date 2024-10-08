@@ -1,19 +1,18 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { fetchIngredients } from '../../utils/api';
 import { TIngredient } from '../types/data';
-import { PayloadAction } from '@reduxjs/toolkit';
 import { handleError } from '../../utils/utils';
-
-export const initialState: TIngredientsState = {
-	ingredients: [],
-	error: null,
-	isLoading: false,
-};
 
 type TIngredientsState = {
 	ingredients: TIngredient[];
 	error: null | undefined | string;
 	isLoading: boolean;
+};
+
+export const initialState: TIngredientsState = {
+	ingredients: [],
+	error: null,
+	isLoading: false,
 };
 
 export const getIngredients = createAsyncThunk<TIngredient[], void, { rejectValue: unknown }>(

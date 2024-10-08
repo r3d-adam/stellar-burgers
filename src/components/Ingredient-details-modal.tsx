@@ -1,10 +1,10 @@
-import React, { FC, useEffect, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import Modal from './modal/modal';
 import { openModal } from '../services/slices/modalSlice';
 import { TIngredient, TIngredientWithID } from '../services/types/data';
 import IngredientDetails from './burger-ingredients/ingredient-details/ingredient-details';
-import { useDispatch, useSelector } from './../services/store';
+import { useDispatch, useSelector } from '../services/store';
 
 interface IIngredientDetailsModalProps {
 	onClose: () => void;

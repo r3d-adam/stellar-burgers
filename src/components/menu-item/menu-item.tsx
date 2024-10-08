@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import menuItem from './menu-item.module.css';
 import { NavLink } from 'react-router-dom';
+import menuItem from './menu-item.module.css';
 
 interface IMenuItemProps {
 	iconComponent?: React.ElementType;
@@ -11,22 +11,20 @@ interface IMenuItemProps {
 const MenuItem: FC<IMenuItemProps> = ({ iconComponent, text, href }) => {
 	const showIcon = (isActive: boolean) => {
 		return (
-			<>
-				{iconComponent &&
-					React.createElement(iconComponent, {
-						type: isActive ? 'primary' : 'secondary',
-					})}
-			</>
+			iconComponent &&
+			React.createElement(iconComponent, {
+				type: isActive ? 'primary' : 'secondary',
+			})
 		);
 	};
 
-	const linkClass = 'p-5 ' + menuItem.menuItem;
+	const linkClass = `${menuItem.menuItem}`;
 
 	return (
 		<NavLink
 			to={href}
 			className={({ isActive }) => {
-				return isActive ? linkClass + ' ' + menuItem.menuItemActive : linkClass;
+				return isActive ? `${linkClass} ${menuItem.menuItemActive}` : linkClass;
 			}}
 		>
 			{({ isActive }) => {

@@ -3,16 +3,16 @@ import { fetchOrder } from '../../utils/api';
 import { TIngredient } from '../types/data';
 import { handleError } from '../../utils/utils';
 
-export const initialState: TOrderState = {
-	orderId: null,
-	error: null,
-	isLoading: false,
-};
-
 type TOrderState = {
 	orderId: string | null;
 	error?: string | null | undefined;
 	isLoading: boolean;
+};
+
+export const initialState: TOrderState = {
+	orderId: null,
+	error: null,
+	isLoading: false,
 };
 
 export const getOrder = createAsyncThunk(
@@ -42,7 +42,7 @@ export const orderSlice = createSlice({
 		builder.addCase(getOrder.fulfilled, (state, action) => {
 			state.isLoading = false;
 			const payloadOrderId = action.payload?.order?.number.toString();
-			state.orderId = payloadOrderId ? payloadOrderId : null;
+			state.orderId = payloadOrderId || null;
 		});
 		builder.addCase(getOrder.rejected, (state, action): TOrderState => {
 			return {

@@ -2,7 +2,8 @@ import React, { FC, ReactNode, ReactPortal, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './modal.module.css';
 import ModalOverlay from './modal-overlay/modal-overlay';
-import { useSelector } from './../../services/store';
+import { useSelector } from '../../services/store';
+
 const modalRoot = document.getElementById('react-modals') as HTMLElement;
 
 interface ModalProps {
@@ -36,11 +37,7 @@ const Modal: FC<ModalProps> = ({ onClose, children }): ReactPortal => {
 			<ModalOverlay onClose={onClose} />
 
 			<div className={`${styles.modal} p-10 pb-15`}>
-				<span
-					className={styles.modalClose}
-					onClick={onClose}
-					data-testid="modal-close"
-				></span>
+				<span className={styles.modalClose} onClick={onClose} data-testid="modal-close" />
 				<span className={`${styles.modalTitle} text text_type_main-large`}>{title}</span>
 				<div className={styles.modalContent}>{children}</div>
 			</div>

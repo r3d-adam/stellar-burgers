@@ -1,10 +1,9 @@
+// eslint-disable-next-line no-use-before-define
 import React, { useState, useRef, useEffect, FC } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
-import { orderListShape, ingredientListShape } from '../../utils/propTypesShapes.mjs';
 import IngredientsGroup from './ingredients-group/ingredients-group';
 import styles from './burger-ingredients.module.css';
-import { useDispatch, useSelector } from './../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 import { addIngredient } from '../../services/slices/constructorSlice';
 import { TIngredient, TIngredientWithID } from '../../services/types/data';
 
@@ -30,6 +29,7 @@ const BurgerIngredients: FC = () => {
 
 	useEffect(() => {
 		if (isTabClicked) {
+			// eslint-disable-next-line no-unused-expressions
 			scrollToRef.current && scrollToRef.current.scrollIntoView({ behavior: 'smooth' });
 			setTabClicked(false);
 			setActiveTab(null);
@@ -37,14 +37,17 @@ const BurgerIngredients: FC = () => {
 	}, [scrollToRef.current, activeTab, isTabClicked]);
 
 	useEffect(() => {
+		// eslint-disable-next-line no-use-before-define
 		tabContentRef.current?.addEventListener('scroll', handleScroll);
 
 		return () => {
+			// eslint-disable-next-line no-use-before-define
 			tabContentRef.current?.removeEventListener('scroll', handleScroll);
 		};
 	}, [tabContentRef]);
 
 	useEffect(() => {
+		// eslint-disable-next-line no-unused-expressions
 		tabContentRef.current && tabContentRef.current.dispatchEvent(new Event('scroll'));
 	}, []);
 

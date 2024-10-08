@@ -6,7 +6,7 @@ interface IModalOverlayProps {
 }
 
 const ModalOverlay: FC<IModalOverlayProps> = ({ onClose }) => {
-	return <div className={styles.modalOverlay} onClick={onClose ? onClose : undefined}></div>;
+	return <div className={styles.modalOverlay} onClick={onClose || undefined} />;
 };
 
 export default ModalOverlay;

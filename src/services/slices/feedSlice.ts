@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
 import { getOrderRequest } from '../../utils/api';
-import { RootState } from '../store';
+import type { RootState } from '../store';
 import { TOrder } from '../types/data';
 import { handleError } from '../../utils/utils';
 

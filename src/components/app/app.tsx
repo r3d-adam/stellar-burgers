@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useMemo, FC } from 'react';
+import { useState, useEffect, useMemo, FC } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Routes, Route, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getRandomInt } from '../../utils/utils';
 import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import { useDispatch, useSelector } from './../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 import { getIngredients } from '../../services/slices/ingredientsSlice';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import Modal from '../modal/modal';
 import { closeModal, openModal } from '../../services/slices/modalSlice';
-import { Routes, Route, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import {
 	Home,
@@ -31,6 +31,7 @@ import OrderPage from '../../pages/order';
 import OrderDetailsModal, { OrderDetailsSource } from '../order-details-modal';
 import UserOrders from '../user-orders/user-orders';
 import UserOrderPage from '../../pages/user-order';
+import { setMobile } from '../../services/slices/uiSlice';
 
 const App: FC = () => {
 	const location = useLocation();
@@ -42,6 +43,24 @@ const App: FC = () => {
 		dispatch(checkUserAuth());
 	}, []);
 
+	useEffect(() => {
+		const mql = window.matchMedia('(max-width: 991.9px)');
+
+		const updateMobileState = (e: MediaQueryListEvent) => {
+			dispatch(setMobile(e.matches));
+		};
+
+		if (mql.matches) {
+			dispatch(setMobile(true));
+		}
+
+		mql.addEventListener('change', updateMobileState);
+
+		return () => {
+			mql.removeEventListener('change', updateMobileState);
+		};
+	}, [dispatch]);
+
 	const handleIngredientsModalClose = () => {
 		dispatch(closeModal());
 		navigate(-1);
@@ -52,7 +71,7 @@ const App: FC = () => {
 		navigate(-1);
 	};
 
-	const state = location.state;
+	const { state } = location;
 
 	return (
 		<>
@@ -80,7 +99,7 @@ const App: FC = () => {
 						path="/profile/orders/:id"
 						element={<OnlyAuth element={<UserOrderPage />} />}
 					/>
-					<Route path={'/ingredients/:id'} element={<IngredientPage />} />
+					<Route path="/ingredients/:id" element={<IngredientPage />} />
 					<Route path="/feed" element={<FeedPage />} />
 					<Route path="/feed/:id" element={<OrderPage />} />
 					<Route path="*" element={<Error404Page />} />
@@ -90,12 +109,13 @@ const App: FC = () => {
 			{state?.backgroundLocation && (
 				<Routes>
 					<Route
-						path={'/ingredients/:id'}
+						path="/ingredients/:id"
 						element={<IngredientDetailsModal onClose={handleIngredientsModalClose} />}
 					/>
 					<Route
-						path={'/feed/:id'}
+						path="/feed/:id"
 						element={
+							// eslint-disable-next-line react/jsx-wrap-multilines
 							<OrderDetailsModal
 								onClose={handleOrderDetailsModalClose}
 								source={OrderDetailsSource.FEED}
@@ -106,8 +126,10 @@ const App: FC = () => {
 					<Route
 						path="/profile/orders/:id"
 						element={
+							// eslint-disable-next-line react/jsx-wrap-multilines
 							<OnlyAuth
 								element={
+									// eslint-disable-next-line react/jsx-wrap-multilines
 									<OrderDetailsModal
 										onClose={handleOrderDetailsModalClose}
 										source={OrderDetailsSource.USER}

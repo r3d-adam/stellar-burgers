@@ -2,9 +2,17 @@
 	"root": true,
 	// "parser": "babel-eslint",
 	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaVersion": "latest",
+		"sourceType": "module",
+		"project": "./tsconfig.json"
+	},
 	"extends": [
 		"airbnb",
-		"react"
+		"react",
+		"plugin:react/recommended",
+		"plugin:import/typescript",
+		"plugin:prettier/recommended"
 	],
 	"env": {
 		"browser": true,
@@ -14,8 +22,9 @@
 		"@typescript-eslint",
 		"jest",
 		"react",
-		"jsx-a11y",
-		"import"
+		// "jsx-a11y",
+		"import",
+		"prettier"
 	],
 	"settings": {
 		"import/resolver": {
@@ -73,6 +82,40 @@
 		"object-curly-newline": 0,
 		"implicit-arrow-linebreak": 0,
 		"arrow-body-style": 0,
-		"comma-dangle": 0
+		"comma-dangle": 0,
+		"prefer-reflect": 0,
+		"react/jsx-filename-extension": [
+			1,
+			{
+				"extensions": [
+					".js",
+					".jsx",
+					".tsx"
+				]
+			}
+		],
+		"react/jsx-indent": 0,
+		"react/jsx-indent-props": 0,
+		"react/jsx-uses-react": "off",
+		"react/react-in-jsx-scope": "off",
+		"react/function-component-definition": 0,
+		"import/no-named-as-default": 1,
+		// "import/no-cycle": [
+		// 	"error",
+		// 	{
+		// 		"ignoreTypeImports": true
+		// 	}
+		// ]
+		"no-use-before-define": 0,
+		// "@typescript-eslint/no-use-before-define": 1
+		"@typescript-eslint/no-use-before-define": 1,
+		"react/jsx-props-no-spreading": 0,
+		"react/require-default-props": 0,
+		"react/no-array-index-key": 1,
+		"jsx-a11y/click-events-have-key-events": 1,
+		"jsx-a11y/no-static-element-interactions": 1,
+		"no-nested-ternary": 0,
+		"react/prop-types": 0,
+		"react/no-unused-prop-types": 0
 	}
 }

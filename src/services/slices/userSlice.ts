@@ -14,15 +14,7 @@ import {
 	TUserResponse,
 } from '../../utils/api';
 import { deleteTokens, handleError } from '../../utils/utils';
-import { AppDispatch, RootState } from '../store';
-
-export const initialState: UserState = {
-	user: null,
-	isAuthChecked: false,
-	isLoading: false,
-	error: null,
-	forgotPasswordSuccess: false,
-};
+import type { AppDispatch, RootState } from '../store';
 
 type UserState = {
 	user: null | TUser;
@@ -30,6 +22,14 @@ type UserState = {
 	isLoading: boolean;
 	error: null | undefined | string;
 	forgotPasswordSuccess: boolean;
+};
+
+export const initialState: UserState = {
+	user: null,
+	isAuthChecked: false,
+	isLoading: false,
+	error: null,
+	forgotPasswordSuccess: false,
 };
 
 const setLoading = (state: UserState) => {
@@ -153,12 +153,15 @@ export const resetPassword = createAsyncThunk(
 export const checkUserAuth = createAsyncThunk('user/checkUserAuth', async (_, { dispatch }) => {
 	if (localStorage.getItem('accessToken')) {
 		fetchUserData()
+			// eslint-disable-next-line no-use-before-define
 			.then((res) => dispatch(setUser(res.user)))
 			.catch(deleteTokens)
 			.finally(() => {
+				// eslint-disable-next-line no-use-before-define
 				dispatch(setAuthChecked(true));
 			});
 	} else {
+		// eslint-disable-next-line no-use-before-define
 		dispatch(setAuthChecked(true));
 	}
 });

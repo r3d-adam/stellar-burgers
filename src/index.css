@@ -24,3 +24,74 @@ html,
 	height: 100%;
 	margin: 0;
 }
+.m-auto {
+	margin: auto;
+}
+.ml-auto {
+	margin-left: auto;
+}
+.mt-auto {
+	margin-top: auto;
+}
+.mr-auto {
+	margin-right: auto;
+}
+.mb-auto {
+	margin-bottom: auto;
+}
+.mi-auto,
+mx-auto {
+	margin-inline: auto;
+}
+.mbl-auto,
+my-auto {
+	margin-block: auto;
+}
+
+.btn-close {
+	position: relative;
+	width: 24px;
+	height: 24px;
+	display: block;
+	cursor: pointer;
+}
+.btn-close:before,
+.btn-close:after {
+	content: '';
+	display: block;
+	height: 3px;
+	width: 24px;
+	border-radius: 10px;
+	position: absolute;
+	top: 50%;
+	margin-top: -2px;
+	background-color: #fff;
+}
+.btn-close:before {
+	rotate: 45deg;
+}
+.btn-close:after {
+	rotate: -45deg;
+}
+
+@media screen and (max-width: 991.9px) {
+	.button.button_size_medium {
+		min-height: 40px;
+		min-height: 40px;
+		padding: 10px;
+		width: 196px;
+		max-width: 100%;
+	}
+	form input,
+	form .input_size_default {
+		max-width: 480px;
+		width: 100%;
+	}
+	form {
+		max-width: 100%;
+	}
+	.input__container {
+		max-width: 100%;
+		width: auto !important;
+	}
+}

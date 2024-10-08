@@ -8,6 +8,7 @@
 	text-decoration: none;
 	color: #8585ad;
 	transition: color 0.2s ease;
+	width: fit-content;
 }
 .menuItem:hover {
 	color: #fff;
@@ -29,4 +30,13 @@
 .tabContentWrapper {
 	padding-top: 40px;
 	flex-grow: 1;
+	width: 100%;
+}
+@media screen and (max-width: 991.9px) {
+	.navWrapper {
+		display: none;
+	}
+	.tabContentWrapper {
+		padding-inline: 8px;
+	}
 }

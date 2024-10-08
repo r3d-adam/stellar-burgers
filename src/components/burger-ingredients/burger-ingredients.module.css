@@ -40,3 +40,21 @@
 	flex: 1 1 auto;
 	min-width: auto;
 }
+@media screen and (max-width: 991.9px) {
+	.tabs {
+		max-width: 100%;
+	}
+	.tabs > div {
+		padding-inline: 0;
+	}
+}
+@media (max-width: 575.9px) {
+	.heading {
+		font-size: 28px;
+		text-align: center;
+	}
+	.tabContent {
+		padding-left: 8px;
+		padding-right: 8px;
+	}
+}

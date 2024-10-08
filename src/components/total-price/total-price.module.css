@@ -1,0 +1,11 @@
+.orderTotal {
+	text-wrap: nowrap;
+}
+@media screen and (max-width: 991.9px) {
+	.orderTotal {
+		font-size: 22px;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+}

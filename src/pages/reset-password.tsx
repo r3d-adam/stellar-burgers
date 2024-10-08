@@ -3,7 +3,7 @@ import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burg
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import styles from './reset-password.module.css';
 import { resetPasswordRequest } from '../utils/api';
-import { useDispatch, useSelector } from './../services/store';
+import { useDispatch, useSelector } from '../services/store';
 import { resetPassword } from '../services/slices/userSlice';
 
 const ResetPasswordPage: FC = () => {
@@ -46,20 +46,20 @@ const ResetPasswordPage: FC = () => {
 				<PasswordInput
 					onChange={onChange}
 					value={formState.newPassword}
-					name={'newPassword'}
-					placeholder={'Введите новый пароль'}
+					name="newPassword"
+					placeholder="Введите новый пароль"
 					required
 				/>
 				{/* @ts-ignore */}
 				<Input
 					onChange={onChange}
 					value={formState.emailCode}
-					name={'emailCode'}
-					placeholder={'Введите код из письма'}
+					name="emailCode"
+					placeholder="Введите код из письма"
 					extraClass="mt-6"
 					required
 				/>
-				<Button htmlType="submit" extraClass={'mt-6'}>
+				<Button htmlType="submit" extraClass="mt-6">
 					Сохранить
 				</Button>
 				{formSubmitted && !isLoading && error && (
@@ -67,7 +67,7 @@ const ResetPasswordPage: FC = () => {
 				)}
 				<p className="text text_type_main-small text_color_inactive mt-20">
 					Вспомнили пароль?&ensp;
-					<Link to={'/login'} className={styles.link}>
+					<Link to="/login" className={styles.link}>
 						Войти
 					</Link>
 				</p>

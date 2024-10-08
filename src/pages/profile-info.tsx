@@ -7,7 +7,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import styles from './profile-info.module.css';
-import { useDispatch, useSelector } from './../services/store';
+import { useDispatch, useSelector } from '../services/store';
 import { updateUser } from '../services/slices/userSlice';
 
 interface IProfileInfoForm {
@@ -63,16 +63,16 @@ const ProfileInfo: FC = () => {
 				<Input
 					onChange={onChange}
 					value={state.name}
-					name={'name'}
-					placeholder={'Имя'}
+					name="name"
+					placeholder="Имя"
 					icon="EditIcon"
 				/>
 				<EmailInput
 					onChange={onChange}
 					value={state.email}
-					name={'email'}
+					name="email"
 					isIcon={false}
-					placeholder={'Логин'}
+					placeholder="Логин"
 					extraClass="mt-6 mb-6"
 					// @ts-ignore
 					icon="EditIcon"
@@ -80,16 +80,16 @@ const ProfileInfo: FC = () => {
 				<PasswordInput
 					onChange={onChange}
 					value={state.password}
-					name={'password'}
-					placeholder={'Пароль'}
+					name="password"
+					placeholder="Пароль"
 					icon="EditIcon"
 				/>
 				{isDataChanged && (
 					<div className={styles.buttonGroup}>
-						<Button htmlType="reset" onClick={handleCancel} extraClass={'mt-6'}>
+						<Button htmlType="reset" onClick={handleCancel} extraClass="mt-6">
 							Отменить
 						</Button>
-						<Button htmlType="button" onClick={handleSubmit} extraClass={'mt-6'}>
+						<Button htmlType="button" onClick={handleSubmit} extraClass="mt-6">
 							Сохранить
 						</Button>
 					</div>

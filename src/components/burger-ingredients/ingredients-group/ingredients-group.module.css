@@ -11,6 +11,7 @@
 	padding: 0;
 	margin-left: 4px;
 	margin-right: 4px;
+	overflow-x: hidden;
 }
 
 .listItem {
@@ -18,4 +19,22 @@
 	list-style: none;
 	padding-left: 12px;
 	padding-right: 12px;
+	overflow: hidden;
+}
+@media screen and (max-width: 991.9px) {
+	.list {
+		inset: 0;
+		margin-inline: auto;
+	}
+}
+@media (max-width: 575.9px) {
+	.list {
+		margin-left: -8px;
+		margin-right: -8px;
+	}
+	.listItem {
+		padding-left: 8px;
+		padding-right: 8px;
+		margin-bottom: 30px;
+	}
 }

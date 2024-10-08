@@ -5,3 +5,8 @@
 	max-width: 1280px;
 	margin: 0 auto;
 }
+@media (max-width: 991.9px) {
+	.mainContainer {
+		height: calc(100% - 64px);
+	}
+}

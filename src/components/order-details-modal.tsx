@@ -6,7 +6,7 @@ import { TIngredient } from '../services/types/data';
 import FeedOrderDetails from './feed-order-dedails/feed-order-dedails';
 import { getOrder as getOrderFromFeed } from '../services/slices/feedSlice';
 import { getOrder as getOrderFromUser } from '../services/slices/userOrdersSlice';
-import { useDispatch, useSelector } from './../services/store';
+import { useDispatch, useSelector } from '../services/store';
 
 export enum OrderDetailsSource {
 	FEED = 'feed',

@@ -2,20 +2,28 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuid } from 'uuid';
 import { TIngredientWithID } from '../types/data';
 
-export const initialState: TConstructorState = {
-	bun: null,
-	constructorIngredients: [],
-};
-
 type TConstructorState = {
 	bun: null | TIngredientWithID;
 	constructorIngredients: TIngredientWithID[];
+	isDragging: boolean;
+};
+
+export const initialState: TConstructorState = {
+	bun: null,
+	constructorIngredients: [],
+	isDragging: false,
 };
 
 export const constructorSlice = createSlice({
 	name: 'constructor',
 	initialState,
 	reducers: {
+		startDrag: (state) => {
+			state.isDragging = true;
+		},
+		endDrag: (state) => {
+			state.isDragging = false;
+		},
 		deleteIngredient: (state, action: PayloadAction<string>) => {
 			console.log(action);
 			state.constructorIngredients = state.constructorIngredients.filter(
@@ -30,7 +38,11 @@ export const constructorSlice = createSlice({
 				if (action.payload.ingredient.type === 'bun') {
 					state.bun = action.payload.ingredient;
 				} else {
-					const index = action.payload.index;
+					let { index } = action.payload;
+
+					if (index === -1) {
+						index = state.constructorIngredients.length;
+					}
 
 					state.constructorIngredients = [
 						...[...state.constructorIngredients].splice(0, index),
@@ -71,5 +83,6 @@ export type TConstructorActions = ReturnType<
 	TConstructorActionCreators[keyof TConstructorActionCreators]
 >;
 
-export const { deleteIngredient, addIngredient, moveIngredient } = constructorSlice.actions;
+export const { deleteIngredient, addIngredient, moveIngredient, startDrag, endDrag } =
+	constructorSlice.actions;
 export default constructorSlice.reducer;

@@ -60,3 +60,17 @@
 .modalContent {
 	color: #fff;
 }
+@media (max-width: 575.9px) {
+	.modalTitle {
+		font-size: 24px;
+	}
+	.modal {
+		padding: 4% 4% 6%;
+		margin: 3px;
+	}
+
+	.modalClose {
+		top: 20px;
+		right: 20px;
+	}
+}

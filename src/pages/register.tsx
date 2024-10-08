@@ -7,7 +7,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import styles from './register.module.css';
-import { useDispatch, useSelector } from './../services/store';
+import { useDispatch, useSelector } from '../services/store';
 import { registerUser } from '../services/slices/userSlice';
 
 interface IRegisterPageFrom {
@@ -48,27 +48,27 @@ const RegisterPage: FC = () => {
 				<Input
 					onChange={onChange}
 					value={state.name}
-					name={'name'}
-					placeholder={'Имя'}
+					name="name"
+					placeholder="Имя"
 					required
 				/>
 				<EmailInput
 					onChange={onChange}
 					value={state.email}
-					name={'email'}
+					name="email"
 					isIcon={false}
-					placeholder={'E-mail'}
+					placeholder="E-mail"
 					extraClass="mt-6 mb-6"
 					required
 				/>
 				<PasswordInput
 					onChange={onChange}
 					value={state.password}
-					name={'password'}
-					placeholder={'Пароль'}
+					name="password"
+					placeholder="Пароль"
 					required
 				/>
-				<Button htmlType="submit" extraClass={'mt-6'}>
+				<Button htmlType="submit" extraClass="mt-6">
 					Зарегистрироваться
 				</Button>
 				{formSubmitted && !isLoading && error && (
@@ -76,7 +76,7 @@ const RegisterPage: FC = () => {
 				)}
 				<p className="text text_type_main-small text_color_inactive mt-20">
 					Уже зарегистрированы?&ensp;
-					<Link to={'/login'} className={styles.link}>
+					<Link to="/login" className={styles.link}>
 						Войти
 					</Link>
 				</p>

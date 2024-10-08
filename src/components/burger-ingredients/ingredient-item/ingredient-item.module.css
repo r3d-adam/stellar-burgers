@@ -7,17 +7,57 @@
 	max-width: 272px;
 	text-decoration: none;
 	color: #fff;
+	touch-action: auto;
 }
 
 .image {
 }
+.image img {
+	max-width: 100%;
+}
 .price {
 	display: flex;
 	text-align: center;
+	align-items: center;
 }
 .price svg {
 	margin-left: 4px;
 }
 .name {
 	text-align: center;
+}
+.addBtn {
+	color: #4c4cff;
+}
+.addBtn:hover,
+.addBtn:active {
+	color: #3939b6;
+}
+@media (max-width: 575.9px) {
+	.card {
+		padding-top: 8px;
+		height: 100%;
+	}
+	.card :global(.counter) {
+		height: 28px;
+		min-width: 28px;
+		padding: 0 4px;
+		font-size: 22px;
+	}
+	.name {
+		font-size: 14px;
+	}
+	.price {
+		font-size: 22px;
+		margin-bottom: 8px;
+	}
+	.price svg {
+		margin-left: 8px;
+	}
+	.addBtn {
+		padding-top: 8px;
+		padding-bottom: 8px;
+		inset-block: 0 8px;
+		margin-top: auto;
+	}
 }

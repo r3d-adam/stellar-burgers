@@ -18,7 +18,7 @@ const Loader: FC = () => {
 				}}
 			>
 				<Oval
-					visible={true}
+					visible
 					height="60"
 					width="60"
 					color="#4c4cff"
@@ -30,7 +30,7 @@ const Loader: FC = () => {
 						alignItems: 'center',
 						flex: '1 0 auto',
 					}}
-					wrapperClass={''}
+					wrapperClass=""
 				/>
 			</div>
 		</div>

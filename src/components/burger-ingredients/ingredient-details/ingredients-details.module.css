@@ -21,6 +21,31 @@
 	text-align: center;
 }
 .modalImage {
+	max-width: 100%;
 	display: block;
 	margin: auto;
+}
+@media (max-width: 991.9px) {
+	.list {
+		padding-left: 0;
+		padding-right: 0;
+		margin-left: 34px;
+		margin-right: 34px;
+		gap: 16px;
+	}
+}
+@media (max-width: 575.9px) {
+	.container {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.list li {
+		font-size: 14px;
+	}
+	.list li span {
+		font-size: 22px;
+	}
+	.modalName {
+		font-size: 20px;
+	}
 }

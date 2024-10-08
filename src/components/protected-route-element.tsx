@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { useSelector } from './../services/store';
+import { useSelector } from '../services/store';
 import Loader from './loader';
 
 interface IProtectedRouteElementProps {
@@ -25,7 +25,7 @@ export const ProtectedRouteElement: FC<IProtectedRouteElementProps> = ({
 	}
 
 	if (!onlyUnAuth && !user) {
-		return <Navigate to={'/login'} state={{ from: location }} />;
+		return <Navigate to="/login" state={{ from: location }} />;
 	}
 
 	return element;
@@ -33,5 +33,5 @@ export const ProtectedRouteElement: FC<IProtectedRouteElementProps> = ({
 
 export const OnlyAuth = ProtectedRouteElement;
 export const OnlyUnAuth: FC<{ element: React.ReactElement }> = ({ element }) => {
-	return <ProtectedRouteElement onlyUnAuth={true} element={element} />;
+	return <ProtectedRouteElement onlyUnAuth element={element} />;
 };

@@ -7,7 +7,7 @@ import {
 import { Link } from 'react-router-dom';
 import styles from './login.module.css';
 import { login } from '../services/slices/userSlice';
-import { useDispatch, useSelector } from './../services/store';
+import { useDispatch, useSelector } from '../services/store';
 
 interface ILoginFormState {
 	email: string;
@@ -45,35 +45,35 @@ const LoginPage: FC = () => {
 				<EmailInput
 					onChange={onChange}
 					value={state.email}
-					name={'email'}
+					name="email"
 					isIcon={false}
-					placeholder={'Укажите e-mail'}
+					placeholder="Укажите e-mail"
 					required
 				/>
 				<PasswordInput
 					onChange={onChange}
 					value={state.password}
-					name={'password'}
+					name="password"
 					extraClass="mt-6"
-					placeholder={'Пароль'}
+					placeholder="Пароль"
 					required
 				/>
 
-				<Button htmlType="submit" extraClass={'mt-6'}>
+				<Button htmlType="submit" extraClass="mt-6">
 					Войти
 				</Button>
 				{formSubmitted && !isLoading && error && (
 					<p className="text text_type_main-default mb-6 mt-6">{`Ошибка: ${error}`}</p>
 				)}
 				<p className="text text_type_main-small text_color_inactive mb-2 mt-20">
-					Вы — новый пользователь?&ensp;
-					<Link to={'/register'} className={styles.link}>
+					Вы&nbsp;&mdash; новый пользователь?&ensp;
+					<Link to="/register" className={styles.link}>
 						Зарегистрироваться
 					</Link>
 				</p>
 				<p className="text text_type_main-small text_color_inactive">
 					Забыли пароль?&ensp;
-					<Link to={'/forgot-password'} className={styles.link}>
+					<Link to="/forgot-password" className={styles.link}>
 						Восстановить пароль
 					</Link>
 				</p>

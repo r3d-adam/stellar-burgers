@@ -4,9 +4,9 @@ import {
 	CurrencyIcon,
 	FormattedDate,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './card-order.module.css';
-import { useDispatch, useSelector } from './../../../services/store';
 import { Link, useLocation } from 'react-router-dom';
+import styles from './card-order.module.css';
+import { useDispatch, useSelector } from '../../../services/store';
 import { openModal } from '../../../services/slices/modalSlice';
 import { OrderStatus, TIngredient, TIngredientWithID, TOrder } from '../../../services/types/data';
 
@@ -15,7 +15,7 @@ interface ICardOrderProps {
 	showStatus?: boolean;
 }
 
-const CardOrder: FC<ICardOrderProps> = ({ data, showStatus = false }) => {
+const CardOrder: FC<ICardOrderProps> = React.memo(function CardOrder({ data, showStatus = false }) {
 	const location = useLocation();
 
 	const dispatch = useDispatch();
@@ -96,34 +96,30 @@ const CardOrder: FC<ICardOrderProps> = ({ data, showStatus = false }) => {
 	}
 
 	return (
-		<>
-			<Link
-				to={`${data.number}`}
-				className={`${styles.card} mb-4 p-6`}
-				state={{ backgroundLocation: location }}
-			>
-				<div className={`${styles.top} mb-6`}>
-					<span className={`${styles.code} text text_type_digits-default`}>
-						#{data.number}
-					</span>
-					<span
-						className={`${styles.time} text text_type_main-default text_color_inactive`}
-					>
-						<FormattedDate date={new Date(data.createdAt)} />
-					</span>
-				</div>
-				<div className={`${styles.name} text text_type_main-medium`}>{data.name}</div>
-				{showStatus && status}
-				<div className={`${styles.bottom} mt-6`}>
-					<ul className={`${styles.imageList}`}>{imageList}</ul>
-					<span className={`${styles.price} text text_type_digits-default`}>
-						{totalPrice}&nbsp;
-						<CurrencyIcon type="primary" />
-					</span>
-				</div>
-			</Link>
-		</>
+		<Link
+			to={`${data.number}`}
+			className={`${styles.card} mb-4 p-6`}
+			state={{ backgroundLocation: location }}
+		>
+			<div className={`${styles.top} mb-6`}>
+				<span className={`${styles.code} text text_type_digits-default`}>
+					#{data.number}
+				</span>
+				<span className={`${styles.time} text text_type_main-default text_color_inactive`}>
+					<FormattedDate date={new Date(data.createdAt)} />
+				</span>
+			</div>
+			<div className={`${styles.name} text text_type_main-medium`}>{data.name}</div>
+			{showStatus && status}
+			<div className={`${styles.bottom} mt-6`}>
+				<ul className={`${styles.imageList}`}>{imageList}</ul>
+				<span className={`${styles.price} text text_type_digits-default`}>
+					{totalPrice}&nbsp;
+					<CurrencyIcon type="primary" />
+				</span>
+			</div>
+		</Link>
 	);
-};
+});
 
 export default CardOrder;

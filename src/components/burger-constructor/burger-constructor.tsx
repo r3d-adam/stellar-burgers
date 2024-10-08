@@ -4,20 +4,21 @@ import {
 	CurrencyIcon,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useNavigate } from 'react-router-dom';
 import styles from './burger-constructor.module.css';
 import Modal from '../modal/modal';
-import DraggableConstructorElement from './draggable-constructor-element/draggable-constructor-element';
 import DropTarget from '../drop-target/drop-target';
 import { getOrder } from '../../services/slices/orderSlice';
 import { openModal, closeModal } from '../../services/slices/modalSlice';
-import { useNavigate } from 'react-router-dom';
 import { TIngredientWithID } from '../../services/types/data';
 import OrderDetails from '../order-details/order-details';
-import { useDispatch, useSelector } from './../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
+import TotalPrice from '../total-price/total-price';
+import SwipeDeleteBackground from './draggable-constructor-element/swipeable-draggable';
 
 const BurgerConstructor: FC = () => {
 	const dispatch = useDispatch();
-	const { constructorIngredients, bun } = useSelector((store) => {
+	const { constructorIngredients, bun, isDragging } = useSelector((store) => {
 		return store.constructorStore;
 	});
 	const { user } = useSelector((store) => store.user);
@@ -39,26 +40,19 @@ const BurgerConstructor: FC = () => {
 		dispatch(closeModal());
 	};
 
-	const totalPrice = useMemo(() => {
-		let totalPrice: number = 0;
-		totalPrice = bun ? totalPrice + bun.price * 2 : totalPrice;
-		totalPrice = constructorIngredients.reduce(
-			(acc: number, item: TIngredientWithID) => acc + item.price,
-			totalPrice,
-		);
-		return totalPrice;
-	}, [bun, constructorIngredients]);
+	const mainList = React.useMemo(() => {
+		return constructorIngredients.map((ingredient: TIngredientWithID) => {
+			const { id } = ingredient;
 
-	const mainList = constructorIngredients.map((ingredient: TIngredientWithID) => {
-		const { id } = ingredient;
-		return (
-			<li className={styles.listItem} key={id}>
-				<DropTarget id={id}>
-					<DraggableConstructorElement {...ingredient}></DraggableConstructorElement>
-				</DropTarget>
-			</li>
-		);
-	});
+			return (
+				<li className={styles.listItem} key={id}>
+					<DropTarget id={id}>
+						<SwipeDeleteBackground visible={!isDragging} {...ingredient} />
+					</DropTarget>
+				</li>
+			);
+		});
+	}, [constructorIngredients]);
 
 	return (
 		<div className={styles.wrapper}>
@@ -68,23 +62,23 @@ const BurgerConstructor: FC = () => {
 						<DropTarget type="bun">
 							<ConstructorElement
 								type="top"
-								isLocked={true}
+								isLocked
 								text={`${bun.name} (верх)`}
 								price={bun.price}
 								thumbnail={bun.image}
-								key={bun.id + '_0'}
+								key={`${bun.id}_0`}
 							/>
 						</DropTarget>
 					</div>
 				) : (
 					<DropTarget type="bun">
-						<div className={styles.bunPlaceholder + ' ' + styles.bunPlaceholderTop}>
+						<div className={`${styles.bunPlaceholder} ${styles.bunPlaceholderTop}`}>
 							Выберите булки
 						</div>
 					</DropTarget>
 				)}
 
-				<ul className={styles.list}>
+				<ul className={`${styles.list} scrollable-list`}>
 					{mainList.length ? (
 						mainList
 					) : (
@@ -101,25 +95,25 @@ const BurgerConstructor: FC = () => {
 						<DropTarget type="bun">
 							<ConstructorElement
 								type="bottom"
-								isLocked={true}
+								isLocked
 								text={`${bun.name} (низ)`}
 								price={bun.price}
 								thumbnail={bun.image}
-								key={bun.id + '_1'}
+								key={`${bun.id}_1`}
 							/>
 						</DropTarget>
 					</div>
 				) : (
 					<DropTarget type="bun">
-						<div className={styles.bunPlaceholder + ' ' + styles.bunPlaceholderBottom}>
+						<div className={`${styles.bunPlaceholder} ${styles.bunPlaceholderBottom}`}>
 							Выберите булки
 						</div>
 					</DropTarget>
 				)}
 			</div>
 			<div className={`${styles.orderSummary} mt-10`}>
-				<span className={`${styles.orderTotal} digittext text_type_digits-medium`}>
-					{totalPrice} <CurrencyIcon type={'primary'} />
+				<span className="mr-10">
+					<TotalPrice />
 				</span>
 				<Button
 					htmlType="button"
@@ -127,6 +121,7 @@ const BurgerConstructor: FC = () => {
 					size="medium"
 					onClick={handleClick}
 					data-testid="order-button"
+					disabled={!bun || !constructorIngredients.length}
 				>
 					Оформить заказ
 				</Button>

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import doneImagePath from '../../images/done.png';
 import styles from './order-details.module.css';
-import { useSelector } from './../../services/store';
+import { useSelector } from '../../services/store';
 import Loader from '../loader';
 
 const OrderDetails: FC = () => {
@@ -33,7 +33,7 @@ const OrderDetails: FC = () => {
 					</span>
 				</>
 			) : error ? (
-				<span className={`text text_type_main-large mb-8`}>Произошла ошибка: {error}</span>
+				<span className="text text_type_main-large mb-8">Произошла ошибка: {error}</span>
 			) : (
 				<Loader />
 			)}

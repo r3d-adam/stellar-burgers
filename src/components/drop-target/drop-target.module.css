@@ -1,19 +1,39 @@
 .wrapper {
 	position: relative;
 }
+
 .innerWrapper {
-	padding-top: 8px;
-	padding-bottom: 8px;
+	/* padding-top: 8px;
+	padding-bottom: 8px; */
 	/* margin-top: 16px; */
-	padding-left: 32px;
+	/* padding-left: 32px; */
+	transition: all 0.2s linear;
+}
+.active .innerWrapper {
+	/* background: green; */
+	transition: all 0.2s linear;
+}
+
+.activeBefore .innerWrapper {
+	padding-top: 96px;
+	transition: all 0.2s linear;
+	/* background: green; */
+}
+
+.activeAfter .innerWrapper {
+	transition: all 0.2s linear;
+	/* background: blue; */
+
+	padding-bottom: 96px;
 }
 .innerWrapperBun {
 	padding-left: 0;
 	padding-bottom: 0;
 	padding-top: 0;
 }
+
 .bar {
-	display: block;
+	display: none;
 	position: absolute;
 	left: 32px;
 	right: 10px;
@@ -35,4 +55,33 @@
 }
 .bar.bottom {
 	bottom: -5px;
+}
+.dropOverlay {
+	display: block;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 50px;
+	/* top: 0; */
+	/* translate: 0 -50%; */
+	height: 100%;
+	/* background: rgba(255, 0, 255, 0.3); */
+	z-index: 99999;
+}
+.afterDrop .innerWrapper {
+	transition: none !important;
+	/* border: 3px solid red;
+	background-color: red; */
+}
+@media (max-width: 991.9px) {
+	.activeBefore .innerWrapper {
+		padding-top: 70px;
+	}
+
+	.activeAfter .innerWrapper {
+		padding-bottom: 70px;
+	}
+	.dropOverlay {
+		top: 36px;
+	}
 }

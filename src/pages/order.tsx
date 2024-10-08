@@ -1,13 +1,13 @@
 import React, { FC, useEffect, useMemo } from 'react';
-import IngredientDetails from '../components/burger-ingredients/ingredient-details/ingredient-details';
-import { useDispatch, useSelector } from './../services/store';
 import { useParams, useLocation } from 'react-router-dom';
 import { Oval, RevolvingDot } from 'react-loader-spinner';
+import IngredientDetails from '../components/burger-ingredients/ingredient-details/ingredient-details';
+import { useDispatch, useSelector } from '../services/store';
 import Error404Page from './404';
 import Loader from '../components/loader';
 import styles from './ingredient.module.css';
 import { TIngredient, TIngredientWithID } from '../services/types/data';
-import FeedOrderDetails from './../components/feed-order-dedails/feed-order-dedails';
+import FeedOrderDetails from '../components/feed-order-dedails/feed-order-dedails';
 import { getOrder } from '../services/slices/feedSlice';
 import { getOrderRequest } from '../utils/api';
 

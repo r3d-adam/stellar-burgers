@@ -2,7 +2,7 @@ import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-comp
 import React, { FC, useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import styles from './forgot-password.module.css';
-import { useDispatch, useSelector } from './../services/store';
+import { useDispatch, useSelector } from '../services/store';
 import { forgotPassword } from '../services/slices/userSlice';
 
 const ForgotPasswordPage: FC = () => {
@@ -35,12 +35,12 @@ const ForgotPasswordPage: FC = () => {
 				<EmailInput
 					onChange={onChange}
 					value={email}
-					name={'email'}
+					name="email"
 					isIcon={false}
-					placeholder={'Укажите e-mail'}
+					placeholder="Укажите e-mail"
 					required
 				/>
-				<Button htmlType="submit" extraClass={'mt-6'}>
+				<Button htmlType="submit" extraClass="mt-6">
 					Восстановить
 				</Button>
 				{formSubmitted && !isLoading && error && (
@@ -48,7 +48,7 @@ const ForgotPasswordPage: FC = () => {
 				)}
 				<p className="text text_type_main-small text_color_inactive mt-20">
 					Вспомнили пароль?&ensp;
-					<Link to={'/login'} className={styles.link}>
+					<Link to="/login" className={styles.link}>
 						Войти
 					</Link>
 				</p>

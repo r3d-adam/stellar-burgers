@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import IngredientItem from '../ingredient-item/ingredient-item';
 import styles from './ingredients-group.module.css';
 import { TIngredientWithID } from '../../../services/types/data';
@@ -10,22 +10,26 @@ interface IIngredientsGroupProps {
 
 type Ref = HTMLSpanElement;
 
-const IngredientsGroup = React.forwardRef<Ref, IIngredientsGroupProps>((props, ref) => {
-	return (
-		<>
-			<span className={`${styles.tabName} text text_type_main-medium mb-6`} ref={ref}>
-				{props.title}
-			</span>
+const IngredientsGroup = React.memo(
+	React.forwardRef<Ref, IIngredientsGroupProps>(function IngredientsGroup(props, ref) {
+		const { title, ingredients } = props;
 
-			<ul className={styles.list}>
-				{props.ingredients.map((ingredient, index) => (
-					<li className={styles.listItem} key={ingredient._id}>
-						<IngredientItem ingredient={ingredient} />
-					</li>
-				))}
-			</ul>
-		</>
-	);
-});
+		return (
+			<>
+				<span className={`${styles.tabName} text text_type_main-medium mb-6`} ref={ref}>
+					{title || null}
+				</span>
+
+				<ul className={styles.list}>
+					{ingredients.map((ingredient) => (
+						<li className={styles.listItem} key={ingredient._id}>
+							<IngredientItem ingredient={ingredient} />
+						</li>
+					))}
+				</ul>
+			</>
+		);
+	}),
+);
 
 export default IngredientsGroup;
